@@ -3,3 +3,8 @@
     font-size: 14px;
     margin-top: 4px;
 }
+.required-label:before {
+    content:"*";
+    color: red;
+    margin-right: 5px;
+}

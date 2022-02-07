@@ -1,8 +1,8 @@
 <?php
-class Model_Asset extends Zend_Db_Table{
+class Model_User extends Zend_Db_Table{
 
-    protected $_name = 'tbl_asset';
-    protected $_primary = 'asset_id';
+    protected $_name = 'tbl_user';
+    protected $_primary = 'user_id';
     protected $db;
     protected $_filter = null;
     protected $_validate = null;
@@ -15,69 +15,6 @@ class Model_Asset extends Zend_Db_Table{
             'asset_id' => array('Int'),
         );
 
-        $this->_validate = array(
-            'name' => array(
-                new Zend_Validate_NotEmpty(),
-                new Zend_Validate_StringLength(
-                    array(
-                        'max' => 30
-                    )
-                ),
-                Zend_Filter_Input::MESSAGES => array(
-                    array(
-                        Zend_Validate_NotEmpty::IS_EMPTY => '* Vui lòng nhập tên tài sản !',
-                    ),
-                    array(
-                        Zend_Validate_StringLength::TOO_LONG => '* Tên tài sản tối đa 30 kí tự !',
-                    )
-                )
-            ),
-            'code' => array(
-                new Zend_Validate_NotEmpty(),
-                new Zend_Validate_StringLength(
-                    array(
-                        'max' => 20,
-                        'min' => 3
-                    )
-                ),
-                Zend_Filter_Input::MESSAGES => array(
-                    array(
-                        Zend_Validate_NotEmpty::IS_EMPTY => '* Vui lòng nhập mã tài sản !',
-                    ),
-                    array(
-                        Zend_Validate_StringLength::TOO_LONG => '* Mã tài sản tối đa 20 kí tự !',
-                        Zend_Validate_StringLength::TOO_SHORT => '* Mã tài sản tối thiểu 3 kí tự !',
-                    ),
-                    array(
-                        Zend_Validate_Db_NoRecordExists::ERROR_RECORD_FOUND=> '* Mã tài sản đã tồn tại!',
-                    ),
-                )
-            ),
-            'asset_group_id' => array(
-            new Zend_Validate_NotEmpty(),
-            Zend_Filter_Input::MESSAGES => array(
-                array(
-                    Zend_Validate_NotEmpty::IS_EMPTY => '* Vui lòng nhập nhóm tài sản !',
-                    )
-                ),
-            ),
-            'state' => array(
-                new Zend_Validate_NotEmpty(),
-                Zend_Filter_Input::MESSAGES => array(
-                    array(
-                        Zend_Validate_NotEmpty::IS_EMPTY => '* Vui lòng nhập tình trạng !',
-                    )
-                ),
-            ),
-            'status' => array(
-                new Zend_Validate_NotEmpty(),
-                Zend_Filter_Input::MESSAGES => array(
-                    array(
-                        Zend_Validate_NotEmpty::IS_EMPTY => '* Vui lòng nhập nhóm trạng thái !',
-                    )
-                ),
-            ),
-        );
     }
 
     public function countItem(){
@@ -89,15 +26,13 @@ class Model_Asset extends Zend_Db_Table{
 
     }
 
-    public function listAssets(){
+    public function listUsers(){
         //$result = $this->fetchAll($where, $order, $count, $offet);
-        $select = $this->db->select('tbl_person.name')
-            ->from('tbl_asset')
-            ->join('tbl_status','tbl_asset.status=tbl_status.status_id')
-            ->join('tbl_state','tbl_asset.state=tbl_state.state_id')
-            ->where('tbl_asset.is_disabled = 0')
-            ->order('tbl_asset.asset_id DESC');
-
+        $select = $this->db->select()
+            ->from('tbl_user')
+            ->join('tbl_roles','tbl_user.role_id=tbl_roles.role_id', array('role_name'=>'name'))
+            ->where('tbl_user.is_disabled = 0')
+            ->order('tbl_user.user_id DESC');
         $result = $this->db->fetchAll($select);
         return $result;
     }
@@ -235,7 +170,7 @@ class Model_Asset extends Zend_Db_Table{
         }
         return $result;
     }
-    public function deleteAsset($ID){
+    public function deleteUser($ID){
         $where = 'user_id= '.$ID;
         $row['is_disabled']=1;
         $row['deleted_at']= date("Y-m-d H:i:s");

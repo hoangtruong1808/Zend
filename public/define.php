@@ -19,3 +19,7 @@ define('PUBLIC_PATH', realpath(dirname(__FILE__) . '/../public'));
 
 //duong dan den thu muc file
 define('FILE_PATH', PUBLIC_PATH . '/files');
+
+define('IMAGE_PATH', PUBLIC_PATH.'/images');
+
+define('ASSET_IMAGE_PATH', IMAGE_PATH.'/asset_images');

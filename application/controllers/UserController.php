@@ -1,5 +1,5 @@
 <?php
-class AssetController extends Zend_Controller_Action
+class UserController extends Zend_Controller_Action
 {
     protected $_arrParam;
     protected $_currentController;
@@ -18,15 +18,15 @@ class AssetController extends Zend_Controller_Action
         $this->view->currentController = $this->_currentController;
         $this->view->actionMain = $this->_actionMain;
 
-        $this->model = new Model_Asset;
+        $this->model = new Model_User;
 
     }
 
     //liệt kê dữ liệu trong db
     public function indexAction(){
 
-        $this->view->title = "Quản lý tài sản";
-        $this->view->asset_list = $this->model->listAssets();
+        $this->view->title = "Quản lý nhân sự";
+        $this->view->user_list = $this->model->listUsers();
         if (isset($_SESSION['message'])) {
             $this->view->message = $_SESSION['message'];
             unset( $_SESSION['message'] );
@@ -110,7 +110,7 @@ class AssetController extends Zend_Controller_Action
         $this->view->state_list = $state->listState();
 
         //lấy dữ liệu
-       $this->view->asset = $this->model->getAsset($arrParam["id"]);
+        $this->view->asset = $this->model->getAsset($arrParam["id"]);
 
         if ($this->_request->isPost()) {
             //xử lý image
@@ -170,7 +170,7 @@ class AssetController extends Zend_Controller_Action
         $arrParam = $this->_arrParam;
 
         //delete item
-        $this->model->deleteAsset($arrParam["id"]);
+        $this->model->deleteUser($arrParam["id"]);
     }
 
     //xóa nhiều dữ liệu trong db
@@ -181,7 +181,7 @@ class AssetController extends Zend_Controller_Action
         //delete items
         foreach($arrParam["id"] as $item_id)
         {
-            $this->model->deleteAsset($item_id);
+            $this->model->deleteUser($item_id);
         }
     }
 

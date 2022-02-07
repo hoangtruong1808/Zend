@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.42, created on 2022-01-26 14:31:06
+/* Smarty version 3.1.42, created on 2022-02-07 14:43:51
   from 'C:\laragon\www\Zend\application\layouts\scripts\menu\index.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.42',
-  'unifunc' => 'content_61f0f8bab35131_45220640',
+  'unifunc' => 'content_6200cdb7e61769_36722775',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '15fa91c925b9480d645f095743bf8f23c7949c2e' => 
     array (
       0 => 'C:\\laragon\\www\\Zend\\application\\layouts\\scripts\\menu\\index.tpl',
-      1 => 1643181759,
+      1 => 1644219781,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_61f0f8bab35131_45220640 (Smarty_Internal_Template $_smarty_tpl) {
+function content_6200cdb7e61769_36722775 (Smarty_Internal_Template $_smarty_tpl) {
 ?><style>
     th {
         text-align: center;
@@ -107,7 +107,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
                             <form action="" method="post" >
                                 <div class="modal-body" style="margin: 10px 10px 60px 10px">
                                     <div class="form-group" style="margin-bottom: 60px">
-                                        <label class="col-sm-3 add-name" style="font-size: 13px; margin-top: 10px; text-align: right"><b>Tên:</b></label>
+                                        <label class="col-sm-3 add-name required-label" style="font-size: 13px; margin-top: 10px; text-align: right"><b>Tên:</b></label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" name="description" id="add_description">
                                             <p id="alert" style="color: red; font-size: 13px; margin: 10px"></p>
@@ -182,11 +182,11 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
                         <form method="POST">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="edit-data"><b>Chỉnh sửa dữ liệu</b></h5>
+                                    <h5 class="modal-title" id="edit-data" style="text-align: center"><b>Chỉnh sửa dữ liệu</b></h5>
                                 </div>
                                 <div class="modal-body" style="margin: 10px 10px 60px 10px">
                                     <div class="form-group" style="margin-bottom: 60px">
-                                        <label class="col-sm-3" style="margin-top:5px; text-align: right"><b>Tên:</b></label>
+                                        <label class="col-sm-3 required-label" style="margin-top:5px; text-align: right"><b>Tên:</b></label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" id="update_description" name="description" required>
                                             <div class="update-alert" style="color: red; font-size: 13px; margin:10px; text-align: left"></div>

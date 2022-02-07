@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.42, created on 2022-01-26 16:10:10
+/* Smarty version 3.1.42, created on 2022-02-07 10:14:15
   from 'C:\laragon\www\Zend\application\layouts\scripts\asset\index.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.42',
-  'unifunc' => 'content_61f10ff2b2ecc0_50410863',
+  'unifunc' => 'content_62008e870d9d93_17449748',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'e17aafa28c9fac0fdadc7e90b1c80d601f02bb19' => 
     array (
       0 => 'C:\\laragon\\www\\Zend\\application\\layouts\\scripts\\asset\\index.tpl',
-      1 => 1643188209,
+      1 => 1644203654,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_61f10ff2b2ecc0_50410863 (Smarty_Internal_Template $_smarty_tpl) {
+function content_62008e870d9d93_17449748 (Smarty_Internal_Template $_smarty_tpl) {
 ?><style>
     th {
         text-align: center;
@@ -70,6 +70,10 @@ function content_61f10ff2b2ecc0_50410863 (Smarty_Internal_Template $_smarty_tpl)
                 </thead>
                 <tbody>
                 <div id="message">
+                    <?php if ((isset($_smarty_tpl->tpl_vars['message']->value))) {?>
+                    <div class="alert alert-success"><?php echo $_smarty_tpl->tpl_vars['message']->value;?>
+</div>
+                    <?php }?>
                 </div>
                 <?php
 $_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['asset_list']->value, 'value', false, 'key');
@@ -174,7 +178,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
                 $(".xoa-modal").modal('hide');
                 $("#row"+delete_id).remove();
                 $(".alert").remove();
-                $("#message").append('<div class="alert alert-success">Xóa dữ liệu thành công!</div>');
+                $("#message").append('<div class="alert alert-success">Xóa tài sản thành công!</div>');
             }
         });
     });

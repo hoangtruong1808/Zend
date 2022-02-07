@@ -53,7 +53,7 @@ class MenuController extends Zend_Controller_Action
             };
         }
         else{
-            $error_input = ['error_input'=> "Vui lòng nhập Tên/Mô tả!"];
+            $error_input = ['error_input'=> "Vui lòng nhập tên nhóm tài sản!"];
             $this->_helper->json->sendJson($error_input);
         };
 
@@ -72,10 +72,8 @@ class MenuController extends Zend_Controller_Action
             $this->model->updateItem($arrParam);
         }
         else{
-            header('Content-Type: application/json; charset=utf-8');
-            $error_input = ['error_input'=> "Vui lòng nhập Tên/Mô tả!"];
-            echo json_encode($error_input, JSON_UNESCAPED_UNICODE);
-            exit();
+            $error_input = ['error_input'=> "Vui lòng nhập tên nhóm tài sản!"];
+            $this->_helper->json->sendJson($error_input);
         };
     }
 

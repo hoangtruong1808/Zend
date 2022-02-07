@@ -1,4 +1,27 @@
-<style>
+<?php
+/* Smarty version 3.1.42, created on 2022-02-07 16:30:53
+  from 'C:\laragon\www\Zend\application\layouts\scripts\user\index.tpl' */
+
+/* @var Smarty_Internal_Template $_smarty_tpl */
+if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
+  'version' => '3.1.42',
+  'unifunc' => 'content_6200e6cd605fb4_60505375',
+  'has_nocache_code' => false,
+  'file_dependency' => 
+  array (
+    '7a0c57fc8ec64173b599ea56dcd330560bf0d424' => 
+    array (
+      0 => 'C:\\laragon\\www\\Zend\\application\\layouts\\scripts\\user\\index.tpl',
+      1 => 1644226251,
+      2 => 'file',
+    ),
+  ),
+  'includes' => 
+  array (
+  ),
+),false)) {
+function content_6200e6cd605fb4_60505375 (Smarty_Internal_Template $_smarty_tpl) {
+?><style>
     th {
         text-align: center;
     }
@@ -17,10 +40,10 @@
     }
 </style>
 <section>
-    {$stt=1}
+    <?php $_smarty_tpl->_assignInScope('stt', 1);?>
     <header class="panel-heading">
         <div class="col-sm-10">
-            Quản lý tài sản
+            Quản lý người dùng
         </div>
         <div class="col-sm-2">
             <div class="add-data">
@@ -37,39 +60,53 @@
                     <th style="width:60px;" >
                         <input type="checkbox" class="check-control" id="all-checked">
                     </th>
-                    <th style="color:black">Tên</th>
-                    <th style="color:black">Mã</th>
-                    <th style="color:black">Cấu hình</th>
-                    <th style="color:black">Tình trạng</th>
-                    <th style="color:black">Trạng thái</th>
+                    <th style="color:black">Họ tên</th>
+                    <th style="color:black">Số điện thoại</th>
+                    <th style="color:black">Email</th>
+                    <th style="color:black">Quyền</th>
                     <th style="color:black">Thao tác</th>
                 </tr>
                 </thead>
                 <tbody>
                 <div id="message">
-                    {if isset($message)}
-                    <div class="alert alert-success">{$message}</div>
-                    {/if}
+                    <?php if ((isset($_smarty_tpl->tpl_vars['message']->value))) {?>
+                        <div class="alert alert-success"><?php echo $_smarty_tpl->tpl_vars['message']->value;?>
+</div>
+                    <?php }?>
                 </div>
-                {foreach $asset_list  as $key=>$value}
-                    <tr id="row{$value.asset_id}">
-                        <td><label class="i-checks m-b-none"><input type="checkbox" class="delete_item_check" value="{$value.asset_id}"><i></i></label></td>
-                        <td style="color:black" >{$value.name}</td>
-                        <td style="color:black" >{$value.code}</td>
-                        <td style="color:black" >{$value.configuration}</td>
-                        <td style="color:black" >{$value.status_name}</td>
-                        <td style="color:black" >{$value.state_name}</td>
+                <?php
+$_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['user_list']->value, 'value', false, 'key');
+$_smarty_tpl->tpl_vars['value']->do_else = true;
+if ($_from !== null) foreach ($_from as $_smarty_tpl->tpl_vars['key']->value => $_smarty_tpl->tpl_vars['value']->value) {
+$_smarty_tpl->tpl_vars['value']->do_else = false;
+?>
+                    <tr id="row<?php echo $_smarty_tpl->tpl_vars['value']->value['user_id'];?>
+">
+                        <td><label class="i-checks m-b-none"><input type="checkbox" class="delete_item_check" value="<?php echo $_smarty_tpl->tpl_vars['value']->value['user_id'];?>
+"><i></i></label></td>
+                        <td style="color:black" ><?php echo $_smarty_tpl->tpl_vars['value']->value['name'];?>
+</td>
+                        <td style="color:black" ><?php echo $_smarty_tpl->tpl_vars['value']->value['phone'];?>
+</td>
+                        <td style="color:black" ><?php echo $_smarty_tpl->tpl_vars['value']->value['email'];?>
+</td>
+                        <td style="color:black" ><?php echo $_smarty_tpl->tpl_vars['value']->value['role_name'];?>
+</td>
                         <td>
-                            <a href="/asset/detail/id/{$value.asset_id}" style="margin-right: 20px"><i class="fas fa-eye"></i></a>
-                            <a href="/asset/update/id/{$value.asset_id}"  style="margin-right: 20px"><i class="fas fa-pen"></i></a>
-                            <button class="delete-button" data-toggle="modal" data-target="#delete-data" data-id="{$value.asset_id}"><i class="fas fa-trash-alt"></i></button>
+                            <a href="/asset/detail/id/<?php echo $_smarty_tpl->tpl_vars['value']->value['user_id'];?>
+" style="margin-right: 20px"><i class="fas fa-eye"></i></a>
+                            <a href="/asset/update/id/<?php echo $_smarty_tpl->tpl_vars['value']->value['user_id'];?>
+"  style="margin-right: 20px"><i class="fas fa-pen"></i></a>
+                            <button class="delete-button" data-toggle="modal" data-target="#delete-data" data-id="<?php echo $_smarty_tpl->tpl_vars['value']->value['user_id'];?>
+"><i class="fas fa-trash-alt"></i></button>
                         </td>
                     </tr>
-                {/foreach}
+                <?php
+}
+$_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
                 </tbody>
 
-                {*form multi delete*}
-
+                
                 <div class="modal fade xoa-modal" id="multi-delete-data" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 100px">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -91,8 +128,7 @@
                         </div>
                     </div>
                 </div>
-                {*form delete*}
-                <div class="modal fade xoa-modal" id="delete-data" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 100px">
+                                <div class="modal fade xoa-modal" id="delete-data" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 100px">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -118,7 +154,8 @@
         </div>
     </div>
 </section>
-<script>
+<?php echo '<script'; ?>
+>
     //xóa dữ liệu
     let delete_select_id;
     $(".delete-button").click(function(){
@@ -130,7 +167,7 @@
         console.log(delete_id);
         $.ajax({
             method: "POST",
-            url: "/asset/delete",
+            url: "/user/delete",
             data:{
                 "id":delete_id
             },
@@ -158,7 +195,7 @@
         else{
             $.ajax({
                 method: "POST",
-                url: "/asset/multidelete",
+                url: "/user/multidelete",
                 data:{
                     "id":id
                 },
@@ -167,10 +204,13 @@
                         $("#row"+id[i]).remove();
                     }
                     $(".alert").remove();
-                    $("#message").append('<div class="alert alert-success">Xóa dữ liệu thành công!</div>');
+                    $("#message").append('<div class="alert alert-success">Xóa người dùng thành công!</div>');
                     $("#multi-delete-data").modal('hide');
                 }
             });
         }
     });
-</script>
+<?php echo '</script'; ?>
+>
+<?php }
+}

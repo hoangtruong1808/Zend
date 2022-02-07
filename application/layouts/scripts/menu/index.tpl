@@ -67,7 +67,7 @@
                             <form action="" method="post" >
                                 <div class="modal-body" style="margin: 10px 10px 60px 10px">
                                     <div class="form-group" style="margin-bottom: 60px">
-                                        <label class="col-sm-3 add-name" style="font-size: 13px; margin-top: 10px; text-align: right"><b>Tên:</b></label>
+                                        <label class="col-sm-3 add-name required-label" style="font-size: 13px; margin-top: 10px; text-align: right"><b>Tên:</b></label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" name="description" id="add_description">
                                             <p id="alert" style="color: red; font-size: 13px; margin: 10px"></p>
@@ -145,14 +145,14 @@
                         <form method="POST">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="edit-data"><b>Chỉnh sửa dữ liệu</b></h5>
+                                    <h5 class="modal-title" id="edit-data" style="text-align: center"><b>Chỉnh sửa dữ liệu</b></h5>
                                 </div>
                                 <div class="modal-body" style="margin: 10px 10px 60px 10px">
                                     <div class="form-group" style="margin-bottom: 60px">
-                                        <label class="col-sm-3" style="margin-top:5px; text-align: right"><b>Tên:</b></label>
+                                        <label class="col-sm-3 required-label" style="margin-top:5px; text-align: right"><b>Tên:</b></label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" id="update_description" name="description" required>
-                                            <div class="update-alert" style="color: red; font-size: 13px; margin:10px; text-align: left"></div>
+                                            <div class="update-alert" style="color: #ff0000; font-size: 13px; margin:10px; text-align: left"></div>
                                         </div>
                                     </div>
                                     <div class="form-group">
