@@ -25,6 +25,7 @@ class Model_Menu extends Zend_Db_Table{
         $select = $this->db->select()
                 ->from('tbl_asset_group')
                 ->where('is_disabled = 0')
+                ->where('active = 1')
                 ->order('group_id DESC');
         $result = $this->db->fetchAll($select);
         return $result;

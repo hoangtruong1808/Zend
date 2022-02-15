@@ -71,16 +71,6 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">Trạng thái</label>
-                <div class="col-sm-6">
-                    <select class="form-control m-bot15" name="state">
-                        {foreach $state_list as $key=>$value}
-                            <option value="{$value.state_id}" {($value.state_id==$asset.state)?'selected="selected"':""}>{$value.state_name}</option>
-                        {/foreach}
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
                 <div class="row">
                     <label class="col-sm-3 control-label required-label">Hình ảnh</label>
                     <div class="col-sm-6">

@@ -34,17 +34,21 @@
             <table id="example" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                 <tr>
-                    <th style="width:60px;" >
+                    <th style="width:60px;" class="no-sort">
                             <input type="checkbox" class="check-control" id="all-checked">
                     </th>
                     <th style="color:black">Tên</th>
                     <th style="color:black">Trạng thái</th>
-                    <th style="color:black">Thao tác</th>
+                    <th style="color:black" class="no-sort">Thao tác</th>
                 </tr>
                 </thead>
-                <tbody>
                 <div id="message">
+                    {if isset($message)}
+                        <div class="alert alert-success">{$message}</div>
+                    {/if}
                 </div>
+                <tbody>
+
                 {foreach $menu_list  as $key=>$value}
                     <tr id="row{$value.group_id}">
                         <td><label class="i-checks m-b-none"><input type="checkbox" class="delete_item_check" value="{$value.group_id}"><i></i></label></td>
@@ -178,10 +182,24 @@
     </div>
 </section>
 <script>
-    $(document).ready(function() {
-        $('#example').DataTable();
-    } );
+    {*<tr id="row{$value.group_id}">*}
+    {*    <td><label class="i-checks m-b-none"><input type="checkbox" class="delete_item_check" value="{$value.group_id}"><i></i></label></td>*}
+    {*    <td style="color:black" id="row-description{$value.group_id}">{$value.description}</td>*}
+    {*    <td style="color:black" id="row-status{$value.group_id}">{($value.active==1)?"Kích hoạt":"Không kích hoạt"}</td>*}
+    {*    <td>*}
+    {*        <button class="update-button" type="submit" data-toggle="modal" data-target="#update-data" data-id="{$value.group_id}" data-desription="{$value.description}" data-active="{$value.active}"><i class="fas fa-pen"></i></button>*}
+    {*        <button class="delete-button" data-toggle="modal" data-target="#delete-data" data-id="{$value.group_id}"><i class="fas fa-trash-alt"></i></button>*}
+    {*    </td>*}
+    {*</tr>*}
     //add dữ liệu
+    $('#example').DataTable({
+        "columnDefs": [ {
+            "targets": 'no-sort',
+            "orderable": false,
+        } ],
+        order: [[ 2, 'asc' ]],
+        "bDestroy": true,
+    });
     $("#add").click(function(){
         var description = $("#add_description").val();
         var active = $("#add_active").val();
@@ -201,7 +219,9 @@
                     $(".alert").remove();
                     $("#message").append('<div class="alert alert-success">Thêm dữ liệu thành công!</div>');
                     $("#exampleModal").modal('hide');
-                    var id = data.id_insert;
+                    var group_id = data.id_insert;
+                    console.log(active);
+                    $('tbody').prepend('<tr id="row'+group_id+'">'+'<td><label class="i-checks m-b-none"><input type="checkbox" class="delete_item_check" value="'+group_id+'"><i></i></label></td>'+'<td style="color:black" id="row-description'+group_id+'">'+description+'</td>'+'<td style="color:black" id="row-status'+group_id+'">'+'Kích hoạt'+'</td>'+'<td>'+'<button class="update-button" type="submit" data-toggle="modal" data-target="#update-data" data-id="'+group_id+'" data-desription="'+description+'" data-active="'+active+'"><i class="fas fa-pen"></i></button>'+'<button class="delete-button" data-toggle="modal" data-target="#delete-data" data-id="'+group_id+'"><i class="fas fa-trash-alt"></i></button>'+'</td>'+'</tr>');
                     location.reload();
                 }
 
@@ -271,6 +291,7 @@
         update_select_id = $(this).data("id");
         update_select_description = $(this).data("desription");
         update_select_active = $(this).data("active");
+        // console.log( update_select_id + update_select_description + update_select_active);
         $("#update_description").val(update_select_description);
         $("#update_active").val(update_select_active);
     });
@@ -296,7 +317,7 @@
                     $("#update-data").modal('hide');
                     $("#row-description"+update_id).html(description);
                     if(active == 1) {
-                        $("#row-description" + update_id).html("Kích hoạt");
+                        $("#row-status" + update_id).html("Kích hoạt");
                     }
                     else{
                         $("#row-status" + update_id).html("Không kích hoạt");

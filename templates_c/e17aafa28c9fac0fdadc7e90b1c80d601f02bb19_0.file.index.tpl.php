@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.42, created on 2022-02-07 10:14:15
+/* Smarty version 3.1.42, created on 2022-02-15 09:25:25
   from 'C:\laragon\www\Zend\application\layouts\scripts\asset\index.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.42',
-  'unifunc' => 'content_62008e870d9d93_17449748',
+  'unifunc' => 'content_620b0f15cd7356_02520411',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'e17aafa28c9fac0fdadc7e90b1c80d601f02bb19' => 
     array (
       0 => 'C:\\laragon\\www\\Zend\\application\\layouts\\scripts\\asset\\index.tpl',
-      1 => 1644203654,
+      1 => 1644891915,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_62008e870d9d93_17449748 (Smarty_Internal_Template $_smarty_tpl) {
+function content_620b0f15cd7356_02520411 (Smarty_Internal_Template $_smarty_tpl) {
 ?><style>
     th {
         text-align: center;
@@ -42,11 +42,12 @@ function content_62008e870d9d93_17449748 (Smarty_Internal_Template $_smarty_tpl)
 <section>
     <?php $_smarty_tpl->_assignInScope('stt', 1);?>
     <header class="panel-heading">
-        <div class="col-sm-10">
+        <div class="col-sm-9">
             Quản lý tài sản
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <div class="add-data">
+                <span><a href="" class="btn btn-primary"><i class="fa fa-box-check"></i>Kiểm kê</a></span>
                 <a href="/asset/add" class="btn btn-success" style="" class="card-title" data-toggle="modal"><i class="fa fa-plus" aria-hidden="true"></i> Thêm</a>
                 <span style="margin-left: 10px;"><a class="btn btn-danger" data-toggle="modal" data-target="#multi-delete-data" ><i class="fas fa-times"></i> Xóa</a></span>
             </div>
@@ -57,7 +58,7 @@ function content_62008e870d9d93_17449748 (Smarty_Internal_Template $_smarty_tpl)
             <table id="example" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                 <tr>
-                    <th style="width:60px;" >
+                    <th style="width:60px;" class="no-sort">
                         <input type="checkbox" class="check-control" id="all-checked">
                     </th>
                     <th style="color:black">Tên</th>
@@ -65,7 +66,7 @@ function content_62008e870d9d93_17449748 (Smarty_Internal_Template $_smarty_tpl)
                     <th style="color:black">Cấu hình</th>
                     <th style="color:black">Tình trạng</th>
                     <th style="color:black">Trạng thái</th>
-                    <th style="color:black">Thao tác</th>
+                    <th style="color:black" class="no-sort">Thao tác</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -207,11 +208,19 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
                         $("#row"+id[i]).remove();
                     }
                     $(".alert").remove();
-                    $("#message").append('<div class="alert alert-success">Xóa dữ liệu thành công!</div>');
+                    $("#message").append('<div class="alert alert-success">Xóa tài sản thành công!</div>');
                     $("#multi-delete-data").modal('hide');
                 }
             });
         }
+    });
+    $('#example').DataTable({
+        "columnDefs": [ {
+            "targets": 'no-sort',
+            "orderable": false,
+        } ],
+        order: [[ 5, 'asc' ]],
+        "bDestroy": true,
     });
 <?php echo '</script'; ?>
 >

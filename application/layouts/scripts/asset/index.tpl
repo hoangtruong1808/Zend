@@ -19,11 +19,12 @@
 <section>
     {$stt=1}
     <header class="panel-heading">
-        <div class="col-sm-10">
+        <div class="col-sm-9">
             Quản lý tài sản
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <div class="add-data">
+                <span><a href="" class="btn btn-primary"><i class="fa fa-box-check"></i>Kiểm kê</a></span>
                 <a href="/asset/add" class="btn btn-success" style="" class="card-title" data-toggle="modal"><i class="fa fa-plus" aria-hidden="true"></i> Thêm</a>
                 <span style="margin-left: 10px;"><a class="btn btn-danger" data-toggle="modal" data-target="#multi-delete-data" ><i class="fas fa-times"></i> Xóa</a></span>
             </div>
@@ -34,7 +35,7 @@
             <table id="example" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                 <tr>
-                    <th style="width:60px;" >
+                    <th style="width:60px;" class="no-sort">
                         <input type="checkbox" class="check-control" id="all-checked">
                     </th>
                     <th style="color:black">Tên</th>
@@ -42,7 +43,7 @@
                     <th style="color:black">Cấu hình</th>
                     <th style="color:black">Tình trạng</th>
                     <th style="color:black">Trạng thái</th>
-                    <th style="color:black">Thao tác</th>
+                    <th style="color:black" class="no-sort">Thao tác</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -167,10 +168,18 @@
                         $("#row"+id[i]).remove();
                     }
                     $(".alert").remove();
-                    $("#message").append('<div class="alert alert-success">Xóa dữ liệu thành công!</div>');
+                    $("#message").append('<div class="alert alert-success">Xóa tài sản thành công!</div>');
                     $("#multi-delete-data").modal('hide');
                 }
             });
         }
+    });
+    $('#example').DataTable({
+        "columnDefs": [ {
+            "targets": 'no-sort',
+            "orderable": false,
+        } ],
+        order: [[ 5, 'asc' ]],
+        "bDestroy": true,
     });
 </script>

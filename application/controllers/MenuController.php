@@ -7,6 +7,13 @@ class MenuController extends Zend_Controller_Action
     protected $model;
 
     public function init(){
+
+        //kiểm tra auth
+        $auth = Zend_Auth::getInstance();
+        if(!$auth->hasIdentity()){
+            $this->redirect('/login');
+        }
+
         $this->_helper->layout->setLayout('layout_admin');
 
         $this->_arrParam = $this->_request->getParams();
@@ -18,13 +25,16 @@ class MenuController extends Zend_Controller_Action
         $this->view->actionMain = $this->_actionMain;
 
         $this->model = new Model_Menu;
-
     }
 
     //liệt kê dữ liệu trong db
     public function indexAction(){
         $this->view->title = "Nhóm tài sản";
         $this->view->menu_list = $this->model->listItems();
+        if (isset($_SESSION['message'])) {
+            $this->view->message = $_SESSION['message'];
+            unset($_SESSION['message']);
+        }
     }
 
     //thêm dữ liệu vào db
@@ -45,6 +55,7 @@ class MenuController extends Zend_Controller_Action
             if($exist_validator->isValid($description_add)){
                 $id = $this->model->addItem($arrParam);
                 $id_insert = ['id_insert'=> $id];
+                $_SESSION['message'] = 'Thêm dữ liệu thành công!';
                 $this->_helper->json->sendJson($id_insert);
             }
             else {

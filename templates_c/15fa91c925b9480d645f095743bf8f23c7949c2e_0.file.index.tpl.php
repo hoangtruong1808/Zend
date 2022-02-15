@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.42, created on 2022-02-07 14:43:51
+/* Smarty version 3.1.42, created on 2022-02-10 14:17:17
   from 'C:\laragon\www\Zend\application\layouts\scripts\menu\index.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.42',
-  'unifunc' => 'content_6200cdb7e61769_36722775',
+  'unifunc' => 'content_6204bbfd70db63_99816953',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '15fa91c925b9480d645f095743bf8f23c7949c2e' => 
     array (
       0 => 'C:\\laragon\\www\\Zend\\application\\layouts\\scripts\\menu\\index.tpl',
-      1 => 1644219781,
+      1 => 1644477435,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_6200cdb7e61769_36722775 (Smarty_Internal_Template $_smarty_tpl) {
+function content_6204bbfd70db63_99816953 (Smarty_Internal_Template $_smarty_tpl) {
 ?><style>
     th {
         text-align: center;
@@ -58,17 +58,22 @@ function content_6200cdb7e61769_36722775 (Smarty_Internal_Template $_smarty_tpl)
             <table id="example" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                 <tr>
-                    <th style="width:60px;" >
+                    <th style="width:60px;" class="no-sort">
                             <input type="checkbox" class="check-control" id="all-checked">
                     </th>
                     <th style="color:black">Tên</th>
                     <th style="color:black">Trạng thái</th>
-                    <th style="color:black">Thao tác</th>
+                    <th style="color:black" class="no-sort">Thao tác</th>
                 </tr>
                 </thead>
-                <tbody>
                 <div id="message">
+                    <?php if ((isset($_smarty_tpl->tpl_vars['message']->value))) {?>
+                        <div class="alert alert-success"><?php echo $_smarty_tpl->tpl_vars['message']->value;?>
+</div>
+                    <?php }?>
                 </div>
+                <tbody>
+
                 <?php
 $_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['menu_list']->value, 'value', false, 'key');
 $_smarty_tpl->tpl_vars['value']->do_else = true;
@@ -189,7 +194,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
                                         <label class="col-sm-3 required-label" style="margin-top:5px; text-align: right"><b>Tên:</b></label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" id="update_description" name="description" required>
-                                            <div class="update-alert" style="color: red; font-size: 13px; margin:10px; text-align: left"></div>
+                                            <div class="update-alert" style="color: #ff0000; font-size: 13px; margin:10px; text-align: left"></div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -216,10 +221,15 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
 </section>
 <?php echo '<script'; ?>
 >
-    $(document).ready(function() {
-        $('#example').DataTable();
-    } );
-    //add dữ liệu
+                                        //add dữ liệu
+    $('#example').DataTable({
+        "columnDefs": [ {
+            "targets": 'no-sort',
+            "orderable": false,
+        } ],
+        order: [[ 2, 'asc' ]],
+        "bDestroy": true,
+    });
     $("#add").click(function(){
         var description = $("#add_description").val();
         var active = $("#add_active").val();
@@ -239,7 +249,9 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
                     $(".alert").remove();
                     $("#message").append('<div class="alert alert-success">Thêm dữ liệu thành công!</div>');
                     $("#exampleModal").modal('hide');
-                    var id = data.id_insert;
+                    var group_id = data.id_insert;
+                    console.log(active);
+                    $('tbody').prepend('<tr id="row'+group_id+'">'+'<td><label class="i-checks m-b-none"><input type="checkbox" class="delete_item_check" value="'+group_id+'"><i></i></label></td>'+'<td style="color:black" id="row-description'+group_id+'">'+description+'</td>'+'<td style="color:black" id="row-status'+group_id+'">'+'Kích hoạt'+'</td>'+'<td>'+'<button class="update-button" type="submit" data-toggle="modal" data-target="#update-data" data-id="'+group_id+'" data-desription="'+description+'" data-active="'+active+'"><i class="fas fa-pen"></i></button>'+'<button class="delete-button" data-toggle="modal" data-target="#delete-data" data-id="'+group_id+'"><i class="fas fa-trash-alt"></i></button>'+'</td>'+'</tr>');
                     location.reload();
                 }
 
@@ -309,6 +321,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
         update_select_id = $(this).data("id");
         update_select_description = $(this).data("desription");
         update_select_active = $(this).data("active");
+        // console.log( update_select_id + update_select_description + update_select_active);
         $("#update_description").val(update_select_description);
         $("#update_active").val(update_select_active);
     });
@@ -334,7 +347,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
                     $("#update-data").modal('hide');
                     $("#row-description"+update_id).html(description);
                     if(active == 1) {
-                        $("#row-description" + update_id).html("Kích hoạt");
+                        $("#row-status" + update_id).html("Kích hoạt");
                     }
                     else{
                         $("#row-status" + update_id).html("Không kích hoạt");

@@ -1,48 +1,45 @@
+<style>
+
+</style>
 <section>
     <header class="panel-heading">
         <div class="col-sm-12">
-            Thêm tài sản
+            Thêm người dùng
         </div>
     </header>
     <div class="table-agile-info">
 
-        <form class="form-horizontal bucket-form" method="POST" action="/asset/add" enctype="multipart/form-data">
+        <form class="form-horizontal bucket-form" method="POST" action="/user/add" enctype="multipart/form-data">
             <div class="form-group">
-                <label class="col-sm-3 control-label required-label">Tên</label>
+                <label class="col-sm-3 control-label required-label">Họ tên</label>
                 <div class="col-sm-6">
                     <input type="text" class="form-control" name="name">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label required-label">Mã</label>
+                <label class="col-sm-3 control-label required-label">Số điện thoại</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="code">
+                    <input type="text" class="form-control" name="phone">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label required-label">Nhóm tài sản</label>
+                <label class="col-sm-3 control-label required-label">Email</label>
                 <div class="col-sm-6">
-                    <select class="form-control m-bot15" name="asset_group_id">
-                        <option disabled selected value="">Chọn nhóm tài sản</option>
-                        {foreach $menu_list as $key=>$value}
-                        <option value="{$value.group_id}">{$value.description}</option>
-                        {/foreach}
-                    </select>
+                    <input type="text" class="form-control" name="email">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">Cấu hình</label>
+                <label class="col-sm-3 control-label required-label">Mật khẩu</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="configuration">
+                    <input type="password" class="form-control" name="password">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label required-label">Tình trạng</label>
+                <label class="col-sm-3 control-label required-label" >Vai trò</label>
                 <div class="col-sm-6">
-                    <select class="form-control m-bot15" name="status">
-                        <option disabled selected value>Chọn tình trạng</option>
-                        {foreach $status_list as $key=>$value}
-                            <option value="{$value.status_id}">{$value.status_name}</option>
+                    <select class="form-control m-bot15" name="role">
+                        {foreach $role_list as $key=>$value}
+                            <option value="{$value.role_id}">{$value.name}</option>
                         {/foreach}
                     </select>
                 </div>
@@ -55,7 +52,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <span id="image-area"></span>
+                    <span id="image-area"></span
                 </div>
             </div>
             <button type="submit" class="btn btn-success" style="margin-left: 48%">Thêm</button>
@@ -89,15 +86,15 @@
         });
 
         {if isset($error_input)}
-        var err_input = {$error_input|json_encode};
-        console.log(err_input);
-        $.each( err_input, function(key, value) {
-            $('.form-control').each(function () {
-                if ($(this).prop('name') == key) {
-                    $(this).parent().append('<div class="err_input">'+Object.values(value)+'</div>');
-                }
+            var err_input = {$error_input|json_encode};
+            console.log(err_input);
+            $.each( err_input, function(key, value) {
+                $('.form-control').each(function () {
+                    if ($(this).prop('name') == key) {
+                        $(this).parent().append('<div class="err_input">'+Object.values(value)+'</div>');
+                    }
+                });
             });
-        });
         {/if}
 
     });

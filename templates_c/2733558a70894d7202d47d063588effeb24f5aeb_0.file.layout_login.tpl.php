@@ -1,36 +1,27 @@
 <?php
-/* Smarty version 3.1.42, created on 2022-02-10 08:58:10
-  from 'C:\laragon\www\Zend\application\layouts\scripts\layout_admin.tpl' */
+/* Smarty version 3.1.42, created on 2022-02-15 09:16:13
+  from 'C:\laragon\www\Zend\application\layouts\scripts\layout_login.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.42',
-  'unifunc' => 'content_6204713274cc88_16336482',
+  'unifunc' => 'content_620b0ced653b39_42026204',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    'af031711e7a9a59cc67e1c1877cdb01ec47896ca' => 
+    '2733558a70894d7202d47d063588effeb24f5aeb' => 
     array (
-      0 => 'C:\\laragon\\www\\Zend\\application\\layouts\\scripts\\layout_admin.tpl',
-      1 => 1644458283,
+      0 => 'C:\\laragon\\www\\Zend\\application\\layouts\\scripts\\layout_login.tpl',
+      1 => 1644891369,
       2 => 'file',
     ),
   ),
   'includes' => 
   array (
-    'file:layout/header.tpl' => 1,
-    'file:layout/sidebar.tpl' => 1,
-    'file:layout/footer.tpl' => 1,
   ),
 ),false)) {
-function content_6204713274cc88_16336482 (Smarty_Internal_Template $_smarty_tpl) {
-?><!--A Design by W3layouts
-Author: W3layout
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
-<!DOCTYPE html>
+function content_620b0ced653b39_42026204 (Smarty_Internal_Template $_smarty_tpl) {
+?><!DOCTYPE html>
 <head>
     <title>Quản lý tài sản</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -51,7 +42,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
     <!-- font-awesome icons -->
     <link rel="stylesheet" href="/css/font.css" type="text/css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
     <link rel="stylesheet" href=https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css />
 
 
@@ -59,7 +50,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!-- calendar -->
     <link rel="stylesheet" href="/css/monthly.css">
 
-
+        
     <?php echo '<script'; ?>
  src="https://code.jquery.com/jquery-3.5.1.js"><?php echo '</script'; ?>
 >
@@ -81,46 +72,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 >
 </head>
 <body>
-<section id="container">
-    <!--header start-->
-   <?php $_smarty_tpl->_subTemplateRender("file:layout/header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
-?>
-    <!--header end-->
-    <!--sidebar start-->
-        <?php $_smarty_tpl->_subTemplateRender("file:layout/sidebar.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
-?>
-    <!--sidebar end-->
-    <!--main content start-->
-    <section id="main-content">
-        <section class="wrapper">
-            <!-- //market-->
-            <?php echo $_smarty_tpl->tpl_vars['this']->value->layout()->content;?>
+<div class="log-w3">
+    <div class="w3layouts-main">
+            <h2>ĐĂNG NHẬP</h2>
+            <form action="#" method="post">
+                <input type="email" class="ggg" name="email" placeholder="E-MAIL" required="">
+                <input type="password" class="ggg" name="password" placeholder="MẬT KHẨU" required="">
+                <?php if (((isset($_smarty_tpl->tpl_vars['error']->value)))) {?>
+                <div class="alert alert-danger">Sai mật khẩu!</div>
+                <?php }?>
+                <span><input type="checkbox" />Nhớ mật khẩu</span>
+                <div class="clearfix"></div>
+                <input type="submit" value="ĐĂNG NHẬP" name="login">
+            </form>
+    </div>
+    <?php echo $_smarty_tpl->tpl_vars['this']->value->layout()->content;?>
 
-        </section>
-        <!-- footer -->
-        <?php $_smarty_tpl->_subTemplateRender("file:layout/footer.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
-?>
-        <!-- / footer -->
-    </section>
-    <!--main content end-->
-
-    <?php echo '<script'; ?>
->
-        //nút all check được chọn
-        $("#all-checked").change(function(){
-            if(this.checked) {
-                $('.delete_item_check').prop('checked', true);
-                $('.delete_item_check').change(function(){
-                    $('#all-checked').prop('checked', false);
-                })
-            }
-            else{
-                $('.delete_item_check').prop('checked', false);
-            }
-        })
-    <?php echo '</script'; ?>
->
-</section>
+</div>
 <?php echo '<script'; ?>
  src="/js/bootstrap.js"><?php echo '</script'; ?>
 >
@@ -143,8 +111,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <?php echo '<script'; ?>
  src="/js/jquery.scrollTo.js"><?php echo '</script'; ?>
 >
-<!-- morris JavaScript -->
 </body>
-</html>
-<?php }
+</html><?php }
 }

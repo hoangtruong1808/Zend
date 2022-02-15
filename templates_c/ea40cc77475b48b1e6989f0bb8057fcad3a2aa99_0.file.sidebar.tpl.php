@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.42, created on 2022-01-25 15:52:58
+/* Smarty version 3.1.42, created on 2022-02-11 13:36:37
   from 'C:\laragon\www\Zend\application\layouts\scripts\layout\sidebar.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.42',
-  'unifunc' => 'content_61efba6a6f1482_00280802',
+  'unifunc' => 'content_620603f5016f31_09954458',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ea40cc77475b48b1e6989f0bb8057fcad3a2aa99' => 
     array (
       0 => 'C:\\laragon\\www\\Zend\\application\\layouts\\scripts\\layout\\sidebar.tpl',
-      1 => 1643100777,
+      1 => 1644561395,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_61efba6a6f1482_00280802 (Smarty_Internal_Template $_smarty_tpl) {
+function content_620603f5016f31_09954458 (Smarty_Internal_Template $_smarty_tpl) {
 ?><aside>
     <div id="sidebar" class="nav-collapse">
         <!-- sidebar menu start-->
@@ -46,19 +46,19 @@ function content_61efba6a6f1482_00280802 (Smarty_Internal_Template $_smarty_tpl)
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a href="javascript:;">
-                        <i class="fas fa-desktop"></i>
-                        <span>Quản lý nhân sự</span>
+                    <a href="/user">
+                        <i class="fa fa-user"></i>
+                        <span>Quản lý người dùng</span>
                     </a>
                 </li>
                 <li>
-                    <a href="login.html">
-                        <i class="fa fa-user"></i>
+                    <a href="/account">
+                        <i class="fas fa-desktop"></i>
                         <span>Quản lý tài khoản</span>
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href="/login/logout">
                         <i class=" fa fa-bar-chart-o"></i>
                         <span>Đăng xuất</span>
                     </a>

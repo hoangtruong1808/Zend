@@ -1,9 +1,3 @@
-<!--A Design by W3layouts
-Author: W3layout
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
 <!DOCTYPE html>
 <head>
     <title>Quản lý tài sản</title>
@@ -23,7 +17,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
     <!-- font-awesome icons -->
     <link rel="stylesheet" href="/css/font.css" type="text/css"/>
-{*    <link href="/css/font-awesome.css" rel="stylesheet">*}
+    {*    <link href="/css/font-awesome.css" rel="stylesheet">*}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
     <link rel="stylesheet" href=https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css />
 
@@ -32,8 +26,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!-- calendar -->
     <link rel="stylesheet" href="/css/monthly.css">
 
-{*    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">*}
-{*    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css">*}
+    {*    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">*}
+    {*    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css">*}
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
@@ -46,40 +40,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script src="/js/morris.js"></script>
 </head>
 <body>
-<section id="container">
-    <!--header start-->
-   {include file="layout/header.tpl"}
-    <!--header end-->
-    <!--sidebar start-->
-        {include file="layout/sidebar.tpl"}
-    <!--sidebar end-->
-    <!--main content start-->
-    <section id="main-content">
-        <section class="wrapper">
-            <!-- //market-->
-            {$this->layout()->content}
-        </section>
-        <!-- footer -->
-        {include file="layout/footer.tpl"}
-        <!-- / footer -->
-    </section>
-    <!--main content end-->
-
-    <script>
-        //nút all check được chọn
-        $("#all-checked").change(function(){
-            if(this.checked) {
-                $('.delete_item_check').prop('checked', true);
-                $('.delete_item_check').change(function(){
-                    $('#all-checked').prop('checked', false);
-                })
-            }
-            else{
-                $('.delete_item_check').prop('checked', false);
-            }
-        })
-    </script>
-</section>
+{*<a>abc</a>*}
+<div class="log-w3">
+    <div class="w3layouts-main">
+            <h2>ĐĂNG NHẬP</h2>
+            <form action="#" method="post">
+                <input type="email" class="ggg" name="email" placeholder="E-MAIL" required="">
+                <input type="password" class="ggg" name="password" placeholder="MẬT KHẨU" required="">
+                {if (isset($error))}
+                <div class="alert alert-danger">Sai mật khẩu!</div>
+                {/if}
+                <span><input type="checkbox" />Nhớ mật khẩu</span>
+                <div class="clearfix"></div>
+                <input type="submit" value="ĐĂNG NHẬP" name="login">
+            </form>
+    </div>
+    {$this->layout()->content}
+</div>
 <script src="/js/bootstrap.js"></script>
 <script src="/js/jquery.dcjqaccordion.2.7.js"></script>
 <script src="/js/scripts.js"></script>
@@ -88,6 +65,5 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--[if lte IE 8]>
 <script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
 <script src="/js/jquery.scrollTo.js"></script>
-<!-- morris JavaScript -->
 </body>
 </html>

@@ -15,69 +15,6 @@ class Model_Asset extends Zend_Db_Table{
             'asset_id' => array('Int'),
         );
 
-        $this->_validate = array(
-            'name' => array(
-                new Zend_Validate_NotEmpty(),
-                new Zend_Validate_StringLength(
-                    array(
-                        'max' => 30
-                    )
-                ),
-                Zend_Filter_Input::MESSAGES => array(
-                    array(
-                        Zend_Validate_NotEmpty::IS_EMPTY => '* Vui lòng nhập tên tài sản !',
-                    ),
-                    array(
-                        Zend_Validate_StringLength::TOO_LONG => '* Tên tài sản tối đa 30 kí tự !',
-                    )
-                )
-            ),
-            'code' => array(
-                new Zend_Validate_NotEmpty(),
-                new Zend_Validate_StringLength(
-                    array(
-                        'max' => 20,
-                        'min' => 3
-                    )
-                ),
-                Zend_Filter_Input::MESSAGES => array(
-                    array(
-                        Zend_Validate_NotEmpty::IS_EMPTY => '* Vui lòng nhập mã tài sản !',
-                    ),
-                    array(
-                        Zend_Validate_StringLength::TOO_LONG => '* Mã tài sản tối đa 20 kí tự !',
-                        Zend_Validate_StringLength::TOO_SHORT => '* Mã tài sản tối thiểu 3 kí tự !',
-                    ),
-                    array(
-                        Zend_Validate_Db_NoRecordExists::ERROR_RECORD_FOUND=> '* Mã tài sản đã tồn tại!',
-                    ),
-                )
-            ),
-            'asset_group_id' => array(
-            new Zend_Validate_NotEmpty(),
-            Zend_Filter_Input::MESSAGES => array(
-                array(
-                    Zend_Validate_NotEmpty::IS_EMPTY => '* Vui lòng nhập nhóm tài sản !',
-                    )
-                ),
-            ),
-            'state' => array(
-                new Zend_Validate_NotEmpty(),
-                Zend_Filter_Input::MESSAGES => array(
-                    array(
-                        Zend_Validate_NotEmpty::IS_EMPTY => '* Vui lòng nhập tình trạng !',
-                    )
-                ),
-            ),
-            'status' => array(
-                new Zend_Validate_NotEmpty(),
-                Zend_Filter_Input::MESSAGES => array(
-                    array(
-                        Zend_Validate_NotEmpty::IS_EMPTY => '* Vui lòng nhập nhóm trạng thái !',
-                    )
-                ),
-            ),
-        );
     }
 
     public function countItem(){
@@ -90,6 +27,7 @@ class Model_Asset extends Zend_Db_Table{
     }
 
     public function listAssets(){
+
         //$result = $this->fetchAll($where, $order, $count, $offet);
         $select = $this->db->select('tbl_person.name')
             ->from('tbl_asset')
@@ -113,10 +51,10 @@ class Model_Asset extends Zend_Db_Table{
                 ),
                 Zend_Filter_Input::MESSAGES => array(
                     array(
-                        Zend_Validate_NotEmpty::IS_EMPTY => '* Vui lòng nhập tên tài sản !',
+                        Zend_Validate_NotEmpty::IS_EMPTY => 'Vui lòng nhập tên tài sản ',
                     ),
                     array(
-                        Zend_Validate_StringLength::TOO_LONG => '* Tên tài sản tối đa 30 kí tự !',
+                        Zend_Validate_StringLength::TOO_LONG => 'Tên tài sản tối đa 30 kí tự ',
                     )
                 )
             ),
@@ -136,14 +74,14 @@ class Model_Asset extends Zend_Db_Table{
                 ),
                 Zend_Filter_Input::MESSAGES => array(
                     array(
-                        Zend_Validate_NotEmpty::IS_EMPTY => '* Vui lòng nhập mã tài sản !',
+                        Zend_Validate_NotEmpty::IS_EMPTY => 'Vui lòng nhập mã tài sản ',
                     ),
                     array(
-                        Zend_Validate_StringLength::TOO_LONG => '* Mã tài sản tối đa 20 kí tự !',
-                        Zend_Validate_StringLength::TOO_SHORT => '* Mã tài sản tối thiểu 3 kí tự !',
+                        Zend_Validate_StringLength::TOO_LONG => 'Mã tài sản tối đa 20 kí tự ',
+                        Zend_Validate_StringLength::TOO_SHORT => 'Mã tài sản tối thiểu 3 kí tự ',
                     ),
                     array(
-                        Zend_Validate_Db_NoRecordExists::ERROR_RECORD_FOUND=> '* Mã tài sản đã tồn tại!',
+                        Zend_Validate_Db_NoRecordExists::ERROR_RECORD_FOUND=> 'Mã tài sản đã tồn tại',
                     ),
                 )
             ),
@@ -151,15 +89,7 @@ class Model_Asset extends Zend_Db_Table{
                 new Zend_Validate_NotEmpty(),
                 Zend_Filter_Input::MESSAGES => array(
                     array(
-                        Zend_Validate_NotEmpty::IS_EMPTY => '* Vui lòng nhập nhóm tài sản !',
-                    )
-                ),
-            ),
-            'state' => array(
-                new Zend_Validate_NotEmpty(),
-                Zend_Filter_Input::MESSAGES => array(
-                    array(
-                        Zend_Validate_NotEmpty::IS_EMPTY => '* Vui lòng nhập tình trạng !',
+                        Zend_Validate_NotEmpty::IS_EMPTY => 'Vui lòng nhập nhóm tài sản ',
                     )
                 ),
             ),
@@ -167,20 +97,21 @@ class Model_Asset extends Zend_Db_Table{
                 new Zend_Validate_NotEmpty(),
                 Zend_Filter_Input::MESSAGES => array(
                     array(
-                        Zend_Validate_NotEmpty::IS_EMPTY => '* Vui lòng nhập nhóm trạng thái !',
+                        Zend_Validate_NotEmpty::IS_EMPTY => 'Vui lòng nhập nhóm tình trạng',
                     )
                 ),
             ),
         );
         $result = null;
         $input = new Zend_Filter_Input($this->_filter, $this->_validate, $arrParam, $this->_option);
+
         if ($input->isValid()){
             $row['name']= $arrParam['name'];
             $row['code']= $arrParam['code'];
             $row['configuration']= $arrParam['configuration'];
             $row['status']= $arrParam['status'];
             $row['asset_group_id']= $arrParam['asset_group_id'];
-            $row['state']= $arrParam['state'];
+            $row['state']= 2;
             $row['image']= $arrParam['image'];
             $this->db->insert('tbl_asset', $row);
             $result = true;
@@ -206,11 +137,79 @@ class Model_Asset extends Zend_Db_Table{
             ->order('tbl_asset.asset_id DESC');
 
         $result = $this->db->fetchRow($select);
+
 //        $where = 'asset_id = ' . $id;
 //        $detail = $this->fetchRow($where)->toArray();
         return $result;
     }
     public function updateAsset($arrParam){
+
+        $this->_validate = array(
+            'name' => array(
+                new Zend_Validate_NotEmpty(),
+                new Zend_Validate_StringLength(
+                    array(
+                        'max' => 30
+                    )
+                ),
+                Zend_Filter_Input::MESSAGES => array(
+                    array(
+                        Zend_Validate_NotEmpty::IS_EMPTY => 'Vui lòng nhập tên tài sản ',
+                    ),
+                    array(
+                        Zend_Validate_StringLength::TOO_LONG => 'Tên tài sản tối đa 30 kí tự ',
+                    )
+                )
+            ),
+            'code' => array(
+                new Zend_Validate_NotEmpty(),
+                new Zend_Validate_StringLength(
+                    array(
+                        'max' => 20,
+                        'min' => 3
+                    )
+                ),
+                new Zend_Validate_Db_NoRecordExists(
+                    array(
+                        'table' => 'tbl_asset',
+                        'field' => 'code',
+                        'exclude' => array(
+                            "field" => "asset_id",
+                            "value" => $arrParam['id']
+                        )
+                    )
+                ),
+                Zend_Filter_Input::MESSAGES => array(
+                    array(
+                        Zend_Validate_NotEmpty::IS_EMPTY => 'Vui lòng nhập mã tài sản ',
+                    ),
+                    array(
+                        Zend_Validate_StringLength::TOO_LONG => 'Mã tài sản tối đa 20 kí tự ',
+                        Zend_Validate_StringLength::TOO_SHORT => 'Mã tài sản tối thiểu 3 kí tự ',
+                    ),
+                    array(
+                        Zend_Validate_Db_NoRecordExists::ERROR_RECORD_FOUND=> 'Mã tài sản đã tồn tại',
+                    ),
+                )
+            ),
+            'asset_group_id' => array(
+                new Zend_Validate_NotEmpty(),
+                Zend_Filter_Input::MESSAGES => array(
+                    array(
+                        Zend_Validate_NotEmpty::IS_EMPTY => 'Vui lòng nhập nhóm tài sản ',
+                    )
+                ),
+            ),
+            'status' => array(
+                new Zend_Validate_NotEmpty(),
+                Zend_Filter_Input::MESSAGES => array(
+                    array(
+                        Zend_Validate_NotEmpty::IS_EMPTY => 'Vui lòng nhập tình trạng ',
+                    )
+                ),
+            ),
+        );
+
         $result = null;
         $input = new Zend_Filter_Input($this->_filter, $this->_validate, $arrParam, $this->_option);
         if ($input->isValid()){
@@ -220,7 +219,6 @@ class Model_Asset extends Zend_Db_Table{
             $row['configuration']= $arrParam['configuration'];
             $row['status']= $arrParam['status'];
             $row['asset_group_id']= $arrParam['asset_group_id'];
-            $row['state']= $arrParam['state'];
             if (!empty($arrParam['image'])){
                 $row['image']= $arrParam['image'];
             }
@@ -236,22 +234,49 @@ class Model_Asset extends Zend_Db_Table{
         return $result;
     }
     public function deleteAsset($ID){
-        $where = 'user_id= '.$ID;
+        $where = 'asset_id= '.$ID;
         $row['is_disabled']=1;
         $row['deleted_at']= date("Y-m-d H:i:s");
-        $this->db->update('tbl_user', $row, $where);
+        $this->db->update('tbl_asset', $row, $where);
     }
-    public function searchItem($key){
+    public function borrowUser($arrParam){
 
+        //insert vào bảng mượn
+        $row['asset_id']= $arrParam['asset_id'];
+        $row['user_id']= $arrParam['borrow_user_id'];
+        $row['borrow_date']= $arrParam['borrow_date'];
+
+        $this->db->insert('tbl_borrow', $row);
+
+        //chuyển tài sản thành trạng thái đang sử dụng
+        $row_asset['state'] = 1;
+        $where = 'asset_id= '.$arrParam['asset_id'];
+        $this->db->update('tbl_asset', $row_asset, $where);
+    }
+    public function getCurrentBorrow($asset_id){
         $select = $this->db->select()
-            ->from('tbl_asset_group')
-            ->where('is_disabled = 0');
-        $keywords = '%'.$key.'%';
-        $select->where('lower(description) LIKE ?', $keywords);
+            ->from('tbl_borrow')
+            ->join('tbl_asset','tbl_asset.asset_id=tbl_borrow.asset_id')
+            ->join('tbl_user','tbl_user.user_id=tbl_borrow.user_id', array('borrow_user_name'=>'name'))
+            ->where('tbl_asset.asset_id ='. $asset_id)
+            ->where('tbl_asset.is_disabled = 0')
+            ->order('tbl_borrow.borrow_id DESC');
+
+        $result = $this->db->fetchRow($select);
+
+        return $result;
+    }
+    public function getAllBorrow($asset_id){
+        $select = $this->db->select()
+            ->from('tbl_borrow')
+            ->join('tbl_asset','tbl_asset.asset_id=tbl_borrow.asset_id')
+            ->join('tbl_user','tbl_user.user_id=tbl_borrow.user_id', array('borrow_user_name'=>'name'))
+            ->where('tbl_asset.asset_id ='. $asset_id)
+            ->where('tbl_asset.is_disabled = 0')
+            ->order('tbl_borrow.borrow_id DESC');
 
         $result = $this->db->fetchAll($select);
+
         return $result;
-
-
     }
 }

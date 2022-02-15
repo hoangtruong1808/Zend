@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.42, created on 2022-02-07 14:41:59
+/* Smarty version 3.1.42, created on 2022-02-09 09:48:47
   from 'C:\laragon\www\Zend\application\layouts\scripts\asset\update.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.42',
-  'unifunc' => 'content_6200cd47d86379_43277133',
+  'unifunc' => 'content_62032b8f4b3fc1_22835330',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '5177e52e3f99182fbad80321079b35b7c8b7f0f1' => 
     array (
       0 => 'C:\\laragon\\www\\Zend\\application\\layouts\\scripts\\asset\\update.tpl',
-      1 => 1644219710,
+      1 => 1644374453,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_6200cd47d86379_43277133 (Smarty_Internal_Template $_smarty_tpl) {
+function content_62032b8f4b3fc1_22835330 (Smarty_Internal_Template $_smarty_tpl) {
 ?><style>
     #image-area {
         position: relative;
@@ -122,26 +122,6 @@ $_smarty_tpl->tpl_vars['value']->do_else = false;
                             <option value="<?php echo $_smarty_tpl->tpl_vars['value']->value['status_id'];?>
 " <?php echo $_smarty_tpl->tpl_vars['value']->value['status_id'] == $_smarty_tpl->tpl_vars['asset']->value['status'] ? 'selected="selected"' : '';?>
 ><?php echo $_smarty_tpl->tpl_vars['value']->value['status_name'];?>
-</option>
-                        <?php
-}
-$_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">Trạng thái</label>
-                <div class="col-sm-6">
-                    <select class="form-control m-bot15" name="state">
-                        <?php
-$_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['state_list']->value, 'value', false, 'key');
-$_smarty_tpl->tpl_vars['value']->do_else = true;
-if ($_from !== null) foreach ($_from as $_smarty_tpl->tpl_vars['key']->value => $_smarty_tpl->tpl_vars['value']->value) {
-$_smarty_tpl->tpl_vars['value']->do_else = false;
-?>
-                            <option value="<?php echo $_smarty_tpl->tpl_vars['value']->value['state_id'];?>
-" <?php echo $_smarty_tpl->tpl_vars['value']->value['state_id'] == $_smarty_tpl->tpl_vars['asset']->value['state'] ? 'selected="selected"' : '';?>
-><?php echo $_smarty_tpl->tpl_vars['value']->value['state_name'];?>
 </option>
                         <?php
 }

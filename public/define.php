@@ -2,7 +2,7 @@
 
 //duong dan den thu muc chua ung dung
 defined('APPLICATION_PATH')
-|| define('APPLICATION_PATH', dirname(__FILE__) . '/../application');
+|| define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
 
 //define application enviroment
 defined('APPLICATION_ENV')
@@ -23,3 +23,5 @@ define('FILE_PATH', PUBLIC_PATH . '/files');
 define('IMAGE_PATH', PUBLIC_PATH.'/images');
 
 define('ASSET_IMAGE_PATH', IMAGE_PATH.'/asset_images');
+
+define('USER_IMAGE_PATH', IMAGE_PATH.'/user_images');

@@ -23,19 +23,19 @@
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a href="javascript:;">
-                        <i class="fas fa-desktop"></i>
-                        <span>Quản lý nhân sự</span>
+                    <a href="/user">
+                        <i class="fa fa-user"></i>
+                        <span>Quản lý người dùng</span>
                     </a>
                 </li>
                 <li>
-                    <a href="login.html">
-                        <i class="fa fa-user"></i>
+                    <a href="/account">
+                        <i class="fas fa-desktop"></i>
                         <span>Quản lý tài khoản</span>
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href="/login/logout">
                         <i class=" fa fa-bar-chart-o"></i>
                         <span>Đăng xuất</span>
                     </a>

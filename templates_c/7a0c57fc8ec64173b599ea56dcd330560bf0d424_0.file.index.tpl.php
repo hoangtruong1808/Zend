@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.42, created on 2022-02-07 16:30:53
+/* Smarty version 3.1.42, created on 2022-02-10 09:00:10
   from 'C:\laragon\www\Zend\application\layouts\scripts\user\index.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.42',
-  'unifunc' => 'content_6200e6cd605fb4_60505375',
+  'unifunc' => 'content_620471aa383c29_64009779',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '7a0c57fc8ec64173b599ea56dcd330560bf0d424' => 
     array (
       0 => 'C:\\laragon\\www\\Zend\\application\\layouts\\scripts\\user\\index.tpl',
-      1 => 1644226251,
+      1 => 1644458408,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_6200e6cd605fb4_60505375 (Smarty_Internal_Template $_smarty_tpl) {
+function content_620471aa383c29_64009779 (Smarty_Internal_Template $_smarty_tpl) {
 ?><style>
     th {
         text-align: center;
@@ -47,7 +47,7 @@ function content_6200e6cd605fb4_60505375 (Smarty_Internal_Template $_smarty_tpl)
         </div>
         <div class="col-sm-2">
             <div class="add-data">
-                <a href="/asset/add" class="btn btn-success" style="" class="card-title" data-toggle="modal"><i class="fa fa-plus" aria-hidden="true"></i> Thêm</a>
+                <a href="/user/add" class="btn btn-success" style="" class="card-title" data-toggle="modal"><i class="fa fa-plus" aria-hidden="true"></i> Thêm</a>
                 <span style="margin-left: 10px;"><a class="btn btn-danger" data-toggle="modal" data-target="#multi-delete-data" ><i class="fas fa-times"></i> Xóa</a></span>
             </div>
         </div>
@@ -57,14 +57,14 @@ function content_6200e6cd605fb4_60505375 (Smarty_Internal_Template $_smarty_tpl)
             <table id="example" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                 <tr>
-                    <th style="width:60px;" >
+                    <th style="width:60px;" class="no-sort">
                         <input type="checkbox" class="check-control" id="all-checked">
                     </th>
                     <th style="color:black">Họ tên</th>
                     <th style="color:black">Số điện thoại</th>
                     <th style="color:black">Email</th>
                     <th style="color:black">Quyền</th>
-                    <th style="color:black">Thao tác</th>
+                    <th style="color:black" class="no-sort">Thao tác</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -93,9 +93,9 @@ $_smarty_tpl->tpl_vars['value']->do_else = false;
                         <td style="color:black" ><?php echo $_smarty_tpl->tpl_vars['value']->value['role_name'];?>
 </td>
                         <td>
-                            <a href="/asset/detail/id/<?php echo $_smarty_tpl->tpl_vars['value']->value['user_id'];?>
+                            <a href="/user/detail/id/<?php echo $_smarty_tpl->tpl_vars['value']->value['user_id'];?>
 " style="margin-right: 20px"><i class="fas fa-eye"></i></a>
-                            <a href="/asset/update/id/<?php echo $_smarty_tpl->tpl_vars['value']->value['user_id'];?>
+                            <a href="/user/update/id/<?php echo $_smarty_tpl->tpl_vars['value']->value['user_id'];?>
 "  style="margin-right: 20px"><i class="fas fa-pen"></i></a>
                             <button class="delete-button" data-toggle="modal" data-target="#delete-data" data-id="<?php echo $_smarty_tpl->tpl_vars['value']->value['user_id'];?>
 "><i class="fas fa-trash-alt"></i></button>
@@ -114,7 +114,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
                                 <b style="font-size: 17px">Xác nhận</b>
                             </div>
                             <div class="modal-body" style="font-size: 17px; margin-top: 15px; margin-bottom: 30px; text-align: center">
-                                <div>Bạn có chắc muốn xóa những tài sản này?</div>
+                                <div>Bạn có chắc muốn xóa những người dùng này?</div>
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
@@ -135,7 +135,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
                                 <b style="font-size: 17px">Xác nhận</b>
                             </div>
                             <div class="modal-body" style="font-size: 17px; margin-top: 15px; margin-bottom: 30px; text-align: center">
-                                <div style="margin-bottom: 10px"><i class="fas fa-exclamation-triangle" ></i> Bạn có chắc muốn xóa tài sản này?</div>
+                                <div style="margin-bottom: 10px"><i class="fas fa-exclamation-triangle" ></i> Bạn có chắc muốn xóa người dùng này?</div>
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
@@ -206,9 +206,19 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
                     $(".alert").remove();
                     $("#message").append('<div class="alert alert-success">Xóa người dùng thành công!</div>');
                     $("#multi-delete-data").modal('hide');
+                    $('#all-checked').prop('checked', false);
                 }
             });
         }
+    });
+    //datatable
+    $('#example').DataTable({
+        "columnDefs": [ {
+            "targets": 'no-sort',
+            "orderable": false,
+        } ],
+        order: [[ 4, 'asc' ]],
+        "bDestroy": true,
     });
 <?php echo '</script'; ?>
 >

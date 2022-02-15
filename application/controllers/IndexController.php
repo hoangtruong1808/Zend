@@ -9,8 +9,17 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $model = new Model_Test;
-        $model->test();
+//        $model = new Model_Test;
+//        $model->test();
+        var_dump('bc');
+//        $front = Zend_Controller_Front::getInstance();
+//        $front->dispatch();
+//        try {
+//            $front->dispatch();
+//        } catch (Exception $e) {
+//            echo "<pre>";
+//            var_dump($e);
+//        }
     }
 
     public function abcAction()
