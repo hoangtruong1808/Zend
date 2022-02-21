@@ -1,9 +1,16 @@
 <section>
     <header class="panel-heading">
-        <div class="col-sm-9">
-            Chi tiết người dùng
+        <div class="col-sm-4">
+            <ul style="display: flex; list-style: none;" class="crumb">
+                <li><a href="/">Trang chủ</a></li>
+                <li><a href="/asset">Quản lý người dùng</a></li>
+                <li>Chi tiết người dùng</li>
+            </ul>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
+            {$user.name}
+        </div>
+        <div class="col-sm-4">
             <span><a href="/user/update/id/{$user.user_id}" class="btn btn-primary" class="card-title" data-toggle="modal">Sửa</a></span>
             <span><a href="" class="btn btn-danger" data-toggle="modal" data-target="#delete-data">Xóa</a></span>
             <span><a class="btn btn-success" class="card-title" id="return-asset-btn">Trả tài sản</a></span>
@@ -35,6 +42,9 @@
         <div id="message">
             {if isset($message)}
                 <div class="alert alert-success">{$message}</div>
+            {/if}
+            {if isset($alert)}
+                <div class="alert alert-danger">{$alert}</div>
             {/if}
         </div>
         <div class="row">
@@ -107,8 +117,8 @@
 
                     </tr>
                     {foreach $all_borrow_asset as $key=>$value }
-                        <tr id="row{$value.borrow_id}">
-                            <td><label class="i-checks m-b-none"><input type="checkbox" class="delete_item_check" value="{$value.borrow_id}" data-id="{$value.asset_id}" ><i></i></label></td>
+                        <tr id="row{$value.borrow_detail_id}">
+                            <td><label class="i-checks m-b-none"><input type="checkbox" class="delete_item_check" value="{$value.borrow_detail_id}" data-id="{$value.asset_id}" ><i></i></label></td>
                             <td style="text-align:center">{$value.borrow_asset_name}</td>
                             <td style="text-align:center">{$value.borrow_date}</td>
                         </tr>
@@ -123,14 +133,15 @@
 <script>
     //trả tài sản
     $("#return-asset-btn").click(function(){
-        var borrow_id =[];
+        var borrow_detail_id =[];
         var asset_id = [];
         $('.delete_item_check:checkbox:checked').each(function(i){
-            borrow_id[i] = $(this).val();
+            borrow_detail_id[i] = $(this).val();
             asset_id[i] = $(this).data("id");
+
         });
 
-        if(borrow_id.length === 0)
+        if(borrow_detail_id.length === 0)
         {
             $(".alert").remove();
             $("#message").append('<div class="alert alert-danger">Chọn tối thiểu một tài sản!</div>');
@@ -141,17 +152,16 @@
                 method: "POST",
                 url: "/user/return-asset",
                 data:{
-                "borrow_id":borrow_id,
+                "borrow_detail_id":borrow_detail_id,
                 "asset_id":asset_id,
 
             },
             success:function(data) {
-                for(var i=0; i<borrow_id.length; i++) {
-                    $("#row"+borrow_id[i]).remove();
+                for(var i=0; i<borrow_detail_id.length; i++) {
+                    $("#row"+borrow_detail_id[i]).remove();
                 }
                 $(".alert").remove();
                 $("#message").append('<div class="alert alert-success">Trả tài sản thành công!</div>');
-                console.log("#borrow"+borrow_id[i]);
                 $("#multi-delete-data").modal('hide');
                 $('#all-checked').prop('checked', false);
             }

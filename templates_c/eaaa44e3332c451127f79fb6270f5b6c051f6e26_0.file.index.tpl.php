@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.42, created on 2022-02-11 16:48:04
+/* Smarty version 3.1.42, created on 2022-02-15 14:37:57
   from 'C:\laragon\www\Zend\application\layouts\scripts\account\index.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.42',
-  'unifunc' => 'content_620630d4124396_01077743',
+  'unifunc' => 'content_620b58550386c5_51595131',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'eaaa44e3332c451127f79fb6270f5b6c051f6e26' => 
     array (
       0 => 'C:\\laragon\\www\\Zend\\application\\layouts\\scripts\\account\\index.tpl',
-      1 => 1644572881,
+      1 => 1644905277,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_620630d4124396_01077743 (Smarty_Internal_Template $_smarty_tpl) {
+function content_620b58550386c5_51595131 (Smarty_Internal_Template $_smarty_tpl) {
 ?><section>
     <header class="panel-heading">
         <div class="col-sm-9">

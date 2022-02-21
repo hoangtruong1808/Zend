@@ -36,6 +36,10 @@ class UserController extends Zend_Controller_Action
             $this->view->message = $_SESSION['message'];
             unset( $_SESSION['message'] );
         }
+        if (isset($_SESSION['alert'])) {
+            $this->view->message = $_SESSION['alert'];
+            unset( $_SESSION['alert'] );
+        }
     }
 
     //thêm dữ liệu vào db
@@ -54,12 +58,15 @@ class UserController extends Zend_Controller_Action
 
             //validate for image
             $size_validator = new Zend_Validate_File_Size(array('max' => '10MB'));
-            $size_validator->setMessage('*Dung lượng ảnh quá lớn !!!', Zend_Validate_File_Size::TOO_BIG);
+            $size_validator->setMessage('*Dung lượng ảnh quá lớn', Zend_Validate_File_Size::TOO_BIG);
             $upload_validator = new Zend_Validate_File_Upload;
-            $upload_validator->setMessage('*Vui lòng chọn ảnh!!');
+            $upload_validator->setMessage('*Vui lòng chọn ảnh');
+            $extension_validator = new Zend_Validate_File_Extension('jpg,png,gif');
+            $extension_validator->setMessage('Sai định dạng hình ảnh', Zend_Validate_File_Extension::FALSE_EXTENSION);
 
             $file_adapter->addValidator($size_validator);
             $file_adapter->addValidator($upload_validator);
+            $file_adapter->addValidator($extension_validator);
 
             //lấy giá trị image
             $file_upload = $file_adapter->getFileInfo();
@@ -118,13 +125,17 @@ class UserController extends Zend_Controller_Action
                 $arrParam['image']=$file_upload['image']['name'];
                 //validate for image
                 $size_validator = new Zend_Validate_File_Size(array('max' => '1000KB'));
-                $size_validator->setMessage('Dung lượng ảnh quá lớn !!!', Zend_Validate_File_Size::TOO_BIG);
+                $size_validator->setMessage('Dung lượng ảnh quá lớn', Zend_Validate_File_Size::TOO_BIG);
 
                 $exist_validator = new Zend_Validate_File_Upload;
-                $exist_validator->setMessage('*Vui lòng chọn ảnh!!');
+                $exist_validator->setMessage('Vui lòng chọn ảnh');
+
+                $extension_validator = new Zend_Validate_File_Extension('jpg,png,gif');
+                $extension_validator->setMessage('Sai định dạng hình ảnh', Zend_Validate_File_Extension::FALSE_EXTENSION);
 
                 $file_adapter->addValidator($size_validator);
                 $file_adapter->addValidator($exist_validator);
+                $file_adapter->addValidator($extension_validator);
 
             }
 
@@ -164,9 +175,18 @@ class UserController extends Zend_Controller_Action
         $arrParam = $this->_arrParam;
 
         //delete item
-        $this->model->deleteUser($arrParam["id"]);
-        $_SESSION['message'] = 'Xóa người dùng thành công!';
-        $this->redirect('/user');
+
+        if ($this->model->getBorrowAsset($arrParam["id"])){
+            $_SESSION['alert'] = "Xóa người dùng không thành công";
+            $this->redirect('/user/detail/id/'.$arrParam["id"]);
+            $error_input = ['error_input'=> "Xóa người dùng không thành công!"];
+            $this->_helper->json->sendJson($error_input);
+        }
+        else{
+            $this->model->deleteUser($arrParam["id"]);
+            $_SESSION['message'] = 'Xóa người dùng thành công!';
+            $this->redirect('/user');
+        }
     }
 
     //xóa nhiều dữ liệu trong db
@@ -174,11 +194,27 @@ class UserController extends Zend_Controller_Action
 
         //lấy giá trị arrParam từ request
         $arrParam = $this->_arrParam;
-        //delete items
+        //kiểm tra người dùng có mượn tài sản không
         foreach($arrParam["id"] as $item_id)
         {
-            $this->model->deleteUser($item_id);
+            if ($this->model->getBorrowAsset($item_id)){
+                $error = true;
+            }
         }
+        //kiểm tra error
+        if (!isset($error)){
+            foreach($arrParam["id"] as $item_id)
+            {
+                //delete items
+                $this->model->deleteUser($item_id);
+            }
+        }
+        else{
+            //nếu có lỗi thì báo cho người dùng
+            $error_input = ['error_input'=> "Xóa người dùng không thành công!"];
+            $this->_helper->json->sendJson($error_input);
+        }
+
     }
 
     //chi tiết dữ liệu
@@ -192,19 +228,27 @@ class UserController extends Zend_Controller_Action
 
         $this->view->all_borrow_asset = $this->model->getBorrowAsset($arrParam["id"]);
 
+        if (isset($_SESSION['message'])) {
+            $this->view->message = $_SESSION['message'];
+            unset($_SESSION['message'] );
+        }
+        if (isset($_SESSION['alert'])) {
+            $this->view->alert = $_SESSION['alert'];
+            unset($_SESSION['alert'] );
+        }
+        
     }
     public function returnAssetAction(){
 
         //lấy giá trị arrParam từ request
         $arrParam = $this->_arrParam;
         //lấy dữ liệu
-        foreach($arrParam["borrow_id"] as $item)
+        $this->model->returnAsset($arrParam);
+
+
+        foreach($arrParam["asset_id"] as $asset_id)
         {
-            $this->model->returnAsset($item);
-        }
-        foreach($arrParam["asset_id"] as $item)
-        {
-            $this->model->updateAssetState($item);
+            $this->model->updateAssetState($asset_id);
         }
     }
 }

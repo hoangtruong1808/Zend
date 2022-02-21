@@ -328,25 +328,32 @@ class Model_User extends Zend_Db_Table{
     }
     public function getBorrowAsset($user_id){
         $select = $this->db->select()
-            ->from('tbl_borrow')
-            ->join('tbl_asset','tbl_asset.asset_id=tbl_borrow.asset_id', array('borrow_asset_name'=>'name'))
-            ->join('tbl_user','tbl_user.user_id=tbl_borrow.user_id')
-            ->where('tbl_user.user_id ='. $user_id)
-            ->where('tbl_borrow.return_date IS NULL')
+            ->from('tbl_borrow_detail')
+            ->join('tbl_borrow','tbl_borrow_detail.borrow_id=tbl_borrow.borrow_id')
+            ->join('tbl_asset','tbl_borrow_detail.asset_id=tbl_asset.asset_id', array('borrow_asset_name'=>'name'))
+            ->where('tbl_borrow.user_id ='. $user_id)
+            ->where('tbl_borrow_detail.return_date IS NULL')
             ->where('tbl_asset.is_disabled = 0')
 //            ->where('tbl_asset.is_disabled = 0')
-            ->order('tbl_borrow.borrow_id DESC');
+            ->order('tbl_borrow_detail.borrow_detail_id DESC');
 
         $result = $this->db->fetchAll($select);
 
         return $result;
     }
-    public function returnAsset($borrow_id){
+    public function returnAsset($arrParam){
 
         //update vào bảng mượn
-        $row['return_date']= date("Y-m-d");
-        $where = 'borrow_id= '.$borrow_id;
-        $this->db->update('tbl_borrow', $row, $where);
+
+        foreach($arrParam["borrow_detail_id"] as $borrow_detail_id)
+        {
+            $row['return_date']= date("Y-m-d");
+            $row['status']=1;
+            $where = 'borrow_detail_id= '.$borrow_detail_id;
+
+            $this->db->update('tbl_borrow_detail', $row, $where);
+        }
+
     }
     public function updateAssetState($asset_id){
 

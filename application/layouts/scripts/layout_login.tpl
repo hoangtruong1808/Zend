@@ -50,7 +50,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 {if (isset($error))}
                 <div class="alert alert-danger">Sai mật khẩu!</div>
                 {/if}
-                <span><input type="checkbox" />Nhớ mật khẩu</span>
+{*                <span><input type="checkbox" />Nhớ mật khẩu</span>*}
                 <div class="clearfix"></div>
                 <input type="submit" value="ĐĂNG NHẬP" name="login">
             </form>

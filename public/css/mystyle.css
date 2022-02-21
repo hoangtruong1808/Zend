@@ -31,3 +31,26 @@
     cursor: pointer;
     border-radius: 5px;
 }
+.crumb {
+
+    display: flex;
+
+    margin: 5px;
+
+    font-size: 14px;
+
+    opacity: 0.8;
+
+    font-weight: 900;
+
+}
+
+.crumb li + li:before {
+
+    content: "\003e";
+
+    font-family: “FontAwesome”;
+
+    margin: 0 10px;
+
+}

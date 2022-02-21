@@ -1,8 +1,8 @@
 <?php
 class Model_Asset extends Zend_Db_Table{
 
-    protected $_name = 'tbl_asset';
-    protected $_primary = 'asset_id';
+    protected $_name = 'tbl_user';
+    protected $_primary = 'user_id';
     protected $db;
     protected $_filter = null;
     protected $_validate = null;
@@ -33,6 +33,8 @@ class Model_Asset extends Zend_Db_Table{
             ->from('tbl_asset')
             ->join('tbl_status','tbl_asset.status=tbl_status.status_id')
             ->join('tbl_state','tbl_asset.state=tbl_state.state_id')
+            ->join('tbl_asset_group','tbl_asset.asset_group_id=tbl_asset_group.group_id', array('asset_group'=>'description'))
+//            ->join('tbl_borrow', 'tbl_asset.asset_group_id=tbl_asset_group.group_id')
             ->where('tbl_asset.is_disabled = 0')
             ->order('tbl_asset.asset_id DESC');
 
@@ -142,6 +144,7 @@ class Model_Asset extends Zend_Db_Table{
 //        $detail = $this->fetchRow($where)->toArray();
         return $result;
     }
+
     public function updateAsset($arrParam){
 
         $this->_validate = array(
@@ -222,6 +225,9 @@ class Model_Asset extends Zend_Db_Table{
             if (!empty($arrParam['image'])){
                 $row['image']= $arrParam['image'];
             }
+            if ($arrParam['status'] ==3){
+                $row['state']=5; //mất mát
+            }
             $this->db->update('tbl_asset', $row, $where);
             $result = true;
         }
@@ -239,44 +245,127 @@ class Model_Asset extends Zend_Db_Table{
         $row['deleted_at']= date("Y-m-d H:i:s");
         $this->db->update('tbl_asset', $row, $where);
     }
-    public function borrowUser($arrParam){
+    public function borrow($arrParam){
 
-        //insert vào bảng mượn
-        $row['asset_id']= $arrParam['asset_id'];
+        //insert vào bảng borrow
+//        var_dump($arrParam);
+
         $row['user_id']= $arrParam['borrow_user_id'];
         $row['borrow_date']= $arrParam['borrow_date'];
 
         $this->db->insert('tbl_borrow', $row);
+//        $borrow_id = $this->db->lastInsertId('tbl_borrow', 'borrow_id');
 
-        //chuyển tài sản thành trạng thái đang sử dụng
-        $row_asset['state'] = 1;
-        $where = 'asset_id= '.$arrParam['asset_id'];
-        $this->db->update('tbl_asset', $row_asset, $where);
+        //get last insert id của borrow
+        $select = $this->db->select()
+            ->from('tbl_borrow')
+            ->order('borrow_id DESC');
+        $result = $this->db->fetchRow($select);
+
+
+        foreach($arrParam["id"] as $item_id) {
+            $row_detail['is_disabled'] = 1;
+            $where = 'asset_id= '.$item_id;
+            $this->db->update('tbl_borrow_detail', $row_detail, $where);
+
+            //insert vào bảng borrow detail
+            $row_detail['asset_id']= $item_id;
+            $row_detail['borrow_id']=  $result['borrow_id'];
+            $row_detail['is_disabled'] = 0;
+            $this->db->insert('tbl_borrow_detail', $row_detail);
+
+            //chuyển tài sản thành trạng thái đang sử dụng
+            $row_asset['state'] = 1;
+            $where = 'asset_id= '.$item_id;
+            $this->db->update('tbl_asset', $row_asset, $where);
+        }
+
     }
     public function getCurrentBorrow($asset_id){
         $select = $this->db->select()
-            ->from('tbl_borrow')
-            ->join('tbl_asset','tbl_asset.asset_id=tbl_borrow.asset_id')
-            ->join('tbl_user','tbl_user.user_id=tbl_borrow.user_id', array('borrow_user_name'=>'name'))
+            ->from('tbl_borrow_detail')
+            ->join('tbl_asset','tbl_borrow_detail.asset_id=tbl_asset.asset_id')
+            ->join('tbl_borrow','tbl_borrow_detail.borrow_id=tbl_borrow.borrow_id')
+            ->join('tbl_user','tbl_borrow.user_id=tbl_user.user_id', array('borrow_user_name'=>'name'))
             ->where('tbl_asset.asset_id ='. $asset_id)
-            ->where('tbl_asset.is_disabled = 0')
-            ->order('tbl_borrow.borrow_id DESC');
-
+            ->where('tbl_borrow_detail.status = 0');
         $result = $this->db->fetchRow($select);
 
         return $result;
     }
     public function getAllBorrow($asset_id){
         $select = $this->db->select()
-            ->from('tbl_borrow')
-            ->join('tbl_asset','tbl_asset.asset_id=tbl_borrow.asset_id')
-            ->join('tbl_user','tbl_user.user_id=tbl_borrow.user_id', array('borrow_user_name'=>'name'))
-            ->where('tbl_asset.asset_id ='. $asset_id)
-            ->where('tbl_asset.is_disabled = 0')
-            ->order('tbl_borrow.borrow_id DESC');
+            ->from('tbl_borrow_detail')
+            ->join('tbl_asset','tbl_borrow_detail.asset_id=tbl_asset.asset_id')
+            ->join('tbl_borrow','tbl_borrow_detail.borrow_id=tbl_borrow.borrow_id')
+            ->join('tbl_user','tbl_borrow.user_id=tbl_user.user_id', array('borrow_user_name'=>'name'))
+            ->where('tbl_asset.asset_id ='. $asset_id);
 
         $result = $this->db->fetchAll($select);
 
+
         return $result;
+    }
+    public function listInventoryAsset($asset_id){
+        //$result = $this->fetchAll($where, $order, $count, $offet);
+        $sql="";
+        foreach($asset_id as $value){
+            $sql .= 'tbl_asset.asset_id ='.$value.' or ';
+        }
+        $sql .= 'tbl_asset.asset_id is Null';
+        $select = $this->db->select()
+            ->from('tbl_borrow_detail')
+            ->join('tbl_borrow', 'tbl_borrow_detail.borrow_id=tbl_borrow.borrow_id', array('borrow_date'=>'borrow_date'))
+            ->join('tbl_user','tbl_borrow.user_id=tbl_user.user_id', array('user_name'=>'name'))
+            ->join('tbl_asset','tbl_borrow_detail.asset_id=tbl_asset.asset_id')
+            ->join('tbl_status','tbl_asset.status=tbl_status.status_id', array('status_name'=>'status_name'))
+            ->join('tbl_state','tbl_asset.state=tbl_state.state_id', array('state_name'=>'state_name'))
+            ->join('tbl_asset_group','tbl_asset.asset_group_id=tbl_asset_group.group_id', array('asset_group'=>'description'))
+            ->where('tbl_asset.is_disabled = 0')
+            ->where('tbl_borrow_detail.is_disabled = 0')
+            ->where($sql);
+
+        $result = $this->db->fetchAll($select);
+        return $result;
+    }
+    public function inventory($arrParam){
+        //insert vào bảng inventory
+        $row_inventory['inventory_person_id']= $_SESSION['user_id'];
+        $row_inventory['inventory_date']= $arrParam['inventory_date'];
+        $row_inventory['note']= $arrParam['inventory_note'];
+        $this->db->insert('tbl_inventory', $row_inventory);
+
+        //get last insert id của inventory
+        $select = $this->db->select()
+            ->from('tbl_inventory')
+            ->order('inventory_id DESC');
+        $result = $this->db->fetchRow($select);
+        $inventory_id = $result['inventory_id'];
+
+        //đếm số lượng tài sản cần kiểm kê
+        $asset_count = count($arrParam['inventory_asset_id']);
+        //dùng vòng lặp
+        for($i=0; $i<$asset_count; $i++){
+            //insert vào bảng inventory detail
+            $row_detail['asset_id'] = $arrParam['inventory_asset_id'][$i];
+            $row_detail['before_status'] = $arrParam['before_status'][$i];
+            $row_detail['inventory_status'] = $arrParam['inventory_detail_status'][$i];
+            $row_detail['note'] = $arrParam['inventory_detail_note'][$i];
+            $row_detail['inventory_id'] = $inventory_id;
+
+            $this->db->insert('tbl_inventory_detail', $row_detail);
+
+            //update bảng asset
+            $row_asset['status']=$arrParam['inventory_detail_status'][$i];
+            //update trạng thái mất
+            if($row_asset['status'] == 3){
+                $row_asset['state'] =5;
+            }
+            $where = 'asset_id= '.$arrParam['inventory_asset_id'][$i];
+            $this->db->update('tbl_asset', $row_asset, $where);
+
+
+        }
+        return $inventory_id;
     }
 }

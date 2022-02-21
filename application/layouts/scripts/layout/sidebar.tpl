@@ -12,7 +12,7 @@
 
                 <li class="sub-menu">
                     <a href="/menu">
-                        <i class="fa fa-book"></i>
+                        <i class="fas fa-list"></i>
                         <span>Quản lý nhóm tài sản</span>
                     </a>
                 </li>
@@ -26,6 +26,12 @@
                     <a href="/user">
                         <i class="fa fa-user"></i>
                         <span>Quản lý người dùng</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/inventory">
+                        <i class="fa fa-book"></i>
+                        <span>Xem danh sách kiểm kê</span>
                     </a>
                 </li>
                 <li>

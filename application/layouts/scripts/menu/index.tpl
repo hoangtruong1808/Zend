@@ -16,13 +16,20 @@
         border: none;
     }
 </style>
+
 <section>
     {$stt=1}
     <header class="panel-heading">
-        <div class="col-sm-10">
+        <div class="col-sm-3">
+            <ul style="display: flex; list-style: none;" class="crumb">
+                <li><a href="/">Trang chủ</a></li>
+                <li>Quản lý nhóm tài sản</li>
+            </ul>
+        </div>
+        <div class="col-sm-6">
             {$title}
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <div class="add-data">
                 <a href="" class="btn btn-success" style="" class="card-title" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus" aria-hidden="true"></i> Thêm</a>
                 <span style="margin-left: 10px;"><a class="btn btn-danger" data-toggle="modal" data-target="#multi-delete-data" ><i class="fas fa-times"></i> Xóa</a></span>
@@ -51,12 +58,12 @@
 
                 {foreach $menu_list  as $key=>$value}
                     <tr id="row{$value.group_id}">
-                        <td><label class="i-checks m-b-none"><input type="checkbox" class="delete_item_check" value="{$value.group_id}"><i></i></label></td>
-                        <td style="color:black" id="row-description{$value.group_id}">{$value.description}</td>
-                        <td style="color:black" id="row-status{$value.group_id}">{($value.active==1)?"Kích hoạt":"Không kích hoạt"}</td>
+                        <td><label class="i-checks m-b-none"><input type="checkbox" class="delete_item_check" value="{$value.group_id}" data-assetcount="{$value.asset_count}"><i></i></label></td>
+                        <td style="color:black" id="row-description{$value.group_id}">{$value.description}<span class="badge badge-light" style="margin-left: 7px;">{$value.asset_count}</span></td>
+                        <td style="color:black" id="row-status{$value.group_id}">{($value.active==1)?"<span class='badge badge-success'>Kích hoạt</span>":"<span class='badge badge-danger'>Không kích hoạt</span>"}</td>
                         <td>
                             <button class="update-button" type="submit" data-toggle="modal" data-target="#update-data" data-id="{$value.group_id}" data-desription="{$value.description}" data-active="{$value.active}"><i class="fas fa-pen"></i></button>
-                            <button class="delete-button" data-toggle="modal" data-target="#delete-data" data-id="{$value.group_id}"><i class="fas fa-trash-alt"></i></button>
+                            <button class="delete-button" data-toggle="modal" data-target="#delete-data" data-id="{$value.group_id}" data-assetcount="{$value.asset_count}"><i class="fas fa-trash-alt"></i></button>
                         </td>
                     </tr>
                 {/foreach}
@@ -103,8 +110,7 @@
                                 <b style="font-size: 17px">Xác nhận</b>
                             </div>
                             <div class="modal-body" style="font-size: 17px; margin-top: 15px; margin-bottom: 30px; text-align: center">
-                                <div style="margin-bottom: 10px"><i class="fas fa-exclamation-triangle" ></i> Xóa dữ liệu có thể ảnh hưởng tới các tài sản đang sử dụng.</div>
-                                <div>Bạn có chắc muốn xóa những dữ liệu này?</div>
+                                <div style="margin-bottom: 10px"><i class="fas fa-exclamation-triangle" ></i> Bạn có chắc chắn muốn xóa nhóm tài sản này?</div>
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
@@ -126,8 +132,7 @@
                                 <b style="font-size: 17px">Xác nhận</b>
                             </div>
                             <div class="modal-body" style="font-size: 17px; margin-top: 15px; margin-bottom: 30px; text-align: center">
-                                <div style="margin-bottom: 10px"><i class="fas fa-exclamation-triangle" ></i> Xóa dữ liệu có thể ảnh hưởng tới các tài sản đang sử dụng.</div>
-                                <div>Bạn có chắc muốn xóa dữ liệu này?</div>
+                                <div style="margin-bottom: 10px"><i class="fas fa-exclamation-triangle" ></i> Bạn có chắc chắn muốn xóa nhóm tài sản này?</div>
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
@@ -197,8 +202,10 @@
             "targets": 'no-sort',
             "orderable": false,
         } ],
-        order: [[ 2, 'asc' ]],
+        order: [[ 2, 'desc' ]],
         "bDestroy": true,
+        "iDisplayLength": 25,
+        "bLengthChange": false,
     });
     $("#add").click(function(){
         var description = $("#add_description").val();
@@ -217,7 +224,7 @@
                 }
                 else{
                     $(".alert").remove();
-                    $("#message").append('<div class="alert alert-success">Thêm dữ liệu thành công!</div>');
+                    $("#message").append('<div class="alert alert-success">Thêm nhóm tài sản thành công!</div>');
                     $("#exampleModal").modal('hide');
                     var group_id = data.id_insert;
                     console.log(active);
@@ -231,32 +238,45 @@
 
     //xóa dữ liệu
     let delete_select_id;
+    let delete_select_assetcount;
     $(".delete-button").click(function(){
         delete_select_id = $(this).data("id");
+        delete_select_assetcount = $(this).attr("data-assetcount");
     });
     $(".delete").click(function(){
         var delete_id = delete_select_id;
+        var delete_assetcount = delete_select_assetcount;
         console.log(delete_id);
         $.ajax({
             method: "POST",
             url: "/menu/delete",
             data:{
-                "id":delete_id
+                "id":delete_id,
+                "asset_count":delete_assetcount,
             },
             success:function(data) {
-                $(".xoa-modal").modal('hide');
-                $("#row"+delete_id).remove();
-                $(".alert").remove();
-                $("#message").append('<div class="alert alert-success">Xóa dữ liệu thành công!</div>');
+                if (typeof(data.error_input) != "undefined" && data.error_input_export !== null)
+                {
+                    $(".xoa-modal").modal('hide');
+                    $(".alert").remove();
+                    $("#message").append('<div class="alert alert-danger">Xóa nhóm tài sản không thành công!</div>');
+                }
+                else {
+                    $(".xoa-modal").modal('hide');
+                    $("#row" + delete_id).remove();
+                    $(".alert").remove();
+                    $("#message").append('<div class="alert alert-success">Xóa nhóm tài sản thành công!</div>');
+                }
             }
         });
     });
     //xóa nhiều dữ liệu
     $("#btn_multi_delete").click(function(){
             var id =[];
+            var asset_count=[];
             $('.delete_item_check:checkbox:checked').each(function(i){
                 id[i] = $(this).val();
-                console.log(id[i]);
+                asset_count[i] = $(this).attr("data-assetcount");
             });
             if(id.length === 0)
             {
@@ -264,23 +284,33 @@
                 $("#message").append('<div class="alert alert-danger">Chọn tối thiểu một dòng!</div>');
                 $("#multi-delete-data").modal('hide');
             }
-            else{
+            else {
                 $.ajax({
                     method: "POST",
                     url: "/menu/multidelete",
-                    data:{
-                        "id":id
+                    data: {
+                        "id": id,
+                        "asset_count": asset_count,
                     },
-                    success:function(data) {
-                        for(var i=0; i<id.length; i++) {
-                            $("#row"+id[i]).remove();
+                    success: function (data) {
+                        if (typeof(data.error_input) != "undefined" && data.error_input_export !== null)
+                        {
+                            $(".xoa-modal").modal('hide');
+                            $(".alert").remove();
+                            $("#message").append('<div class="alert alert-danger">Xóa nhóm tài sản không thành công!</div>');
                         }
-                        $(".alert").remove();
-                        $("#message").append('<div class="alert alert-success">Xóa dữ liệu thành công!</div>');
-                        $("#multi-delete-data").modal('hide');
+                        else {
+                            for (var i = 0; i < id.length; i++) {
+                                $("#row" + id[i]).remove();
+                            }
+                            $(".alert").remove();
+                            $("#message").append('<div class="alert alert-success">Xóa nhóm tài sản thành công!</div>');
+                            $("#multi-delete-data").modal('hide');
+                        }
                     }
                 });
             }
+
     });
     //cập nhật dữ liệu
     let update_select_id;
@@ -323,7 +353,7 @@
                         $("#row-status" + update_id).html("Không kích hoạt");
                     }
                     $(".alert").remove();
-                    $("#message").append('<div class="alert alert-success">Cập nhật dữ liệu thành công!</div>');
+                    $("#message").append('<div class="alert alert-success">Cập nhật nhóm tài sản thành công!</div>');
                 }
 
             }

@@ -61,9 +61,9 @@ class LoginController extends Zend_Controller_Action
             }else{
                 //đăng nhập thành công
                 $data = $authAdapter->getResultRowObject();
-                var_dump($data);
                 $auth->getStorage()->write($data);
                 $info = $auth->getIdentity();
+                $_SESSION['user_id'] = $info->user_id;
                 $this->redirect('/menu');
             }
         }

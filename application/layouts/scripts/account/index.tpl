@@ -1,7 +1,13 @@
 <section>
     <header class="panel-heading">
-        <div class="col-sm-9">
-            Tài khoản cá nhân
+        <div class="col-sm-3">
+            <ul style="display: flex; list-style: none;" class="crumb">
+                <li><a href="/">Trang chủ</a></li>
+                <li>Tài khoản cá nhân</li>
+            </ul>
+        </div>
+        <div class="col-sm-6">
+            {$user.name}
         </div>
         <div class="col-sm-3">
             <span><a href="/user/update/id/{$user.user_id}" class="btn btn-primary" class="card-title" data-toggle="modal">Sửa</a></span>

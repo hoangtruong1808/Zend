@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.42, created on 2022-02-10 14:17:17
+/* Smarty version 3.1.42, created on 2022-02-16 09:16:40
   from 'C:\laragon\www\Zend\application\layouts\scripts\menu\index.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.42',
-  'unifunc' => 'content_6204bbfd70db63_99816953',
+  'unifunc' => 'content_620c5e8854e3e6_81355101',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '15fa91c925b9480d645f095743bf8f23c7949c2e' => 
     array (
       0 => 'C:\\laragon\\www\\Zend\\application\\layouts\\scripts\\menu\\index.tpl',
-      1 => 1644477435,
+      1 => 1644977737,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_6204bbfd70db63_99816953 (Smarty_Internal_Template $_smarty_tpl) {
+function content_620c5e8854e3e6_81355101 (Smarty_Internal_Template $_smarty_tpl) {
 ?><style>
     th {
         text-align: center;

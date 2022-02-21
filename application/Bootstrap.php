@@ -21,6 +21,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $optionResources = $this->getOption('resources');
         $dbOption = $optionResources['db'];
 
+        $dbOption['params']['username'] = 'postgres';
+        $dbOption['params']['password'] = 'truong123';
+//        $dbOption['params']['port'] = '123';
+        $dbOption['params']['dbname'] = 'n-truong';
+        $dbOption['params']['host'] = 'localhost';
+
         $adapter = $dbOption['adapter'];
         $config = $dbOption['params'];
         $db = Zend_Db::factory($adapter, $config);

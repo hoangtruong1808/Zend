@@ -1,12 +1,18 @@
 <section>
     <header class="panel-heading">
-        <div class="col-sm-9" style="text-align: left">
+        <div class="col-sm-4">
+            <ul style="display: flex; list-style: none;" class="crumb">
+                <li><a href="/">Trang chủ</a></li>
+                <li><a href="/asset">Quản lý tài sản</a></li>
+                <li>Chi tiết tài sản</li>
+            </ul>
+        </div>
+        <div class="col-sm-4" >
             {$asset.name}
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
             <span><a href="/asset/update/id/{$asset.asset_id}" class="btn btn-primary" style="" class="card-title" data-toggle="modal">Sửa</a></span>
             <span><a href="" class="btn btn-danger" data-toggle="modal" data-target="#delete-data">Xóa</a></span>
-            <span><a href="" class="btn btn-success" data-toggle="modal" data-target="#export-user">Xuất cho Người dùng</a></span>
         </div>
     </header>
     {*form delete*}
@@ -189,36 +195,5 @@
     </div>
 </section>
 <script>
-    //xuất cho người dùng
-    $("#btn-borrow-user").click(function(){
-        {if ($asset.state == 1)}
-            $("#fail-alert").remove();
-            $("#export-user").modal('hide');
-            $("#message").append('<div class="alert alert-danger" id="fail-alert">Tài sản đang sử dụng, không thể xuất cho người dùng!</div>');
-        {else}
-        var borrow_user_id = $("#borrow_user_id").val();
-        var borrow_date = $("#borrow_date").val();
-
-        $.ajax({
-            method: "POST",
-            url: "/asset/borrow-user",
-            data:{
-                'asset_id': {$asset.asset_id},
-                'borrow_user_id':borrow_user_id,
-                'borrow_date': borrow_date,
-            },
-            success:function(data) {
-                if (typeof(data.error_input) != "undefined" && data.error_input !== null)
-                {
-                    $("#alert").html(data.error_input);
-                }
-                else{
-                    location.reload();
-                }
-
-            }
-        });
-        {/if}
-    });
 
 </script>

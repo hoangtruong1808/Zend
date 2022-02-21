@@ -32,12 +32,14 @@ class AccountController extends Zend_Controller_Action
     public function indexAction(){
         //lấy giá trị arrParam từ request
 
+
         $arrParam = $this->_arrParam;
 
         //lấy dữ liệu
         $this->view->user = $this->model->getUser($this->account_id);
 
         $this->view->all_borrow_asset = $this->model->getBorrowAsset($this->account_id);
+
     }
     public function changePasswordAction(){
         $arrParam = $this->_arrParam;

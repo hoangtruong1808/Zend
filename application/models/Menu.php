@@ -21,12 +21,28 @@ class Model_Menu extends Zend_Db_Table{
     }
 
     public function listItems(){
+        $select = $this->db->select()
+            ->from('tbl_asset_group')
+            ->where('tbl_asset_group.is_disabled = 0')
+            ->where('tbl_asset_group.active = 1')
+            ->order('group_id DESC');;
+//        echo $select;
+//        exit();
+        $result = $this->db->fetchAll($select);
+        return $result;
+    }
+
+    public function listallItems(){
         //$result = $this->fetchAll($where, $order, $count, $offet);
         $select = $this->db->select()
                 ->from('tbl_asset_group')
-                ->where('is_disabled = 0')
-                ->where('active = 1')
+                ->joinLeft('tbl_asset', 'tbl_asset.asset_group_id=tbl_asset_group.group_id', array('asset_count'=>'COUNT(tbl_asset.asset_id)'))
+                ->where('tbl_asset_group.is_disabled = 0')
+                ->where('(tbl_asset.is_disabled = 0) OR (tbl_asset.is_disabled IS NULL)')
+                ->group('group_id')
+                ->group('tbl_asset.is_disabled')
                 ->order('group_id DESC');
+
         $result = $this->db->fetchAll($select);
         return $result;
     }
@@ -36,6 +52,7 @@ class Model_Menu extends Zend_Db_Table{
         $row['active']= $arrParam['active'];
         $this->db->insert('tbl_asset_group', $row);
         $id = $this->db->lastInsertId();
+        echo $id;
         return $id;
     }
 

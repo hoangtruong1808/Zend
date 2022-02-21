@@ -25,3 +25,5 @@ define('IMAGE_PATH', PUBLIC_PATH.'/images');
 define('ASSET_IMAGE_PATH', IMAGE_PATH.'/asset_images');
 
 define('USER_IMAGE_PATH', IMAGE_PATH.'/user_images');
+
+define('LIBRARY_PATH', realpath(dirname(__FILE__) . '/../library'));

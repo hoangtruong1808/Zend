@@ -19,10 +19,16 @@
 <section>
     {$stt=1}
     <header class="panel-heading">
-        <div class="col-sm-10">
+        <div class="col-sm-3">
+            <ul style="display: flex; list-style: none;" class="crumb">
+                <li><a href="/">Trang chủ</a></li>
+                <li>Quản lý người dùng</li>
+            </ul>
+        </div>
+        <div class="col-sm-6">
             Quản lý người dùng
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <div class="add-data">
                 <a href="/user/add" class="btn btn-success" style="" class="card-title" data-toggle="modal"><i class="fa fa-plus" aria-hidden="true"></i> Thêm</a>
                 <span style="margin-left: 10px;"><a class="btn btn-danger" data-toggle="modal" data-target="#multi-delete-data" ><i class="fas fa-times"></i> Xóa</a></span>
@@ -48,6 +54,9 @@
                 <div id="message">
                     {if isset($message)}
                         <div class="alert alert-success">{$message}</div>
+                    {/if}
+                    {if isset($alert)}
+                        <div class="alert alert-danger">{$alert}</div>
                     {/if}
                 </div>
                 {foreach $user_list  as $key=>$value}
@@ -133,10 +142,18 @@
                 "id":delete_id
             },
             success:function(data) {
-                $(".xoa-modal").modal('hide');
-                $("#row"+delete_id).remove();
-                $(".alert").remove();
-                $("#message").append('<div class="alert alert-success">Xóa tài sản thành công!</div>');
+                if (typeof(data.error_input) != "undefined" && data.error_input_export !== null)
+                {
+                    console.log(data.error_input);
+                    $("#message").append('<div class="alert alert-danger">Xóa người dùng không thành công!</div>');
+                    $(".xoa-modal").modal('hide');
+                }
+                else {
+                    $(".xoa-modal").modal('hide');
+                    $("#row" + delete_id).remove();
+                    $(".alert").remove();
+                    $("#message").append('<div class="alert alert-success">Xóa người dùng thành công!</div>');
+                }
             }
         });
     });
@@ -161,13 +178,21 @@
                     "id":id
                 },
                 success:function(data) {
-                    for(var i=0; i<id.length; i++) {
-                        $("#row"+id[i]).remove();
+                    if (typeof(data.error_input) != "undefined" && data.error_input_export !== null)
+                    {
+                        $("#multi-delete-data").modal('hide');
+                        $(".alert").remove();
+                        $("#message").append('<div class="alert alert-danger">Xóa người dùng không thành công!</div>');
                     }
-                    $(".alert").remove();
-                    $("#message").append('<div class="alert alert-success">Xóa người dùng thành công!</div>');
-                    $("#multi-delete-data").modal('hide');
-                    $('#all-checked').prop('checked', false);
+                    else {
+                        for (var i = 0; i < id.length; i++) {
+                            $("#row" + id[i]).remove();
+                        }
+                        $(".alert").remove();
+                        $("#message").append('<div class="alert alert-success">Xóa người dùng thành công!</div>');
+                        $("#multi-delete-data").modal('hide');
+                        $('#all-checked').prop('checked', false);
+                    }
                 }
             });
         }
@@ -180,5 +205,7 @@
         } ],
         order: [[ 4, 'asc' ]],
         "bDestroy": true,
+        "iDisplayLength": 25,
+        "bLengthChange": false,
     });
 </script>

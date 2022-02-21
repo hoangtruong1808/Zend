@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.42, created on 2022-02-11 13:53:28
+/* Smarty version 3.1.42, created on 2022-02-15 17:01:54
   from 'C:\laragon\www\Zend\application\layouts\scripts\asset\detail.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.42',
-  'unifunc' => 'content_620607e81568d0_27214623',
+  'unifunc' => 'content_620b7a12ec81c4_04009893',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '8b2f0e475511376224a289e5c6d83a9071f5a149' => 
     array (
       0 => 'C:\\laragon\\www\\Zend\\application\\layouts\\scripts\\asset\\detail.tpl',
-      1 => 1644561942,
+      1 => 1644915268,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_620607e81568d0_27214623 (Smarty_Internal_Template $_smarty_tpl) {
+function content_620b7a12ec81c4_04009893 (Smarty_Internal_Template $_smarty_tpl) {
 ?><section>
     <header class="panel-heading">
         <div class="col-sm-9" style="text-align: left">
@@ -186,10 +186,6 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
                                     <label class="col-lg-5 control-label">Người dùng đang sử dụng</label>
                                     <div class="col-lg-7 input-summary-info">
                                         <div class="form-control">
-                                            <?php if (($_smarty_tpl->tpl_vars['asset']->value['state'] == 1)) {?>
-                                                <?php echo $_smarty_tpl->tpl_vars['current_borrow']->value['borrow_user_name'];?>
-
-                                            <?php }?>
                                         </div>
                                     </div>
                                 </div>
@@ -216,23 +212,6 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
                         <th style="text-align:center">Ngày trả</th>
 
                     </tr>
-                    <?php
-$_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['all_borrow']->value, 'value', false, 'key');
-$_smarty_tpl->tpl_vars['value']->do_else = true;
-if ($_from !== null) foreach ($_from as $_smarty_tpl->tpl_vars['key']->value => $_smarty_tpl->tpl_vars['value']->value) {
-$_smarty_tpl->tpl_vars['value']->do_else = false;
-?>
-                    <tr>
-                        <td style="text-align:center"><?php echo $_smarty_tpl->tpl_vars['value']->value['borrow_user_name'];?>
-</td>
-                        <td style="text-align:center"><?php echo $_smarty_tpl->tpl_vars['value']->value['borrow_date'];?>
-</td>
-                        <td style="text-align:center"><?php echo $_smarty_tpl->tpl_vars['value']->value['return_date'];?>
-</td>
-                    </tr>
-                    <?php
-}
-$_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
                     </tbody>
                 </table>
             </div>

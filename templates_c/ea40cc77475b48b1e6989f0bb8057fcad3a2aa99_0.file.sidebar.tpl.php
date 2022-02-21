@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.42, created on 2022-02-11 13:36:37
+/* Smarty version 3.1.42, created on 2022-02-15 15:32:31
   from 'C:\laragon\www\Zend\application\layouts\scripts\layout\sidebar.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.42',
-  'unifunc' => 'content_620603f5016f31_09954458',
+  'unifunc' => 'content_620b651fb2f7f2_44778120',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ea40cc77475b48b1e6989f0bb8057fcad3a2aa99' => 
     array (
       0 => 'C:\\laragon\\www\\Zend\\application\\layouts\\scripts\\layout\\sidebar.tpl',
-      1 => 1644561395,
+      1 => 1644913541,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_620603f5016f31_09954458 (Smarty_Internal_Template $_smarty_tpl) {
+function content_620b651fb2f7f2_44778120 (Smarty_Internal_Template $_smarty_tpl) {
 ?><aside>
     <div id="sidebar" class="nav-collapse">
         <!-- sidebar menu start-->

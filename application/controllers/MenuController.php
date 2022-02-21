@@ -29,8 +29,10 @@ class MenuController extends Zend_Controller_Action
 
     //liệt kê dữ liệu trong db
     public function indexAction(){
+
         $this->view->title = "Nhóm tài sản";
-        $this->view->menu_list = $this->model->listItems();
+        $this->view->menu_list = $this->model->listallItems();
+
         if (isset($_SESSION['message'])) {
             $this->view->message = $_SESSION['message'];
             unset($_SESSION['message']);
@@ -95,7 +97,13 @@ class MenuController extends Zend_Controller_Action
         $arrParam = $this->_arrParam;
 
         //delete item
-        $this->model->deleteItem($arrParam["id"]);
+        if ($arrParam["asset_count"]>0){
+            $error_input = ['error_input'=> "Xóa nhóm tài sản không thành công!"];
+            $this->_helper->json->sendJson($error_input);
+        }
+        else {
+            $this->model->deleteItem($arrParam["id"]);
+        }
     }
 
     //xóa nhiều dữ liệu trong db
@@ -104,9 +112,21 @@ class MenuController extends Zend_Controller_Action
         //lấy giá trị arrParam từ request
         $arrParam = $this->_arrParam;
         //delete items
-        foreach($arrParam["id"] as $item_id)
+        foreach($arrParam["asset_count"] as $item_assetcount)
         {
-            $this->model->deleteItem($item_id);
+            if($item_assetcount > 0){
+                $error = 1;
+            }
+        }
+        if (isset($error)){
+            $error_input = ['error_input'=> "Xóa nhóm tài sản không thành công!"];
+            $this->_helper->json->sendJson($error_input);
+        }
+        else {
+            foreach($arrParam["id"] as $item_id)
+            {
+                $this->model->deleteItem($item_id);
+            }
         }
     }
 

@@ -22,7 +22,6 @@ $view = new Smarty_View($config_app['smarty']);
 
 $render = new Zend_Controller_Action_Helper_ViewRenderer($view);
 
-
 $render->setViewBasePathSpec(APPLICATION_PATH . '/layouts/scripts')
     ->setViewScriptPathSpec(':controller/:action.:suffix')
     ->setViewScriptPathNoControllerSpec(':action.:suffix')
@@ -30,15 +29,17 @@ $render->setViewBasePathSpec(APPLICATION_PATH . '/layouts/scripts')
 
 Zend_Controller_Action_HelperBroker::addHelper($render);
 
-//$layout = Zend_Layout::startMvc(
-//    array(
-//        'layoutPath' => APPLICATION_PATH . '/layouts/scripts',
-//        'layout' => 'layout',
-//        'contentKey' => 'content'
-//    )
-//);
-//$layout->setViewSuffix('tpl');
-
+$layout = Zend_Layout::startMvc(
+    array(
+        'layoutPath' => APPLICATION_PATH . '/layouts/scripts',
+        'layout' => 'layout',
+        'contentKey' => 'content'
+    )
+);
+$layout->setViewSuffix('tpl');
+//echo "<pre>";
+//var_dump($front);
+//die();
 Zend_Session::start();
 
 $front->dispatch();
