@@ -25,6 +25,10 @@ class MenuController extends Zend_Controller_Action
         $this->view->actionMain = $this->_actionMain;
 
         $this->model = new Model_Menu;
+
+        if($_SESSION['role_id']==3){
+            $this->redirect('/');
+        }
     }
 
     //liệt kê dữ liệu trong db

@@ -28,11 +28,10 @@
         <div class="col-sm-6">
             Danh sách kiểm kê
         </div>
+        <form method="POST" action="/inventory/multi-export">
+
         <div class="col-sm-3">
-{*            <div class="add-data">*}
-{*                <a href="/user/add" class="btn btn-success" style="" class="card-title" data-toggle="modal"><i class="fa fa-plus" aria-hidden="true"></i> Thêm</a>*}
-{*                <span style="margin-left: 10px;"><a class="btn btn-danger" data-toggle="modal" data-target="#multi-delete-data" ><i class="fas fa-times"></i> Xóa</a></span>*}
-{*            </div>*}
+            <input type="submit" class="btn btn-success" id="export-btn" value="Xuất excel"></input>
         </div>
     </header>
     <div class="table-agile-info">
@@ -43,10 +42,13 @@
 {*                    <th style="width:60px;" class="no-sort">*}
 {*                        <input type="checkbox" class="check-control" id="all-checked">*}
 {*                    </th>*}
-                    <th style="color:black">ID</th>
+                    <th style="width:60px;" class="no-sort">
+                        <input type="checkbox" class="check-control" id="all-checked">
+                    </th>
+                    <th style="color:black">Mã kiểm kê</th>
                     <th style="color:black">Người kiểm kê</th>
                     <th style="color:black">Ngày kiểm kê</th>
-                    <th style="color:black">Lưu ý</th>
+                    <th style="color:black">Ghi chú</th>
                     <th style="color:black" class="no-sort">Thao tác</th>
                 </tr>
                 </thead>
@@ -61,8 +63,10 @@
                 </div>
                 {foreach $inventory_list  as $key=>$value}
                     <tr>
+                        <td><label class="i-checks m-b-none"><input type="checkbox" class="delete_item_check" value="{$value.inventory_id}" name="inventory_id[]"><i></i></label></td>
+
 {*                        <td><label class="i-checks m-b-none"><input type="checkbox" class="delete_item_check" value="{$value.user_id}"><i></i></label></td>*}
-                        <td style="color:black" >{$value.inventory_id}</td>
+                        <td style="color:black" >{$value.inventory_code}</td>
                         <td style="color:black" >{$value.user_name}</td>
                         <td style="color:black" >{$value.inventory_date}</td>
                         <td style="color:black" >{$value.note}</td>
@@ -72,9 +76,16 @@
                     </tr>
                 {/foreach}
                 </tbody>
+                </form>
 
 
             </table>
         </div>
     </div>
 </section>
+<script>
+    $("#export-btn").click(function(){
+        $(".alert").remove();
+
+    });
+</script>

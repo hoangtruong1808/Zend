@@ -64,7 +64,8 @@ class LoginController extends Zend_Controller_Action
                 $auth->getStorage()->write($data);
                 $info = $auth->getIdentity();
                 $_SESSION['user_id'] = $info->user_id;
-                $this->redirect('/menu');
+                $_SESSION['role_id'] = $info->role_id;
+                $this->redirect('/');
             }
         }
     }
@@ -83,6 +84,7 @@ class LoginController extends Zend_Controller_Action
         $auth = Zend_Auth::getInstance();
         $auth->clearIdentity();
         $this->_redirect('/login');
+        session_destroy();
         $this->_helper->viewRenderer->setNoRender();
     }
 }

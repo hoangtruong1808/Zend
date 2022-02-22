@@ -10,7 +10,7 @@
             {$user.name}
         </div>
         <div class="col-sm-3">
-            <span><a href="/user/update/id/{$user.user_id}" class="btn btn-primary" class="card-title" data-toggle="modal">Sửa</a></span>
+            <span><a href="/account/update" class="btn btn-primary" class="card-title" data-toggle="modal">Sửa</a></span>
             <span><a href="" class="btn btn-success" data-toggle="modal" data-target="#change-password">Đổi mật khẩu</a></span>
         </div>
     </header>

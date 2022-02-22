@@ -748,10 +748,20 @@ ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
     color:#fff;
    text-align: left;
 }
-.market-update-right i.fa.fa-eye {
+.market-update-right i.fa.fa-pencil{
      font-size: 3em;
     color:#fff;
    text-align: left;
+}
+.market-update-right i.fa.fa-align-justify {
+    font-size: 3em;
+    color:#fff;
+    text-align: left;
+}
+.market-update-right i.fa.fa-laptop {
+    font-size: 3em;
+    color:#fff;
+    text-align: left;
 }
 .market-update-right i.fa.fa-usd {
      font-size:3em;

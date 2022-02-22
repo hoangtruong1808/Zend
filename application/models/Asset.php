@@ -19,7 +19,7 @@ class Model_Asset extends Zend_Db_Table{
 
     public function countItem(){
         $select = $this->db->select()
-            ->from('tbl_asset_group', array('COUNT(group_id)'))
+            ->from('tbl_asset', array('COUNT(asset_id)'))
             ->where('is_disabled = 0');
         $result = $this->db->fetchOne($select);
         return $result;
@@ -329,16 +329,30 @@ class Model_Asset extends Zend_Db_Table{
         return $result;
     }
     public function inventory($arrParam){
+
+        //get inventory code
+        $select = $this->db->select()
+            ->from('tbl_inventory', array('count' => 'count(*)'))
+            ->where("inventory_date='".$arrParam['inventory_date']."'");
+        $result = $this->db->fetchAll($select);
+        $stt_code = $result[0]['count']+1;
+        $date_code = date("dm", strtotime($arrParam['inventory_date']));
+        $inventory_code = "CTKK-" . $date_code . "-" . $stt_code;
+
         //insert vào bảng inventory
         $row_inventory['inventory_person_id']= $_SESSION['user_id'];
         $row_inventory['inventory_date']= $arrParam['inventory_date'];
         $row_inventory['note']= $arrParam['inventory_note'];
+        $row_inventory['inventory_code']= $inventory_code;
+
+//        $row_inventory['inventory_code'] =
         $this->db->insert('tbl_inventory', $row_inventory);
 
         //get last insert id của inventory
         $select = $this->db->select()
             ->from('tbl_inventory')
             ->order('inventory_id DESC');
+
         $result = $this->db->fetchRow($select);
         $inventory_id = $result['inventory_id'];
 
@@ -367,5 +381,35 @@ class Model_Asset extends Zend_Db_Table{
 
         }
         return $inventory_id;
+    }
+    public function countStatusAsset(){
+        //$result = $this->fetchAll($where, $order, $count, $offet);
+        $select = $this->db->select()
+            ->from('tbl_status')
+            ->joinLeft('tbl_asset', 'tbl_asset.status=tbl_status.status_id', array('asset_count'=>'COUNT(tbl_asset.asset_id)'))
+            ->where('tbl_status.is_delete = 0')
+            ->where('(tbl_asset.is_disabled = 0) OR (tbl_asset.is_disabled IS NULL)')
+            ->group('tbl_asset.is_disabled')
+            ->group('tbl_status.status_id')
+            ->order('status_id ASC');
+
+        $result = $this->db->fetchAll($select);
+        return $result;
+
+    }
+    public function countStateAsset(){
+        //$result = $this->fetchAll($where, $order, $count, $offet);
+        $select = $this->db->select()
+            ->from('tbl_state')
+            ->joinLeft('tbl_asset', 'tbl_asset.state=tbl_state.state_id', array('asset_count'=>'COUNT(tbl_asset.asset_id)'))
+            ->where('tbl_state.is_delete = 0')
+            ->where('(tbl_asset.is_disabled = 0) OR (tbl_asset.is_disabled IS NULL)')
+            ->group('tbl_asset.is_disabled')
+            ->group('tbl_state.state_id')
+            ->order('state_id ASC');
+
+        $result = $this->db->fetchAll($select);
+        return $result;
+
     }
 }

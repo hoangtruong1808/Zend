@@ -25,6 +25,10 @@ class UserController extends Zend_Controller_Action
 
         $this->model = new Model_User;
 
+        if($_SESSION['role_id']==3){
+            $this->redirect('/');
+        }
+
     }
 
     //liệt kê dữ liệu trong db

@@ -6,7 +6,6 @@ class AssetController extends Zend_Controller_Action
     protected $_actionMain;
     protected $model;
 
-
     public function init(){
 
         $auth = Zend_Auth::getInstance();
@@ -44,10 +43,15 @@ class AssetController extends Zend_Controller_Action
             $this->view->message = $_SESSION['message'];
             unset( $_SESSION['message'] );
         }
+
     }
 
     //thêm dữ liệu vào db
     public function addAction(){
+
+        if($_SESSION['role_id']==3){
+            $this->redirect('/asset');
+        }
 
         //lấy giá trị arrParam từ request
 
@@ -121,6 +125,10 @@ class AssetController extends Zend_Controller_Action
 
     //cập nhật dữ liệu trong db
     public function updateAction(){
+
+        if($_SESSION['role_id']==3){
+            $this->redirect('/asset');
+        }
 
         //lấy giá trị arrParam từ request
         $arrParam = $this->_arrParam;
@@ -196,6 +204,10 @@ class AssetController extends Zend_Controller_Action
     //xóa dữ liệu trong db
     public function deleteAction(){
 
+        if($_SESSION['role_id']==3){
+            $this->redirect('/asset');
+        }
+
         //lấy giá trị arrParam từ request
         $arrParam = $this->_arrParam;
 
@@ -214,6 +226,10 @@ class AssetController extends Zend_Controller_Action
 
     //xóa nhiều dữ liệu trong db
     public function multideleteAction(){
+
+        if($_SESSION['role_id']==3){
+            $this->redirect('/asset');
+        }
 
         //lấy giá trị arrParam từ request
         $arrParam = $this->_arrParam;
@@ -256,6 +272,10 @@ class AssetController extends Zend_Controller_Action
     //xuất người dùng
     public function borrowAction(){
 
+        if($_SESSION['role_id']==3){
+            $this->redirect('/asset');
+        }
+
         //set no layout
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
@@ -280,6 +300,10 @@ class AssetController extends Zend_Controller_Action
 
     //kiểm kê
     public function inventoryAction(){
+
+        if($_SESSION['role_id']==3){
+            $this->redirect('/asset');
+        }
 
         $arrParam = $this->_arrParam;
         //xử lý asset_id

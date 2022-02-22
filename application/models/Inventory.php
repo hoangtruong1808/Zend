@@ -16,6 +16,14 @@ class Model_Inventory extends Zend_Db_Table{
         );
 
     }
+    //đếm số kiểm kê
+    public function countInventory(){
+        $select = $this->db->select()
+            ->from('tbl_inventory', array('COUNT(inventory_id)'));
+        $result = $this->db->fetchOne($select);
+        return $result;
+    }
+
     //hiển thị danh sách kiểm kê
     public function listInventory(){
         $select = $this->db->select()
@@ -26,6 +34,7 @@ class Model_Inventory extends Zend_Db_Table{
         $result = $this->db->fetchAll($select);
         return $result;
     }
+
     //hiển thị chi tiết kiểm kê
     public function getInventory($inventory_id){
         $select = $this->db->select()
@@ -37,6 +46,7 @@ class Model_Inventory extends Zend_Db_Table{
         return $result;
 
     }
+
     public function detailInventory($inventory_id){
         $select = $this->db->select()
             ->from('tbl_inventory_detail')

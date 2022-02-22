@@ -347,10 +347,12 @@
                     $("#update-data").modal('hide');
                     $("#row-description"+update_id).html(description);
                     if(active == 1) {
-                        $("#row-status" + update_id).html("Kích hoạt");
+                        $("#row-status" + update_id + "badge").remove();
+                        $("#row-status" + update_id).append("<span class='badge badge-success'>Kích hoạt</span>");
                     }
                     else{
-                        $("#row-status" + update_id).html("Không kích hoạt");
+                        $("#row-status" + update_id + " .badge").remove();
+                        $("#row-status" + update_id).append("<span class='badge badge-danger'>Không kích hoạt</span>");
                     }
                     $(".alert").remove();
                     $("#message").append('<div class="alert alert-success">Cập nhật nhóm tài sản thành công!</div>');

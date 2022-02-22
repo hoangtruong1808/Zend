@@ -16,6 +16,15 @@ class Model_User extends Zend_Db_Table{
         );
     }
 
+    public function countUsers(){
+        $select = $this->db->select()
+            ->from('tbl_user', array('COUNT(user_id)'))
+            ->where('is_disabled = 0');
+        $result = $this->db->fetchOne($select);
+        return $result;
+
+    }
+
     public function listUsers(){
         //$result = $this->fetchAll($where, $order, $count, $offet);
         $select = $this->db->select()

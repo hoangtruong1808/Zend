@@ -17,6 +17,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!-- //bootstrap-css -->
     <!-- Custom CSS -->
     <link href="/css/style.css" rel='stylesheet' type='text/css' />
+    <link href="/css/charty.css" rel='stylesheet' type='text/css' />
     <link href="/css/mystyle.css" rel='stylesheet' type='text/css' />
     <link href="/css/style-responsive.css" rel="stylesheet"/>
     <!-- font CSS -->
@@ -46,6 +47,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 
     <!-- //calendar -->
     <!-- //font-awesome icons -->
@@ -96,6 +98,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--[if lte IE 8]>
 <script type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
 <script src="/js/jquery.scrollTo.js"></script>
+<script src="/js/charty.js"></script>
 <!-- morris JavaScript -->
 </body>
 </html>

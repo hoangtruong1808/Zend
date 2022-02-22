@@ -42,6 +42,14 @@
     <div class="table-agile-info">
         <div class="form-horizontal bucket-form">
             <div class="form-group">
+                <label class="col-sm-3 control-label">Mã kiểm kê</label>
+                <div class="col-sm-6">
+                    <div class="form-control">
+                        {$inventory.inventory_code}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-sm-3 control-label">Người kiểm kê</label>
                 <div class="col-sm-6">
                     <div class="form-control">
@@ -105,42 +113,5 @@
     </div>
 </section>
 <script>
-    $(document).ready(function() {
-        $('#example').DataTable( {
-            dom: 'Bfrtip',
-            buttons: [
-                { extend: 'excel',
-                    className: 'btn btn-success',
-                    text: 'Xuất excel',
-                    customize: function ( xlsx ) {
 
-                        var sheet = xlsx.xl.worksheets['sheet1.xml'];
-
-                        $('c[r=A1] t', sheet).text( 'abc' );
-                        $('c[r=G1] t', sheet).text( 'Custom text' );
-                        $('c[r=A3] t', sheet).text( 'Custom text' );
-                        $('c[r=A6] t', sheet).text( 'Custom text' );
-                        $('c[r=G7] t', sheet).text( 'Custom text' );
-                        $('c[r=A8] t', sheet).text( 'Custom text' );
-
-                        // jQuery selector to add a border
-                        $('row c', sheet).attr('s', '25');
-
-                        //custom font
-                        // var f1 = '<font><sz val="11" /><name val="Calibri" /><color rgb="FFFFFFFF" /><b /></font>';
-                        // //custom colors
-                        // //green 67
-                        // // s1 = '<fill><patternFill patternType="solid"><fgColor rgb="C6E0B4" /><bgColor indexed="64" /></patternFill></fill>';
-                        // // s2 = '<xf numFmtId="168" fontId="0" fillId="6" borderId="1" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1"><alignment horizontal="center"/></xf>';
-                        // //
-                        // // styles.childNodes[0].childNodes[2].innerHTML = styles.childNodes[0].childNodes[2].innerHTML + s1;
-                        // // styles.childNodes[0].childNodes[5].innerHTML = styles.childNodes[0].childNodes[5].innerHTML + s2;
-                        //
-                        // $('row c[r^="A"]', sheet).attr('s', '67');
-                    }
-
-                }
-            ],
-        } );
-    } );
 </script>

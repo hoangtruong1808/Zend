@@ -29,6 +29,7 @@
 
             Quản lý tài sản
         </div>
+        {if $smarty.session.role_id==2 }
         <div class="col-sm-4">
             <div class="add-data">
                 <form method="post" action="/asset/inventory">
@@ -43,6 +44,7 @@
                 </form>
             </div>
         </div>
+        {/if}
     </header>
     <div class="modal fade xoa-modal" id="multi-export-user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 100px">
         <div class="modal-dialog" role="document">
@@ -131,8 +133,10 @@
                         </td>
                         <td>
                             <a href="/asset/detail/id/{$value.asset_id}" style="margin-right: 20px"><i class="fas fa-eye"></i></a>
+                            {if $smarty.session.role_id==2 }
                             <a href="/asset/update/id/{$value.asset_id}"  style="margin-right: 20px"><i class="fas fa-pen"></i></a>
                             <button class="delete-button" data-toggle="modal" data-target="#delete-data" data-id="{$value.asset_id}"><i class="fas fa-trash-alt"></i></button>
+                            {/if}
                         </td>
                     </tr>
                 {/foreach}
