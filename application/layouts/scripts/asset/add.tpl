@@ -19,19 +19,19 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label">Tên</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="name" value="{(isset($name))? {$name} : ''}">
+                    <input type="text" class="form-control required" name="name" id="name" value="{(isset($name))? {$name} : ''}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label">Mã</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="code" value="{(isset($code))? {$code} : ''}">
+                    <input type="text" class="form-control required" name="code" value="{(isset($code))? {$code} : ''}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label">Nhóm tài sản</label>
                 <div class="col-sm-6">
-                    <select class="form-control m-bot15" name="asset_group_id">
+                    <select class="form-control m-bot15  required" name="asset_group_id">
                         <option disabled selected value="">Chọn nhóm tài sản</option>
                         {foreach $menu_list as $key=>$value}
                         <option value="{$value.group_id}" {(isset($asset_group_id))?(($value.group_id==$asset_group_id)?'selected="selected"':'') : ''}>{$value.description}</option>
@@ -48,7 +48,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label">Tình trạng</label>
                 <div class="col-sm-6">
-                    <select class="form-control m-bot15" name="status">
+                    <select class="form-control m-bot15  required" name="status">
                         <option disabled selected value>Chọn tình trạng</option>
                         {foreach $status_list as $key=>$value}
                             <option value="{$value.status_id}" {(isset($status))?(($value.status_id==$status)?'selected="selected"':'') : ''}>{$value.status_name}</option>
@@ -60,14 +60,14 @@
                 <div class="row">
                     <label class="col-sm-3 control-label required-label">Hình ảnh</label>
                     <div class="col-sm-6">
-                        <input type="file" class="form-control" id="imgInp" name="image" accept="image/png, image/gif, image/jpeg">
+                        <input type="file" class="form-control  required" id="imgInp" name="image" accept="image/png, image/gif, image/jpeg" >
                     </div>
                 </div>
                 <div class="row">
                     <span id="image-area"></span>
                 </div>
             </div>
-            <button type="submit" class="btn btn-success" style="margin-left: 48%">Thêm</button>
+            <button type="submit" class="btn btn-success" id="btn-add" style="margin-left: 48%" disabled="disabled" >Thêm</button>
         </form>
     </div>
 
@@ -75,6 +75,19 @@
 
 <script>
     $(document).ready(function() {
+        $('.required').on('change', function() {
+            let empty = false;
+
+            $('.required').each(function() {
+                console.log($(this).val());
+                empty = $(this).val().length == 0;
+            });
+
+            if (empty)
+                $('#btn-add').attr('disabled', 'disabled');
+            else
+                $('#btn-add').attr('disabled', false);
+        });
 
         $('#imgInp').change(function(){
             $('.err_input').remove();

@@ -273,7 +273,7 @@ ul.top-menu {
     margin-top: 0;
 }
 ul.top-menu > li > a {
-    color: #fff;
+    color: #1874CD;
     font-size: 16px;
     background: #8b5c7e;
     padding: 4px 8px;
@@ -283,13 +283,13 @@ ul.top-menu > li > a {
     padding-right: 8px !important;
 }
 ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
-    background:#fa9fa4;
+    background:#1874CD;
     text-decoration:none;
     color:#fff !important;
     padding-right:8px !important;
 }
 .nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
-     background:#fa9fa4 !important;
+     background:#1874CD !important;
     color:#fff !important;
 }
 .notify-row .badge {
@@ -506,8 +506,8 @@ ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
     padding: 0px;
     background: none;
     margin-right: 0;
-    border: 1px solid #8b5c7e;
-    background: #8b5c7e;
+    border: 1px solid #1874CD;
+    background: #1874CD;
 }
 .top-nav ul.top-menu>li.language>a {
     margin-top:-2px;
@@ -528,8 +528,8 @@ ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
     margin-left:10px;
 }
 .top-nav ul.top-menu>li>a:hover,.top-nav ul.top-menu>li>a:focus {
-    border:1px solid #fa9fa4;
-    background:#fa9fa4 !important;
+    border:1px solid #1874CD;
+    background:#1874CD !important;
     border-radius:100px;
     -webkit-border-radius:100px;
 }

@@ -44,19 +44,19 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label">Tên</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="name" value="{(!empty($name))? {$name} : {$asset.name}}">
+                    <input type="text" class="form-control required" name="name" value="{(!empty($name))? {$name} : {$asset.name}}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label">Mã</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="code" value="{(!empty($code))? {$code} : {$asset.code}}">
+                    <input type="text" class="form-control required" name="code" value="{(!empty($code))? {$code} : {$asset.code}}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">Nhóm tài sản</label>
                 <div class="col-sm-6">
-                    <select class="form-control m-bot15" name="asset_group_id">
+                    <select class="form-control m-bot15 required" name="asset_group_id">
                         {foreach $menu_list as $key=>$value}
                             <option value="{$value.group_id}" {($value.group_id==$asset.asset_group_id)?'selected="selected"':""}>{$value.description}</option>
                         {/foreach}
@@ -72,7 +72,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">Tình trạng</label>
                 <div class="col-sm-6">
-                    <select class="form-control m-bot15" name="status">
+                    <select class="form-control m-bot15 required" name="status">
                         {foreach $status_list as $key=>$value}
                             <option value="{$value.status_id}" {($value.status_id==$asset.status)?'selected="selected"':""}>{$value.status_name}</option>
                         {/foreach}
@@ -84,7 +84,7 @@
                     <label class="col-sm-3 control-label required-label">Hình ảnh</label>
                     <div class="col-sm-6">
                         <input type="file" class="form-control" id="imgInp" name="image" accept="image/png, image/gif, image/jpeg">
-                        <input type="hidden" class="form-control" id="image-check" name="image-check" value="1">
+                        <input type="hidden" class="form-control required" id="image-check" name="image-check" value="1">
                     </div>
                 </div>
                 <div class="row">
@@ -94,7 +94,7 @@
                     </span>
                 </div>
             </div>
-            <button type="submit" class="btn btn-success" style="margin-left: 47%">Cập nhật</button>
+            <button type="submit" class="btn btn-success" style="margin-left: 47%" id="btn-add" >Cập nhật</button>
         </form>
     </div>
 

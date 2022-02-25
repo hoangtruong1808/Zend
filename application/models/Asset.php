@@ -99,6 +99,18 @@ class Model_Asset extends Zend_Db_Table{
                     ),
                 )
             ),
+            'configuration' => array(
+                new Zend_Validate_StringLength(
+                    array(
+                        'max' => 255,
+                    )
+                ),
+                Zend_Filter_Input::MESSAGES => array(
+                    array(
+                        Zend_Validate_StringLength::TOO_LONG => 'Cấu hình tối đa 255 kí tự',
+                    )
+                ),
+            ),
             'asset_group_id' => array(
                 new Zend_Validate_NotEmpty(),
                 Zend_Filter_Input::MESSAGES => array(
@@ -192,11 +204,11 @@ class Model_Asset extends Zend_Db_Table{
     }
     public function borrow($arrParam){
 
+
         //insert vào bảng borrow
-//        var_dump($arrParam);
 
         $row['user_id']= $arrParam['borrow_user_id'];
-        $row['borrow_date']= $arrParam['borrow_date'];
+        $row['borrow_date']= date("Y-m-d H:i:s", strtotime($arrParam['borrow_date']));
 
         $this->db->insert('tbl_borrow', $row);
 //        $borrow_id = $this->db->lastInsertId('tbl_borrow', 'borrow_id');
@@ -207,19 +219,16 @@ class Model_Asset extends Zend_Db_Table{
             ->order('borrow_id DESC');
         $result = $this->db->fetchRow($select);
 
-
         foreach($arrParam["id"] as $item_id) {
-            $row_detail['is_disabled'] = 1;
-            $where = 'asset_id= '.$item_id;
-            $this->db->update('tbl_borrow_detail', $row_detail, $where);
+
 
             //insert vào bảng borrow detail
             $row_detail['asset_id']= $item_id;
             $row_detail['borrow_id']=  $result['borrow_id'];
-            $row_detail['is_disabled'] = 0;
             $this->db->insert('tbl_borrow_detail', $row_detail);
-
-            //chuyển tài sản thành trạng thái đang sử dụng
+//
+//
+//            //chuyển tài sản thành trạng thái đang sử dụng
             $row_asset['state'] = 1;
             $where = 'asset_id= '.$item_id;
             $this->db->update('tbl_asset', $row_asset, $where);

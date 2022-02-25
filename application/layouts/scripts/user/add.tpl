@@ -13,31 +13,31 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label">Họ tên</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="name" value="{(isset($name))? {$name} : ''}">
+                    <input type="text" class="form-control required" name="name" value="{(isset($name))? {$name} : ''}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label">Số điện thoại</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="phone" value="{(isset($phone))? {$phone} : ''}">
+                    <input type="text" class="form-control required" name="phone" value="{(isset($phone))? {$phone} : ''}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label">Email</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="email" value="{(isset($email))? {$email} : ''}">
+                    <input type="text" class="form-control required" name="email" value="{(isset($email))? {$email} : ''}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label">Mật khẩu</label>
                 <div class="col-sm-6">
-                    <input type="password" class="form-control" name="password" value="{(isset($password))? {$password} : ''}">
+                    <input type="password" class="form-control required" name="password" value="{(isset($password))? {$password} : ''}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label" >Vai trò</label>
                 <div class="col-sm-6">
-                    <select class="form-control m-bot15" name="role">
+                    <select class="form-control m-bot15 required" name="role">
                         {foreach $role_list as $key=>$value}
                             <option value="{$value.role_id}" {(isset($role))?(($value.role_id==$role)?'selected="selected"':'') : 'abc'}>{$value.name}</option>
                         {/foreach}
@@ -48,14 +48,14 @@
                 <div class="row">
                     <label class="col-sm-3 control-label required-label">Hình ảnh</label>
                     <div class="col-sm-6">
-                        <input type="file" class="form-control" id="imgInp" name="image" accept="image/png, image/gif, image/jpeg">
+                        <input type="file" class="form-control required" id="imgInp" name="image" accept="image/png, image/gif, image/jpeg">
                     </div>
                 </div>
                 <div class="row">
                     <span id="image-area"></span
                 </div>
             </div>
-            <button type="submit" class="btn btn-success" style="margin-left: 48%">Thêm</button>
+            <button type="submit" class="btn btn-success" style="margin-left: 48%" disabled="disabled" id="btn-add">Thêm</button>
         </form>
     </div>
 
@@ -63,6 +63,20 @@
 
 <script>
     $(document).ready(function() {
+
+        $('.required').on('change', function() {
+            let empty = false;
+
+            $('.required').each(function() {
+                console.log($(this).val());
+                empty = $(this).val().length == 0;
+            });
+
+            if (empty)
+                $('#btn-add').attr('disabled', 'disabled');
+            else
+                $('#btn-add').attr('disabled', false);
+        });
 
         $('#imgInp').change(function(){
             $('.err_input').remove();

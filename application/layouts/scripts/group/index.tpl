@@ -61,7 +61,7 @@
                 {foreach $menu_list  as $key=>$value}
                     <tr id="row{$value.group_id}">
                         <td><label class="i-checks m-b-none"><input type="checkbox" class="delete_item_check" value="{$value.group_id}" data-assetcount="{$value.asset_count}"><i></i></label></td>
-                        <td style="color:black; text-align: left " id="row-description{$value.group_id}"><a href="asset?group_id={$value.group_id}">{$value.description}</a><span class="badge badge-light" style="margin-left: 7px;" >{$value.asset_count}</span></td>
+                        <td style="color:black; text-align: left " id="row-description{$value.group_id}"><a href="asset?group_id={$value.group_id}" class="group-href">{$value.description}</a><span class="badge badge-light" style="margin-left: 7px;" >{$value.asset_count}</span></td>
                         <td style="color:black" id="row-status{$value.group_id}" >{($value.active==1)?"<span class='badge badge-success'>Kích hoạt</span>":"<span class='badge badge-danger'>Không kích hoạt</span>"}</td>
                         <td>
                             <button class="update-button" type="submit" data-toggle="modal" data-target="#update-data" data-id="{$value.group_id}" data-desription="{$value.description}" data-active="{$value.active}" title="Sửa nhóm tài sản"><i class="fas fa-pen"></i></button>
@@ -82,7 +82,7 @@
                                     <div class="form-group" style="margin-bottom: 60px">
                                         <label class="col-sm-3 add-name required-label" style="font-size: 13px; margin-top: 10px; text-align: right"><b>Tên:</b></label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="description" id="add_description">
+                                            <input type="text" class="form-control required" name="description" id="add_description">
                                             <p id="alert" style="color: red; font-size: 13px; margin: 10px"></p>
                                         </div>
                                     </div>
@@ -98,7 +98,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                                    <a type="submit" id="add" class="btn btn-primary">Tiếp tục</a>
+                                    <a type="submit" id="add" class="btn btn-primary" disabled="disabled">Tiếp tục</a>
                                 </div>
                             </form>
                         </div>
@@ -208,13 +208,29 @@
         "bDestroy": true,
         "iDisplayLength": 25,
         "bLengthChange": false,
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.11.4/i18n/vi.json'
+        }
+    });
+    $('.required').on('change', function() {
+        let empty = false;
+
+        $('.required').each(function() {
+            console.log($(this).val());
+            empty = $(this).val().length == 0;
+        });
+
+        if (empty)
+            $('#add').attr('disabled', 'disabled');
+        else
+            $('#add').attr('disabled', false);
     });
     $("#add").click(function(){
         var description = $("#add_description").val();
         var active = $("#add_active").val();
         $.ajax({
             method: "POST",
-            url: "/menu/add",
+            url: "/group/add",
             data:{
                 'description':description,
                 'active': active,
@@ -251,7 +267,7 @@
         console.log(delete_id);
         $.ajax({
             method: "POST",
-            url: "/menu/delete",
+            url: "/group/delete",
             data:{
                 "id":delete_id,
                 "asset_count":delete_assetcount,
@@ -289,7 +305,7 @@
         else {
             $.ajax({
                 method: "POST",
-                url: "/menu/multidelete",
+                url: "/group/multidelete",
                 data: {
                     "id": id,
                     "asset_count": asset_count,
@@ -334,7 +350,7 @@
 
         $.ajax({
             method: "POST",
-            url: "/menu/update",
+            url: "/group/update",
             data:{
                 'id':update_id,
                 'description':description,
@@ -347,7 +363,7 @@
                 }
                 else{
                     $("#update-data").modal('hide');
-                    $("#row-description"+update_id).html(description);
+                    $("#row-description"+update_id+" .group-href").html(description);
                     if(active == 1) {
                         $("#row-status" + update_id + " .badge").remove();
                         $("#row-status" + update_id).append("<span class='badge badge-success'>Kích hoạt</span>");

@@ -72,7 +72,8 @@ class GroupController extends Zend_Controller_Action
             else{
                 $error_input = ['error_input'=> "Vui lòng nhập tên nhóm tài sản!"];
                 $this->_helper->json->sendJson($error_input);
-            };
+            }
+
         } catch (Exception $e) {
             var_dump($e->getMessage());
         }

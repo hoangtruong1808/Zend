@@ -73,7 +73,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Ngày mượn</label>
                                 <div class="col-sm-7">
-                                    <input class="form-control" type="datetime-local" name="borrow_date" id="borrow_date" value="{date("Y-m-d")}" max="{date("Y-m-d")}">
+                                    <input class="form-control" type="datetime-local" name="borrow_date" id="borrow_date" value="{date("Y-m-d")}T{date("H:i")}" max="{date("Y-m-d")}T{date("H:i")}">
                                     <div id="alert" style="color: #ff0000; font-size: 13px; margin:10px; text-align: left"></div>
                                 </div>
                             </div>
@@ -380,6 +380,9 @@
             style:    'multi',
             selector: 'td:first-child'
         },
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.11.4/i18n/vi.json'
+        }
     });
 
     $("#btn-inventory").click(function() {

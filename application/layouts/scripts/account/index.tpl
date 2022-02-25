@@ -29,21 +29,21 @@
 
                                 <label class="col-sm-4" style="font-size: 14px; margin-top: 10px; text-align: right; font-weight: bold">Mật khẩu cũ</label>
                                 <div class="col-sm-7">
-                                    <input class="form-control" type="password" name="old_password" id="old_password">
+                                    <input class="form-control required" type="password" name="old_password" id="old_password">
                                 </div>
                             </div>
                             <div class="form-group">
 
                                 <label class="col-sm-4" style="font-size: 14px; margin-top: 10px; text-align: right; font-weight: bold">Mật khẩu mới</label>
                                 <div class="col-sm-7">
-                                    <input class="form-control" type="password" name="new_password" id="new_password">
+                                    <input class="form-control required" type="password" name="new_password" id="new_password">
                                 </div>
                             </div>
                             <div class="form-group">
 
                                 <label class="col-sm-4" style="font-size: 14px; margin-top: 10px; text-align: right; font-weight: bold">Nhập lại mật khẩu</label>
                                 <div class="col-sm-7">
-                                    <input class="form-control" type="password" name="re_password" id="re_password">
+                                    <input class="form-control required" type="password" name="re_password" id="re_password">
                                 </div>
                             </div>
                         </div>
@@ -51,7 +51,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
-                        <a class="btn btn-primary" id="btn-change-password">Chọn</a>
+                        <a class="btn btn-primary" id="btn-change-password" disabled="disabled">Chọn</a>
                     </div>
                 </div>
             </form>
@@ -149,6 +149,19 @@
     </div>
 </section>
 <script>
+    $('.required').on('change', function() {
+        let empty = false;
+
+        $('.required').each(function() {
+            console.log($(this).val());
+            empty = $(this).val().length == 0;
+        });
+
+        if (empty)
+            $('#btn-change-password').attr('disabled', 'disabled');
+        else
+            $('#btn-change-password').attr('disabled', false);
+    });
     $("#btn-change-password").click(function(){
         var old_password = $("#old_password").val();
         var new_password = $("#new_password").val();

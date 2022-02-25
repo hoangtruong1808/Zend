@@ -208,5 +208,8 @@
         "bDestroy": true,
         "iDisplayLength": 25,
         "bLengthChange": false,
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.11.4/i18n/vi.json'
+        }
     });
 </script>

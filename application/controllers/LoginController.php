@@ -66,6 +66,9 @@ class LoginController extends Zend_Controller_Action
                     $info = $auth->getIdentity();
                     $_SESSION['user_id'] = $info->user_id;
                     $_SESSION['role_id'] = $info->role_id;
+                    $_SESSION['user_name'] = $info->name;
+                    $_SESSION['image'] = $info->image;
+
                     $this->redirect('/');
                 }
             } catch (Exception $e) {

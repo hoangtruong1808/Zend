@@ -232,7 +232,7 @@ class Model_User extends Zend_Db_Table{
 
         foreach($arrParam["borrow_detail_id"] as $borrow_detail_id)
         {
-            $row['return_date']= date("Y-m-d");
+            $row['return_date']= date("Y-m-d H:i:s");
             $row['status']=1;
             $where = 'borrow_detail_id= '.$borrow_detail_id;
 

@@ -280,6 +280,7 @@ class UserController extends Zend_Controller_Action
         //lấy giá trị arrParam từ request
         $arrParam = $this->_arrParam;
         //lấy dữ liệu
+        var_dump($arrParam);
         try {
             $this->model->returnAsset($arrParam);
 

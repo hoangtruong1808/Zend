@@ -134,6 +134,7 @@ class AssetController extends Zend_Controller_Action
                     $this->view->configuration = $arrParam['configuration'];
                     $this->view->status = $arrParam['status'];
                 }
+
             } catch (Exception $e) {
                 var_dump($e->getMessage());
             }
@@ -343,6 +344,7 @@ class AssetController extends Zend_Controller_Action
         //lấy giá trị arrParam từ request
         $arrParam = $this->_arrParam;
         try {
+            $arrParam['id']=array_unique($arrParam['id']);
             //validation
             $validator = new Zend_Validate_NotEmpty();
 
@@ -357,6 +359,7 @@ class AssetController extends Zend_Controller_Action
                 $error_input = ['error_input'=> "Vui lòng nhập đầy đủ thông tin!"];
                 $this->_helper->json->sendJson($error_input);
             };
+            exit();
         } catch (Exception $e) {
         var_dump($e->getMessage());
         }
