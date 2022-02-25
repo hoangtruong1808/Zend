@@ -28,10 +28,11 @@
         <div class="col-sm-6">
             Quản lý người dùng
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-2">
             <div class="add-data">
                 <a href="/user/add" class="btn btn-success" style="" class="card-title" data-toggle="modal"><i class="fa fa-plus" aria-hidden="true"></i> Thêm</a>
-                <span style="margin-left: 10px;"><a class="btn btn-danger" data-toggle="modal" data-target="#multi-delete-data" ><i class="fas fa-times"></i> Xóa</a></span>
+                <span style="margin-left: 10px;"><button class="btn btn-danger  disabled-btn" data-toggle="modal" data-target="#multi-delete-data" disabled><i class="fas fa-times"></i> Xóa</button></span>
             </div>
         </div>
     </header>
@@ -62,14 +63,14 @@
                 {foreach $user_list  as $key=>$value}
                     <tr id="row{$value.user_id}">
                         <td><label class="i-checks m-b-none"><input type="checkbox" class="delete_item_check" value="{$value.user_id}"><i></i></label></td>
-                        <td style="color:black" >{$value.name}</td>
+                        <td style="color:black; text-align: left" >{$value.name}</td>
                         <td style="color:black" >{$value.phone}</td>
-                        <td style="color:black" >{$value.email}</td>
-                        <td style="color:black" >{$value.role_name}</td>
+                        <td style="color:black; text-align: left" >{$value.email}</td>
+                        <td style="color:black; text-align: left" >{$value.role_name}</td>
                         <td>
-                            <a href="/user/detail/id/{$value.user_id}" style="margin-right: 20px"><i class="fas fa-eye"></i></a>
-                            <a href="/user/update/id/{$value.user_id}"  style="margin-right: 20px"><i class="fas fa-pen"></i></a>
-                            <button class="delete-button" data-toggle="modal" data-target="#delete-data" data-id="{$value.user_id}"><i class="fas fa-trash-alt"></i></button>
+                            <a href="/user/detail/id/{$value.user_id}" style="margin-right: 20px" title="Xem chi tiết"><i class="fas fa-eye"></i></a>
+                            <a href="/user/update/id/{$value.user_id}"  style="margin-right: 20px" title="Sửa người dùng"><i class="fas fa-pen"></i></a>
+{*                            <button class="delete-button" data-toggle="modal" data-target="#delete-data" data-id="{$value.user_id}"><i class="fas fa-trash-alt"></i></button>*}
                         </td>
                     </tr>
                 {/foreach}

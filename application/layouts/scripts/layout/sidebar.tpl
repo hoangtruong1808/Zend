@@ -17,7 +17,7 @@
                 </li>
                 {if $smarty.session.role_id==2 }
                 <li class="sub-menu">
-                    <a {($currentController=='/menu')?'class="active"':''} href="/menu">
+                    <a {($currentController=='/menu')?'class="active"':''} href="/group">
                         <i class="fas fa-list"></i>
                         <span>Quản lý nhóm tài sản</span>
                     </a>

@@ -13,25 +13,25 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label">Họ tên</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="name">
+                    <input type="text" class="form-control" name="name" value="{(isset($name))? {$name} : ''}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label">Số điện thoại</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="phone">
+                    <input type="text" class="form-control" name="phone" value="{(isset($phone))? {$phone} : ''}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label">Email</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="email">
+                    <input type="text" class="form-control" name="email" value="{(isset($email))? {$email} : ''}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label">Mật khẩu</label>
                 <div class="col-sm-6">
-                    <input type="password" class="form-control" name="password">
+                    <input type="password" class="form-control" name="password" value="{(isset($password))? {$password} : ''}">
                 </div>
             </div>
             <div class="form-group">
@@ -39,7 +39,7 @@
                 <div class="col-sm-6">
                     <select class="form-control m-bot15" name="role">
                         {foreach $role_list as $key=>$value}
-                            <option value="{$value.role_id}">{$value.name}</option>
+                            <option value="{$value.role_id}" {(isset($role))?(($value.role_id==$role)?'selected="selected"':'') : 'abc'}>{$value.name}</option>
                         {/foreach}
                     </select>
                 </div>

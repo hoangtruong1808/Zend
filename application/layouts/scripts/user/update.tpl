@@ -13,19 +13,19 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label">Họ tên</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="name" value="{$user.name}">
+                    <input type="text" class="form-control" name="name" value="{(!empty($name))? {$name} : {$user.name}}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label">Số điện thoại</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="phone" value="{$user.phone}">
+                    <input type="text" class="form-control" name="phone" value="{(!empty($phone))? {$phone} : {$user.phone}}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label">Email</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="email" value="{$user.email}">
+                    <input type="text" class="form-control" name="email" value="{(!empty($email))? {$email} : {$user.email}}">
                 </div>
             </div>
             <div class="form-group">
@@ -43,6 +43,7 @@
                     <label class="col-sm-3 control-label required-label">Hình ảnh</label>
                     <div class="col-sm-6">
                         <input type="file" class="form-control" id="imgInp" name="image" accept="image/png, image/gif, image/jpeg">
+                        <input type="hidden" class="form-control" id="image-check" name="image-check" value="1">
                     </div>
                 </div>
                 <div class="row">
@@ -66,6 +67,7 @@
                 $('#image-area img').remove();
                 $('#remove-image-btn').remove();
                 $('#imgInp').val('');
+                $('#image-check').val('');
             });
         }
 
@@ -80,6 +82,7 @@
                     $('#image-area img').remove();
                     $('#remove-image-btn').remove();
                     $('#image-area').append('<img src="' + e.target.result +'" id="blah" width="150px" height="120px">' + '<div href="" id="remove-image-btn"><i class="fas fa-times"></i></div>');
+                    $('#image-check').val('1');
                     RemoveImageClick()
                 }
 

@@ -47,25 +47,29 @@ class LoginController extends Zend_Controller_Action
         $select->where('is_disabled = 0');
 
         if ($this->_request->isPost()){
-            $email = $this->_arrParam['email'];
-            $password = md5($this->_arrParam['password']);
-            //set giá trị người dùng nhập để kiểm tra
-            $authAdapter->setIdentity($email);
-            $authAdapter->setCredential($password);
+            try {
+                $email = $this->_arrParam['email'];
+                $password = md5($this->_arrParam['password']);
+                //set giá trị người dùng nhập để kiểm tra
+                $authAdapter->setIdentity($email);
+                $authAdapter->setCredential($password);
 
-            //truy vấn kết quả
-            $result = $auth->authenticate($authAdapter);
-            if (!$result->isValid()){
-                //đăng nhập không thành công
-                $this->view->error = "Sai mật khẩu!";
-            }else{
-                //đăng nhập thành công
-                $data = $authAdapter->getResultRowObject();
-                $auth->getStorage()->write($data);
-                $info = $auth->getIdentity();
-                $_SESSION['user_id'] = $info->user_id;
-                $_SESSION['role_id'] = $info->role_id;
-                $this->redirect('/');
+                //truy vấn kết quả
+                $result = $auth->authenticate($authAdapter);
+                if (!$result->isValid()){
+                    //đăng nhập không thành công
+                    $this->view->error = "Sai mật khẩu!";
+                }else{
+                    //đăng nhập thành công
+                    $data = $authAdapter->getResultRowObject();
+                    $auth->getStorage()->write($data);
+                    $info = $auth->getIdentity();
+                    $_SESSION['user_id'] = $info->user_id;
+                    $_SESSION['role_id'] = $info->role_id;
+                    $this->redirect('/');
+                }
+            } catch (Exception $e) {
+                var_dump($e->getMessage());
             }
         }
     }

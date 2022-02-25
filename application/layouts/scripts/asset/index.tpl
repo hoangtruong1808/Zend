@@ -15,6 +15,14 @@
         background: none;
         border: none;
     }
+    table{
+        table-layout: fixed;
+    }
+    td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 </style>
 <section>
     {$stt=1}
@@ -29,21 +37,17 @@
 
             Quản lý tài sản
         </div>
-        {if $smarty.session.role_id==2 }
-        <div class="col-sm-4">
-            <div class="add-data">
-                <form method="post" action="/asset/inventory">
-                    <span><a style="margin-left: 10px;" class="btn btn-success" class="card-title" data-toggle="modal" data-target="#multi-export-user">Cho mượn</a></span>
-                    <span style="margin-left: 10px;">
-                        <span><input type="hidden" name="asset_id" id="inventory_asset_id"><span>
-                        <span><input type="submit" class="btn btn-primary" value="KIỂM KÊ" id="btn-inventory"><span>
-    {*                    <a style="margin-left: 10px;" href="/asset/inventory" class="btn btn-primary" id="btn-inventory">Kiểm kê</a>*}
-                    </span>
-                    <a style="margin-left: 10px;" href="/asset/add" class="btn btn-success" class="card-title" data-toggle="modal"> Thêm</a>
-                    <span style="margin-left: 10px;"><a class="btn btn-danger" data-toggle="modal" data-target="#multi-delete-data" >Xóa</a></span>
-                </form>
-            </div>
+        <div class="col-sm-1">
         </div>
+        {if $smarty.session.role_id==2 }
+            <div class="col-sm-3">
+                <div class="add-data" >
+                    <span><button style="margin-left: 10px;" class="btn btn-success disabled-btn" class="card-title" data-toggle="modal" data-target="#multi-export-user" id="borrow-btn" disabled>CHO MƯỢN</button></span>
+                    <span><form style="display: inline-block; margin-left: 10px;" method="post" action="/asset/inventory"><input type="hidden" name="asset_id" id="inventory_asset_id"><input type="submit" class="btn btn-primary disabled-btn" value="KIỂM KÊ" id="btn-inventory" disabled></form><span>
+                    <a style="margin-left: 10px;" href="/asset/add" class="btn btn-success" class="card-title" data-toggle="modal"> Thêm</a>
+                    <span style="margin-left: 10px;"><button class="btn btn-danger disabled-btn" data-toggle="modal" data-target="#multi-delete-data" id="delete-btn" disabled>XÓA</button></span>
+                </div>
+            </div>
         {/if}
     </header>
     <div class="modal fade xoa-modal" id="multi-export-user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 100px">
@@ -69,7 +73,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Ngày mượn</label>
                                 <div class="col-sm-7">
-                                    <input class="form-control" type="date" name="borrow_date" id="borrow_date">
+                                    <input class="form-control" type="datetime-local" name="borrow_date" id="borrow_date" value="{date("Y-m-d")}" max="{date("Y-m-d")}">
                                     <div id="alert" style="color: #ff0000; font-size: 13px; margin:10px; text-align: left"></div>
                                 </div>
                             </div>
@@ -98,10 +102,10 @@
                         <input type="checkbox" class="check-control" id="all-checked">
                     </th>
                     <th style="color:black">Tên</th>
-                    <th style="color:black">Mã</th>
-                    <th style="color:black">Cấu hình</th>
-                    <th style="color:black">Tình trạng</th>
-                    <th style="color:black">Trạng thái</th>
+                    <th style="color:black; width: 180px">Mã</th>
+                    <th style="color:black; width: 270px">Cấu hình</th>
+                    <th style="color:black; width: 160px;">Tình trạng</th>
+                    <th style="color:black; width: 160px;">Trạng thái</th>
                     <th style="color:black" class="no-sort">Thao tác</th>
                 </tr>
                 </thead>
@@ -111,7 +115,7 @@
                         {$alert = $flashmessage[0]["alert"]}
                     {/if}
                     {if isset($message)}
-                    <div class="alert alert-success">{$message}</div>
+                        <div class="alert alert-success">{$message}</div>
                     {/if}
                     {if isset($alert)}
                         <div class="alert alert-danger">{$alert}
@@ -120,22 +124,21 @@
                 </div>
                 {foreach $asset_list  as $key=>$value}
                     <tr id="row{$value.asset_id}">
-                        <td><label class="i-checks m-b-none"><input type="checkbox" class="delete_item_check" value="{$value.asset_id}" data-state={$value.state_id} data-status={$value.status_id}><i></i></label></td>
-                        <td style="color:black" >{$value.name}</td>
-                        <td style="color:black" >{$value.code}</td>
-                        <td style="color:black" >{$value.configuration}</td>
+                        <td><label class="i-checks m-b-none"><input type="checkbox" class="delete_item_check" value="{$value.asset_id}" data-id="{$value.asset_id}" data-state={$value.state_id} data-status={$value.status_id}><i></i></label></td>
+                        <td style="color:black; text-align: left" >{$value.name}</td>
+                        <td style="color:black; text-align: left" >{$value.code}</td>
+                        <td style="color:black; text-align: left;" >{$value.configuration}</td>
                         <td style="color:black" >
                             <span class="badge badge-{($value.status_id==1)?'success':(($value.status_id==2)?'warning':'danger')}">{$value.status_name}</span>
-
                         </td>
                         <td style="color:black" >
                             <span class="badge badge-{($value.state_id==2)?'success':(($value.state_id==1)?'warning':'danger')}" id="state_asset{$value.asset_id}">{$value.state_name}</span>
                         </td>
                         <td>
-                            <a href="/asset/detail/id/{$value.asset_id}" style="margin-right: 20px"><i class="fas fa-eye"></i></a>
+                            <a href="/asset/detail/id/{$value.asset_id}" style="margin-right: 20px" title="Xem chi tiết"><i class="fas fa-eye"></i></a>
                             {if $smarty.session.role_id==2 }
-                            <a href="/asset/update/id/{$value.asset_id}"  style="margin-right: 20px"><i class="fas fa-pen"></i></a>
-                            <button class="delete-button" data-toggle="modal" data-target="#delete-data" data-id="{$value.asset_id}"><i class="fas fa-trash-alt"></i></button>
+                                <a href="/asset/update/id/{$value.asset_id}"  style="margin-right: 20px" title="Sửa tài sản"><i class="fas fa-pen"></i></a>
+                                <a class="delete-button" data-toggle="modal" data-target="#delete-data" data-id="{$value.asset_id}"  title="Xóa tài sản"><i class="fas fa-trash-alt"></i></a>
                             {/if}
                         </td>
                     </tr>
@@ -194,6 +197,25 @@
 </section>
 <script>
     //xóa dữ liệu
+    function getAssetID(){
+        if($('#all-checked').is(':checked')){
+            {foreach $asset_list  as $key=>$value}
+            checkbox_asset_id.push("{$value.asset_id}");
+            {/foreach}
+            $('.delete_item_check').change(function(){
+                checkbox_asset_id=[];
+            })
+        }
+        else {
+            $('.delete_item_check:checkbox:checked').each(function (i) {
+                checkbox_asset_id.push($(this).val());
+            });
+        }
+        console.log(checkbox_asset_id);
+        $("#inventory_asset_id").val(checkbox_asset_id);
+        return checkbox_asset_id;
+    }
+
     let delete_select_id;
     $(".delete-button").click(function(){
         delete_select_id = $(this).data("id");
@@ -213,7 +235,7 @@
                 {
                     $(".xoa-modal").modal('hide');
                     $(".alert").remove();
-                    $("#message").append('<div class="alert alert-danger">Xóa tài sản không thành công!</div>');
+                    $("#message").append('<div class="alert alert-danger">'+data.error_input+'</div>');
                 }
                 else {
                     $(".xoa-modal").modal('hide');
@@ -226,18 +248,22 @@
     });
     //xóa nhiều dữ liệu
     $("#btn_multi_delete").click(function(){
-        var id =[];
+        var id = [];
         var state=[];
-        $('.delete_item_check:checkbox:checked').each(function(i){
-            id[i] = $(this).val();
-            state[i] = $(this).attr("data-state");
-            console.log(id[i]);
+        i=0;
+        $.each(getAssetID(), function(index, value ) {
+            id[i] = value;
+            i++;
         });
+        $('.delete_item_check:checkbox:checked').each(function(i){
+            state[i] = $(this).attr("data-state");
+        });
+        //
         if(jQuery.inArray("1", state)!== -1){
             $(".alert").remove();
             $("#fail-alert").remove();
             $("#export-user").modal('hide');
-            $("#message").append('<div class="alert alert-danger" id="fail-alert">Xóa tài sản không thành công!</div>');
+            $("#message").append('<div class="alert alert-danger" id="fail-alert">Xóa tài sản không thành công vì tài sản này đang sử dụng!</div>');
             $("#multi-delete-data").modal('hide');
         }
         else {
@@ -253,40 +279,50 @@
                         "id": id
                     },
                     success: function (data) {
-                        for (var i = 0; i < id.length; i++) {
-                            $("#row" + id[i]).remove();
+                        if (typeof(data.error_input) != "undefined" && data.error_input_export !== null)
+                        {
+                            $("#multi-delete-data").modal('hide');
+                            $(".alert").remove();
+                            $("#fail-alert").remove();
+                            $("#message").append('<div class="alert alert-danger">'+data.error_input+'</div>');
                         }
-                        $(".alert").remove();
-                        $("#message").append('<div class="alert alert-success">Xóa tài sản thành công!</div>');
-                        $("#multi-delete-data").modal('hide');
+                        else {
+                            for (var i = 0; i < id.length; i++) {
+                                $("#row" + id[i]).remove();
+                            }
+                            $(".alert").remove();
+                            $("#message").append('<div class="alert alert-success">Xóa tài sản thành công!</div>');
+                            $("#multi-delete-data").modal('hide');
+                        }
                     }
                 });
             }
         }
     });
-    //xuất người dùng nhiều tài sản
-    function callback(){
-        alert("Kết thúc quá trình.");
-    }
 
     $("#btn_multi_export_user").click(function(){
 
+        var id = [];
+        i=0;
+        $.each(getAssetID(), function(index, value ) {
+            id[i] = value;
+            i++;
+        });
+
         var borrow_user_id = $("#borrow_user_id").val();
         var borrow_date = $("#borrow_date").val();
-        var id =[];
         var state=[];
         var status=[];
         $('.delete_item_check:checkbox:checked').each(function(i){
-            id[i] = $(this).val();
             state[i] = $(this).attr("data-state");
-            status[i] = $(this).attr("data-status")
+            status[i] = $(this).attr("data-status");
             console.log(state[i])
         });
         if(jQuery.inArray("1", state)!== -1 || jQuery.inArray("5", state)!== -1 || jQuery.inArray("2", status)!== -1 || jQuery.inArray("3", status)!== -1){
             $("#fail-alert").remove();
             $("#export-user").modal('hide');
             $(".alert").remove();
-            $("#message").append('<div class="alert alert-danger" id="fail-alert">Tài sản này không thể xuất cho người dùng!</div>');
+            $("#message").append('<div class="alert alert-danger" id="fail-alert">Tài sản này không thể xuất cho người dùng! Chỉ xuất được tài sản có tình trạng nguyên vẹn và trạng thái rảnh cho người dùng</div>');
             $("#multi-export-user").modal('hide');
         }
         else {
@@ -314,13 +350,16 @@
                         }
                         else {
                             $(".alert").remove();
-                            $("#message").append('<div class="alert alert-success">Xuất tài sản cho người dùng thành công!</div>');
-                            for(var i=0; i<id.length; i++) {
-                                console.log("#state_asset"+id);
-                                $("#state_asset"+id[i]).attr('class', 'badge badge-warning');
-                                $("#state_asset"+id[i]).html('Đang sử dụng');
-                            }
+                            // $("#message").append('<div class="alert alert-success">Xuất tài sản cho người dùng thành công!</div>');
+                            // for(var i=0; i<id.length; i++) {
+                            //     console.log("#state_asset"+id);
+                            //     $("#state_asset"+id[i]).attr('class', 'badge badge-warning');
+                            //     $("#state_asset"+id[i]).html('Đang sử dụng');
+                            //     $(".delete_item_check[data-id='" + id[i] + "']").attr('data-state', 1);
+                            //
+                            // }
                             $("#multi-export-user").modal('hide');
+                            location.reload();
                         }
                     }
                 });
@@ -328,23 +367,23 @@
         }
 
     });
-    //lấy id cho form kiểm kê
-    $("#btn-inventory").click(function() {
-        var asset_id=[];
-        $('.delete_item_check:checkbox:checked').each(function (i) {
-            console.log(asset_id[i] = $(this).val());
-        });
 
-        $("#inventory_asset_id").val(asset_id);
-    });
-    $('#example').DataTable({
+    let myTable = $('#example').DataTable({
         "columnDefs": [ {
             "targets": 'no-sort',
             "orderable": false,
         } ],
-        order: [[ 5, 'asc' ]],
+        order: [[ 4, 'asc' ]],
         "bDestroy": true,
-        "iDisplayLength": 25,
-        "bLengthChange": false,
+        "iDisplayLength": 10,
+        select: {
+            style:    'multi',
+            selector: 'td:first-child'
+        },
     });
+
+    $("#btn-inventory").click(function() {
+        getAssetID();
+    });
+
 </script>

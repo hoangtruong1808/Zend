@@ -41,10 +41,14 @@ class InventoryController extends Zend_Controller_Action
             unset( $_SESSION['alert'] );
         }
     }
+
     public function detailAction(){
         $arrParam = $this->_arrParam;
 
         $this->view->inventory = $this->model->getInventory($arrParam['inventory_id']);
+        if(empty($this->view->inventory)){
+            $this->redirect('/inventory');
+        }
         $this->view->inventory_detail = $this->model->detailInventory($arrParam['inventory_id']);
 
     }
@@ -70,17 +74,23 @@ class InventoryController extends Zend_Controller_Action
         //merge row & column
         $sheet->mergeCells('A2:C2');
         $sheet->mergeCells('A3:C3');
-        $sheet->mergeCells('A5:E5');
-        $sheet->mergeCells('B7:E7');
-        $sheet->mergeCells('B8:E8');
-        $sheet->mergeCells('B9:E9');
+        $sheet->mergeCells('A5:F5');
+        $sheet->mergeCells('B7:F7');
+        $sheet->mergeCells('B8:F8');
+        $sheet->mergeCells('B9:F9');
+        $sheet->mergeCells('A11:A12');
+        $sheet->mergeCells('B11:B12');
+        $sheet->mergeCells('C11:C12');
+        $sheet->mergeCells('F11:F12');
+        $sheet->mergeCells('D11:E11');
 
         //set column width
         $sheet->getColumnDimension('A')->setWidth(17);
         $sheet->getColumnDimension('B')->setWidth(35);
         $sheet->getColumnDimension('c')->setWidth(30);
         $sheet->getColumnDimension('D')->setWidth(30);
-        $sheet->getColumnDimension('E')->setWidth(24);
+        $sheet->getColumnDimension('E')->setWidth(30);
+        $sheet->getColumnDimension('F')->setWidth(24);
 
         //set row height
         $sheet->getRowDimension('2')->setRowHeight(20);
@@ -104,27 +114,47 @@ class InventoryController extends Zend_Controller_Action
         $sheet  ->setCellValue('A2', 'VPĐD Plott tại Việt Nam')
                 ->setCellValue('A3', '10 Phổ Quang, Phường 2, Tân Bình, Thành phố Hồ Chí Minh')
                 ->setCellValue('A5', 'BẢN KIỂM KÊ TÀI SẢN')
-                ->setCellValue('A7', 'Người kiểm kê:')
-                ->setCellValue('A8', 'Ngày kiểm kê:')
-                ->setCellValue('A9', 'Ghi chú:')
+                ->setCellValue('A7', 'Người kiểm kê')
+                ->setCellValue('A8', 'Ngày kiểm kê')
+                ->setCellValue('A9', 'Ghi chú')
                 ->setCellValue('A11', 'STT')
                 ->setCellValue('B11', 'Tên tài sản')
-                ->setCellValue('C11', 'Tình trạng trước kiểm kê')
-                ->setCellValue('D11', 'Tình trạng sau kiểm kê')
-                ->setCellValue('E11', 'Ghi chú:')
+                ->setCellValue('C11', 'Mã tài sản')
+                ->setCellValue('D11', 'Tình trạng')
+                ->setCellValue('D12', 'Trước')
+                ->setCellValue('E12', 'Sau')
+                ->setCellValue('F11', 'Ghi chú')
                 ->setCellValue('B7', $inventory['user_name'])
-                ->setCellValue('B8', $inventory['inventory_date'])
+                ->setCellValue('B8', "$inventory_day/$inventory_month/20$inventory_year")
                 ->setCellValue('B9', $inventory['note']);
-        $next_row = 12;
+        $next_row = 13;
         $stt = 1;
         foreach($inventory_detail as $key=>$value){
             $sheet->setCellValue('A'.$next_row, $stt);
             $sheet->setCellValue('B'.$next_row, $value['asset_name']);
-            $sheet->setCellValue('C'.$next_row, $value['before_status_name']);
-            $sheet->setCellValue('D'.$next_row, $value['inventory_status_name']);
-            $sheet->setCellValue('E'.$next_row, $value['note']);
+            $sheet->setCellValue('C'.$next_row, $value['asset_code']);
+            $sheet->setCellValue('D'.$next_row, $value['before_status_name']);
+            $sheet->setCellValue('E'.$next_row, $value['inventory_status_name']);
+            $sheet->setCellValue('F'.$next_row, $value['note']);
 
-            $sheet->getStyle('A'.$next_row.':E'.$next_row)->applyFromArray([
+            $sheet->getStyle('A'.$next_row)->applyFromArray([
+                'font' => [
+                    'size' => 11,
+                    'name' => 'Arial',
+                ],
+                'alignment' => [
+                    'horizontal' => PHPEXcel_Style_Alignment::HORIZONTAL_CENTER,
+                    'vertical' => PHPEXcel_Style_Alignment::VERTICAL_CENTER
+                ],
+                'borders' => array(
+                    'allborders' => array(
+                        'style' => PHPExcel_Style_Border::BORDER_THIN,
+                    )
+                )
+
+            ]);
+
+            $sheet->getStyle('B'.$next_row.':F'.$next_row)->applyFromArray([
                 'font' => [
                     'size' => 11,
                     'name' => 'Arial',
@@ -187,7 +217,7 @@ class InventoryController extends Zend_Controller_Action
 
         ]);
 
-        $sheet->getStyle('A11:E11')->applyFromArray([
+        $sheet->getStyle('A11:F12')->applyFromArray([
             'font' => [
                 'bold' => true,
                 'size' => 11,
@@ -207,9 +237,9 @@ class InventoryController extends Zend_Controller_Action
         //footer of excel
         //ngay thang nam of excel
         $next_row++;
-        $sheet->mergeCells("D$next_row:E$next_row");
-        $sheet->setCellValue("D$next_row","Ngày $inventory_day tháng $inventory_month năm 20$inventory_year");
-        $sheet->getStyle("D$next_row:E$next_row")->applyFromArray([
+        $sheet->mergeCells("E$next_row:F$next_row");
+        $sheet->setCellValue("E$next_row","Ngày $inventory_day tháng $inventory_month năm 20$inventory_year");
+        $sheet->getStyle("E$next_row:F$next_row")->applyFromArray([
             'font' => [
                 'italic' => true,
                 'size' => 10,
@@ -237,9 +267,9 @@ class InventoryController extends Zend_Controller_Action
             ],
         ]);
 
-        $sheet->mergeCells("D$next_row:E$next_row");
-        $sheet->setCellValue("D$next_row","Người kiểm kê");
-        $sheet->getStyle("D$next_row:E$next_row")->applyFromArray([
+        $sheet->mergeCells("E$next_row:F$next_row");
+        $sheet->setCellValue("E$next_row","Người kiểm kê");
+        $sheet->getStyle("E$next_row:F$next_row")->applyFromArray([
             'font' => [
                 'bold' => true,
                 'size' => 11,
@@ -254,7 +284,7 @@ class InventoryController extends Zend_Controller_Action
         //row 'ký họ tên'
         $next_row++;
         $sheet->mergeCells("A$next_row:B$next_row");
-        $sheet->setCellValue("A$next_row","Ký, họ tên, đóng dấu");
+        $sheet->setCellValue("A$next_row","(Ký, họ tên, đóng dấu)");
         $sheet->getStyle("A$next_row:B$next_row")->applyFromArray([
             'font' => [
                 'italic' => true,
@@ -267,9 +297,9 @@ class InventoryController extends Zend_Controller_Action
             ],
         ]);
 
-        $sheet->mergeCells("D$next_row:E$next_row");
-        $sheet->setCellValue("D$next_row","Ký, họ tên");
-        $sheet->getStyle("D$next_row:E$next_row")->applyFromArray([
+        $sheet->mergeCells("E$next_row:F$next_row");
+        $sheet->setCellValue("E$next_row","(Ký, họ tên)");
+        $sheet->getStyle("E$next_row:F$next_row")->applyFromArray([
             'font' => [
                 'italic' => true,
                 'size' => 10,
@@ -337,17 +367,23 @@ class InventoryController extends Zend_Controller_Action
                 //merge row & column
                 $sheet->mergeCells('A2:C2');
                 $sheet->mergeCells('A3:C3');
-                $sheet->mergeCells('A5:E5');
-                $sheet->mergeCells('B7:E7');
-                $sheet->mergeCells('B8:E8');
-                $sheet->mergeCells('B9:E9');
+                $sheet->mergeCells('A5:F5');
+                $sheet->mergeCells('B7:F7');
+                $sheet->mergeCells('B8:F8');
+                $sheet->mergeCells('B9:F9');
+                $sheet->mergeCells('A11:A12');
+                $sheet->mergeCells('B11:B12');
+                $sheet->mergeCells('C11:C12');
+                $sheet->mergeCells('F11:F12');
+                $sheet->mergeCells('D11:E11');
 
                 //set column width
                 $sheet->getColumnDimension('A')->setWidth(17);
                 $sheet->getColumnDimension('B')->setWidth(35);
                 $sheet->getColumnDimension('c')->setWidth(30);
                 $sheet->getColumnDimension('D')->setWidth(30);
-                $sheet->getColumnDimension('E')->setWidth(24);
+                $sheet->getColumnDimension('E')->setWidth(30);
+                $sheet->getColumnDimension('F')->setWidth(24);
 
                 //set row height
                 $sheet->getRowDimension('2')->setRowHeight(20);
@@ -362,30 +398,50 @@ class InventoryController extends Zend_Controller_Action
                 $sheet->getRowDimension('14')->setRowHeight(20);
 
                 //thêm data
-                $sheet->setCellValue('A2', 'VPĐD Plott tại Việt Nam')
+                $sheet  ->setCellValue('A2', 'VPĐD Plott tại Việt Nam')
                     ->setCellValue('A3', '10 Phổ Quang, Phường 2, Tân Bình, Thành phố Hồ Chí Minh')
                     ->setCellValue('A5', 'BẢN KIỂM KÊ TÀI SẢN')
-                    ->setCellValue('A7', 'Người kiểm kê:')
-                    ->setCellValue('A8', 'Ngày kiểm kê:')
-                    ->setCellValue('A9', 'Ghi chú:')
+                    ->setCellValue('A7', 'Người kiểm kê')
+                    ->setCellValue('A8', 'Ngày kiểm kê')
+                    ->setCellValue('A9', 'Ghi chú')
                     ->setCellValue('A11', 'STT')
                     ->setCellValue('B11', 'Tên tài sản')
-                    ->setCellValue('C11', 'Tình trạng trước kiểm kê')
-                    ->setCellValue('D11', 'Tình trạng sau kiểm kê')
-                    ->setCellValue('E11', 'Ghi chú:')
+                    ->setCellValue('C11', 'Mã tài sản')
+                    ->setCellValue('D11', 'Tình trạng')
+                    ->setCellValue('D12', 'Trước')
+                    ->setCellValue('E12', 'Sau')
+                    ->setCellValue('F11', 'Ghi chú')
                     ->setCellValue('B7', $inventory['user_name'])
-                    ->setCellValue('B8', $inventory['inventory_date'])
+                    ->setCellValue('B8', "$inventory_day/$inventory_month/20$inventory_year")
                     ->setCellValue('B9', $inventory['note']);
-                $next_row = 12;
+                $next_row = 13;
                 $stt = 1;
                 foreach ($inventory_detail as $key => $value) {
-                    $sheet->setCellValue('A' . $next_row, $stt);
-                    $sheet->setCellValue('B' . $next_row, $value['asset_name']);
-                    $sheet->setCellValue('C' . $next_row, $value['before_status_name']);
-                    $sheet->setCellValue('D' . $next_row, $value['inventory_status_name']);
-                    $sheet->setCellValue('E' . $next_row, $value['note']);
+                    $sheet->setCellValue('A'.$next_row, $stt);
+                    $sheet->setCellValue('B'.$next_row, $value['asset_name']);
+                    $sheet->setCellValue('C'.$next_row, $value['asset_code']);
+                    $sheet->setCellValue('D'.$next_row, $value['before_status_name']);
+                    $sheet->setCellValue('E'.$next_row, $value['inventory_status_name']);
+                    $sheet->setCellValue('F'.$next_row, $value['note']);
 
-                    $sheet->getStyle('A' . $next_row . ':E' . $next_row)->applyFromArray([
+                    $sheet->getStyle('A'.$next_row)->applyFromArray([
+                        'font' => [
+                            'size' => 11,
+                            'name' => 'Arial',
+                        ],
+                        'alignment' => [
+                            'horizontal' => PHPEXcel_Style_Alignment::HORIZONTAL_CENTER,
+                            'vertical' => PHPEXcel_Style_Alignment::VERTICAL_CENTER
+                        ],
+                        'borders' => array(
+                            'allborders' => array(
+                                'style' => PHPExcel_Style_Border::BORDER_THIN,
+                            )
+                        )
+
+                    ]);
+
+                    $sheet->getStyle('B'.$next_row.':F'.$next_row)->applyFromArray([
                         'font' => [
                             'size' => 11,
                             'name' => 'Arial',
@@ -448,7 +504,7 @@ class InventoryController extends Zend_Controller_Action
 
                 ]);
 
-                $sheet->getStyle('A11:E11')->applyFromArray([
+                $sheet->getStyle('A11:F12')->applyFromArray([
                     'font' => [
                         'bold' => true,
                         'size' => 11,
@@ -464,84 +520,85 @@ class InventoryController extends Zend_Controller_Action
                         )
                     )
                 ]);
+                //footer of excel
+                //ngay thang nam of excel
+                $next_row++;
+                $sheet->mergeCells("E$next_row:F$next_row");
+                $sheet->setCellValue("E$next_row","Ngày $inventory_day tháng $inventory_month năm 20$inventory_year");
+                $sheet->getStyle("E$next_row:F$next_row")->applyFromArray([
+                    'font' => [
+                        'italic' => true,
+                        'size' => 10,
+                        'name' => 'Arial',
+                    ],
+                    'alignment' => [
+                        'horizontal' => PHPEXcel_Style_Alignment::HORIZONTAL_CENTER,
+                        'vertical' => PHPEXcel_Style_Alignment::VERTICAL_CENTER
+                    ],
+                ]);
+
+                //row 'giam doc', 'nguoi kiem ke'
+                $next_row++;
+                $sheet->mergeCells("A$next_row:B$next_row");
+                $sheet->setCellValue("A$next_row","Giám đốc");
+                $sheet->getStyle("A$next_row:B$next_row")->applyFromArray([
+                    'font' => [
+                        'bold' => true,
+                        'size' => 11,
+                        'name' => 'Arial',
+                    ],
+                    'alignment' => [
+                        'horizontal' => PHPEXcel_Style_Alignment::HORIZONTAL_CENTER,
+                        'vertical' => PHPEXcel_Style_Alignment::VERTICAL_CENTER
+                    ],
+                ]);
+
+                $sheet->mergeCells("E$next_row:F$next_row");
+                $sheet->setCellValue("E$next_row","Người kiểm kê");
+                $sheet->getStyle("E$next_row:F$next_row")->applyFromArray([
+                    'font' => [
+                        'bold' => true,
+                        'size' => 11,
+                        'name' => 'Arial',
+                    ],
+                    'alignment' => [
+                        'horizontal' => PHPEXcel_Style_Alignment::HORIZONTAL_CENTER,
+                        'vertical' => PHPEXcel_Style_Alignment::VERTICAL_CENTER
+                    ],
+                ]);
+
+                //row 'ký họ tên'
+                $next_row++;
+                $sheet->getRowDimension("$next_row")->setRowHeight(20);
+                $sheet->mergeCells("A$next_row:B$next_row");
+                $sheet->setCellValue("A$next_row","(Ký, họ tên, đóng dấu)");
+                $sheet->getStyle("A$next_row:B$next_row")->applyFromArray([
+                    'font' => [
+                        'italic' => true,
+                        'size' => 10,
+                        'name' => 'Arial',
+                    ],
+                    'alignment' => [
+                        'horizontal' => PHPEXcel_Style_Alignment::HORIZONTAL_CENTER,
+                        'vertical' => PHPEXcel_Style_Alignment::VERTICAL_CENTER
+                    ],
+                ]);
+
+                $sheet->mergeCells("E$next_row:F$next_row");
+                $sheet->setCellValue("E$next_row","(Ký, họ tên)");
+                $sheet->getStyle("E$next_row:F$next_row")->applyFromArray([
+                    'font' => [
+                        'italic' => true,
+                        'size' => 10,
+                        'name' => 'Arial',
+                    ],
+                    'alignment' => [
+                        'horizontal' => PHPEXcel_Style_Alignment::HORIZONTAL_CENTER,
+                        'vertical' => PHPEXcel_Style_Alignment::VERTICAL_CENTER
+                    ],
+                ]);
             }
 
-            //footer of excel
-            //ngay thang nam of excel
-            $next_row++;
-            $sheet->mergeCells("D$next_row:E$next_row");
-            $sheet->setCellValue("D$next_row","Ngày $inventory_day tháng $inventory_month năm 20$inventory_year");
-            $sheet->getStyle("D$next_row:E$next_row")->applyFromArray([
-                'font' => [
-                    'italic' => true,
-                    'size' => 10,
-                    'name' => 'Arial',
-                ],
-                'alignment' => [
-                    'horizontal' => PHPEXcel_Style_Alignment::HORIZONTAL_CENTER,
-                    'vertical' => PHPEXcel_Style_Alignment::VERTICAL_CENTER
-                ],
-            ]);
-
-            //row 'giam doc', 'nguoi kiem ke'
-            $next_row++;
-            $sheet->mergeCells("A$next_row:B$next_row");
-            $sheet->setCellValue("A$next_row","Giám đốc");
-            $sheet->getStyle("A$next_row:B$next_row")->applyFromArray([
-                'font' => [
-                    'bold' => true,
-                    'size' => 11,
-                    'name' => 'Arial',
-                ],
-                'alignment' => [
-                    'horizontal' => PHPEXcel_Style_Alignment::HORIZONTAL_CENTER,
-                    'vertical' => PHPEXcel_Style_Alignment::VERTICAL_CENTER
-                ],
-            ]);
-
-            $sheet->mergeCells("D$next_row:E$next_row");
-            $sheet->setCellValue("D$next_row","Người kiểm kê");
-            $sheet->getStyle("D$next_row:E$next_row")->applyFromArray([
-                'font' => [
-                    'bold' => true,
-                    'size' => 11,
-                    'name' => 'Arial',
-                ],
-                'alignment' => [
-                    'horizontal' => PHPEXcel_Style_Alignment::HORIZONTAL_CENTER,
-                    'vertical' => PHPEXcel_Style_Alignment::VERTICAL_CENTER
-                ],
-            ]);
-
-            //row 'ký họ tên'
-            $next_row++;
-            $sheet->mergeCells("A$next_row:B$next_row");
-            $sheet->setCellValue("A$next_row","Ký, họ tên, đóng dấu");
-            $sheet->getStyle("A$next_row:B$next_row")->applyFromArray([
-                'font' => [
-                    'italic' => true,
-                    'size' => 10,
-                    'name' => 'Arial',
-                ],
-                'alignment' => [
-                    'horizontal' => PHPEXcel_Style_Alignment::HORIZONTAL_CENTER,
-                    'vertical' => PHPEXcel_Style_Alignment::VERTICAL_CENTER
-                ],
-            ]);
-
-            $sheet->mergeCells("D$next_row:E$next_row");
-            $sheet->setCellValue("D$next_row","Ký, họ tên");
-            $sheet->getStyle("D$next_row:E$next_row")->applyFromArray([
-                'font' => [
-                    'italic' => true,
-                    'size' => 10,
-                    'name' => 'Arial',
-                ],
-                'alignment' => [
-                    'horizontal' => PHPEXcel_Style_Alignment::HORIZONTAL_CENTER,
-                    'vertical' => PHPEXcel_Style_Alignment::VERTICAL_CENTER
-                ],
-            ]);
 
             //lưu file excel
             $objWriter = new PHPExcel_Writer_Excel2007($objExcel);

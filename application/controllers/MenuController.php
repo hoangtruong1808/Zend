@@ -18,7 +18,7 @@ class MenuController extends Zend_Controller_Action
 
         $this->_arrParam = $this->_request->getParams();
         $this->_currentController = '/' . $this->_arrParam['controller'];
-        $this->_actionMain = '/' . $this->_arrParam['controller'] . '/';
+        $this->_actionMain = '/' . $this->_arrParam['ontroller'] . '/';
 
         $this->view->arrParam = $this->_arrParam;
         $this->view->currentController = $this->_currentController;

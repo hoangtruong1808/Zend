@@ -37,139 +37,15 @@ class Model_User extends Zend_Db_Table{
     }
     public function addUser($arrParam){
 
-        $this->_validate = array(
-            'name' => array(
-                new Zend_Validate_NotEmpty(),
-                new Zend_Validate_StringLength(
-                    array(
-                        'min' =>3,
-                        'max' => 30
-                    )
-                ),
-                'breakChainOnFailure' => true,
-                Zend_Filter_Input::MESSAGES => array(
-                    array(
-                        Zend_Validate_NotEmpty::IS_EMPTY => 'Vui lòng nhập tên người dùng',
-                    ),
-                    array(
-                        Zend_Validate_StringLength::TOO_LONG => 'Tên người dùng tối đa 30 kí tự',
-                        Zend_Validate_StringLength::TOO_SHORT => 'Tên người dùng tối thiểu 3 kí tự',
-                    )
-                )
-            ),
-            'email' => array(
-                new Zend_Validate_NotEmpty(),
-                new Zend_Validate_EmailAddress(),
-                new Zend_Validate_Db_NoRecordExists(
-                    array(
-                        'table' => 'tbl_user',
-                        'field' => 'email'
-                    )
-                ),
-                'breakChainOnFailure' => true,
-                Zend_Filter_Input::MESSAGES => array(
-                    array(
-                        Zend_Validate_NotEmpty::IS_EMPTY => 'Vui lòng nhập email'
-                    ),
-                    array(
-                        Zend_Validate_EmailAddress::INVALID => 'Không nhận dạng được email',
-                        Zend_Validate_EmailAddress::INVALID_FORMAT => 'Vui lòng nhập đúng định dạng email',
-                        Zend_Validate_EmailAddress::INVALID_HOSTNAME => 'Vui lòng nhập đúng định dạng email',
-                    ),
-                    array(
-                        Zend_Validate_Db_NoRecordExists::ERROR_RECORD_FOUND => 'Email đã tồn tại'
-                    )
-                )
-            ),
-
-            'phone' => array(
-                new Zend_Validate_Digits,
-                new Zend_Validate_NotEmpty(),
-                new Zend_Validate_Db_NoRecordExists(
-                    array(
-                        'table' => 'tbl_user',
-                        'field' => 'phone'
-                    )
-                ),
-                new Zend_Validate_StringLength(
-                    array(
-                        'min' => 10,
-                        'max' => 11
-                    )
-                ),
-                'breakChainOnFailure' => true,
-                Zend_Filter_Input::MESSAGES => array(
-                    array(
-                        Zend_Validate_Digits::NOT_DIGITS => 'Số điện thoại không đúng định dạng'
-                    ),
-                    array(
-                        Zend_Validate_NotEmpty::IS_EMPTY => 'Vui lòng nhập số điện thoại'
-                    ),
-                    array(
-                        Zend_Validate_Db_NoRecordExists::ERROR_RECORD_FOUND => 'Số điện thoại đã được đăng ký'
-                    ),
-                    array(
-                        Zend_Validate_StringLength::TOO_LONG => 'Số điện thoại tối đa 11 kí tự',
-                        Zend_Validate_StringLength::TOO_SHORT => 'Số điện thoại tối thiểu 9 kí tự'
-                    )
-
-                )
-            ),
-//
-            'password' => array(
-                new Zend_Validate_NotEmpty(),
-                new Zend_Validate_StringLength(
-                    array(
-                        'min' => 3,
-                        'max' => 20
-                    )
-                ),
-                new Zend_Validate_Regex('/^[a-zA-Z0-9_!@#$&*\/]+$/'),
-                'breakChainOnFailure' => true,
-                Zend_Filter_Input::MESSAGES => array(
-                    array(
-                        Zend_Validate_NotEmpty::IS_EMPTY => 'Vui lòng nhập mật khẩu'
-                    ),
-                    array(
-                        Zend_Validate_StringLength::TOO_LONG => 'Mật khẩu tối đa 20 kí tự',
-                        Zend_Validate_StringLength::TOO_SHORT => 'Mật khẩu tối thiểu 3 kí tự'
-                    ),
-                    array(
-                        Zend_Validate_Regex::NOT_MATCH => 'Vui lòng chỉ sử dụng chữ cái, số và ký tự chấm câu thường gặp '
-                    )
-                )
-            ),
-            'role' => array(
-                new Zend_Validate_NotEmpty(),
-                Zend_Filter_Input::MESSAGES => array(
-                    array(
-                        Zend_Validate_NotEmpty::IS_EMPTY => 'Vui lòng nhập vai trò người dùng',
-                    )
-                ),
-            ),
-        );
-
-        $result = null;
-        $input = new Zend_Filter_Input($this->_filter, $this->_validate, $arrParam, $this->_option);
-
         $arrParam['password'] = md5($arrParam['password']);
-        if ($input->isValid()){
-            $row['name']= $arrParam['name'];
-            $row['phone']= $arrParam['phone'];
-            $row['email']= $arrParam['email'];
-            $row['password']= $arrParam['password'];
-            $row['role_id']= $arrParam['role'];
-            $row['image']= $arrParam['image'];
-            $this->db->insert('tbl_user', $row);
-            $result = true;
-        }
-        else {
-            if ($input->hasInvalid() || $input->hasMissing()) {
-                $messages = $input->getMessages();
-                $result = $messages;
-            }
-        }
-        return $result;
+
+        $row['name']= $arrParam['name'];
+        $row['phone']= $arrParam['phone'];
+        $row['email']= $arrParam['email'];
+        $row['password']= $arrParam['password'];
+        $row['role_id']= $arrParam['role'];
+        $row['image']= $arrParam['image'];
+        $this->db->insert('tbl_user', $row);
 
     }
 

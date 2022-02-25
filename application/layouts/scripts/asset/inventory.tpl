@@ -31,6 +31,7 @@
         }
 
     </style>
+    <form class="form-horizontal bucket-form" method="POST" action="/asset/inventory" enctype="multipart/form-data">
     <header class="panel-heading">
         <div class="col-sm-4">
             <ul style="display: flex; list-style: none;" class="crumb">
@@ -43,6 +44,7 @@
             Kiểm kê tài sản
         </div>
         <div class="col-sm-4">
+            <input type="submit" class="btn btn-primary" style="margin-left: 48%" value="Kiểm kê">
         </div>
     </header>
     <div class="table-agile-info">
@@ -58,7 +60,6 @@
                 </div>
             {/if}
         </div>
-        <form class="form-horizontal bucket-form" method="POST" action="/asset/inventory" enctype="multipart/form-data">
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label">Ngày kiểm kê</label>
                 <div class="col-sm-6">
@@ -94,9 +95,6 @@
                                 Trạng thái
                             </th>
                             <th>
-                                Người đang sử dụng
-                            </th>
-                            <th>
                                 Tình trạng sau khi kiểm kê
                             </th>
                             <th>
@@ -114,7 +112,6 @@
                             <td style="color:black" >{$value.asset_group}</td>
                             <td style="color:black" >{$value.status_name}</td>
                             <td style="color:black" >{$value.state_name}</td>
-                            <td style="color:black" >{($value.state==1)?{$value.user_name}:''}</td>
                             <td>
                                 <select class="form-control m-bot15" name="inventory_detail_status[]">
                                 {foreach $status_list as $status_key=>$status_value}
@@ -131,7 +128,7 @@
                 </table>
 
             </div>
-            <input type="submit" class="btn btn-success" style="margin-left: 48%" value="Kiểm kê">
+
         </form>
     </div>
 </section>

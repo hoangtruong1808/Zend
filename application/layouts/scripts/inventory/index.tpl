@@ -29,9 +29,10 @@
             Danh sách kiểm kê
         </div>
         <form method="POST" action="/inventory/multi-export">
-
-        <div class="col-sm-3">
-            <input type="submit" class="btn btn-success" id="export-btn" value="Xuất excel"></input>
+        <div class="col-sm-2">
+        </div>
+        <div class="col-sm-1">
+            <input type="submit" class="btn btn-success disabled-btn" id="export-btn" value="Xuất excel" disabled></input>
         </div>
     </header>
     <div class="table-agile-info">
@@ -66,12 +67,12 @@
                         <td><label class="i-checks m-b-none"><input type="checkbox" class="delete_item_check" value="{$value.inventory_id}" name="inventory_id[]"><i></i></label></td>
 
 {*                        <td><label class="i-checks m-b-none"><input type="checkbox" class="delete_item_check" value="{$value.user_id}"><i></i></label></td>*}
-                        <td style="color:black" >{$value.inventory_code}</td>
-                        <td style="color:black" >{$value.user_name}</td>
+                        <td style="color:black; " >{$value.inventory_code}</td>
+                        <td style="color:black; text-align: left" >{$value.user_name}</td>
                         <td style="color:black" >{$value.inventory_date}</td>
                         <td style="color:black" >{$value.note}</td>
                         <td>
-                            <a href="/inventory/detail/inventory_id/{$value.inventory_id}"><i class="fas fa-eye"></i></a>
+                            <a href="/inventory/detail/inventory_id/{$value.inventory_id}" title="Xem chi tiết"><i class="fas fa-eye"></i></a>
                         </td>
                     </tr>
                 {/foreach}
@@ -88,4 +89,5 @@
         $(".alert").remove();
 
     });
+
 </script>

@@ -79,7 +79,12 @@
     let massStatusPopChart = new Chart(StatusChart, {
         type:'doughnut', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
         data:{
-            labels:['Tài sản nguyên vẹn', 'Tài sản hư hỏng', 'Tài sản mất'],
+            labels:[
+                {foreach $asset_status_count as $value}
+                    '{$value.status_name}',
+                {/foreach}
+
+            ],
             datasets:[{
                 label:'Population',
                 data:[
@@ -89,9 +94,15 @@
                 ],
                 //backgroundColor:'green',
                 backgroundColor:[
-                    'rgba(0, 255, 26, 0.6)',
-                    'rgba(255, 159, 64, 0.6)',
-                    'rgba(255, 0, 0, 0.6)',
+                    {foreach $asset_status_count as $value}
+                        {if $value.status_id == 1}
+                        'rgba(0, 255, 26, 0.6)',
+                        {elseif $value.status_id == 2}
+                        'rgba(255, 159, 64, 0.6)',
+                        {elseif $value.status_id == 3}
+                        'rgba(255, 0, 0, 0.6)',
+                        {/if}
+                    {/foreach}
                 ],
                 borderWidth:1,
                 borderColor:'#777',
@@ -136,7 +147,11 @@
     let massStatePopChart = new Chart(StateChart, {
         type:'doughnut', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
         data:{
-            labels:['Tài sản đang sử dụng', 'Tài sản rảnh', 'Tài sản mất'],
+            labels:[
+                {foreach $asset_state_count as $value}
+                '{$value.state_name}',
+                {/foreach}
+            ],
             datasets:[{
                 label:'Population',
                 data:[
@@ -146,9 +161,15 @@
                 ],
                 //backgroundColor:'green',
                 backgroundColor:[
-                    'rgba(255, 159, 64, 0.6)',
+                    {foreach $asset_state_count as $value}
+                    {if $value.state_id == 2}
                     'rgba(0, 255, 26, 0.6)',
+                    {elseif $value.state_id == 1}
+                    'rgba(255, 159, 64, 0.6)',
+                    {elseif $value.state_id == 5}
                     'rgba(255, 0, 0, 0.6)',
+                    {/if}
+                    {/foreach}
                 ],
                 borderWidth:1,
                 borderColor:'#777',

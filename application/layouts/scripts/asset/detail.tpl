@@ -10,7 +10,8 @@
         <div class="col-sm-4" >
             {$asset.name}
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-2">
             {if $smarty.session.role_id==2 }
             <span><a href="/asset/update/id/{$asset.asset_id}" class="btn btn-primary" style="" class="card-title" data-toggle="modal">Sửa</a></span>
             <span><a href="" class="btn btn-danger" data-toggle="modal" data-target="#delete-data">Xóa</a></span>

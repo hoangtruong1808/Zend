@@ -1,7 +1,16 @@
 <section>
     <header class="panel-heading">
-        <div class="col-sm-12">
+        <div class="col-sm-4">
+            <ul style="display: flex; list-style: none;" class="crumb">
+                <li><a href="/">Trang chủ</a></li>
+                <li><a href="/asset">Quản lý tài sản</a></li>
+                <li>Thêm tài sản</li>
+            </ul>
+        </div>
+        <div class="col-sm-4">
             Thêm tài sản
+        </div>
+        <div class="col-sm-4">
         </div>
     </header>
     <div class="table-agile-info">
@@ -10,13 +19,13 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label">Tên</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="name">
+                    <input type="text" class="form-control" name="name" value="{(isset($name))? {$name} : ''}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label">Mã</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="code">
+                    <input type="text" class="form-control" name="code" value="{(isset($code))? {$code} : ''}">
                 </div>
             </div>
             <div class="form-group">
@@ -25,7 +34,7 @@
                     <select class="form-control m-bot15" name="asset_group_id">
                         <option disabled selected value="">Chọn nhóm tài sản</option>
                         {foreach $menu_list as $key=>$value}
-                        <option value="{$value.group_id}">{$value.description}</option>
+                        <option value="{$value.group_id}" {(isset($asset_group_id))?(($value.group_id==$asset_group_id)?'selected="selected"':'') : ''}>{$value.description}</option>
                         {/foreach}
                     </select>
                 </div>
@@ -33,7 +42,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">Cấu hình</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="configuration">
+                    <textarea class="form-control" name="configuration">{(isset($configuration))? {$configuration} : ''}</textarea>
                 </div>
             </div>
             <div class="form-group">
@@ -42,7 +51,7 @@
                     <select class="form-control m-bot15" name="status">
                         <option disabled selected value>Chọn tình trạng</option>
                         {foreach $status_list as $key=>$value}
-                            <option value="{$value.status_id}">{$value.status_name}</option>
+                            <option value="{$value.status_id}" {(isset($status))?(($value.status_id==$status)?'selected="selected"':'') : ''}>{$value.status_name}</option>
                         {/foreach}
                     </select>
                 </div>

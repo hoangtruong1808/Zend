@@ -33,6 +33,7 @@ class IndexController extends Zend_Controller_Action
         $this->view->inventory_count = $inventory->countInventory();
 
         $this->view->asset_status_count = $asset->countStatusAsset();
+
         $this->view->asset_state_count = $asset->countStateAsset();
 
     }

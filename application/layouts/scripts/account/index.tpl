@@ -9,7 +9,8 @@
         <div class="col-sm-6">
             {$user.name}
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-2">
             <span><a href="/account/update" class="btn btn-primary" class="card-title" data-toggle="modal">Sửa</a></span>
             <span><a href="" class="btn btn-success" data-toggle="modal" data-target="#change-password">Đổi mật khẩu</a></span>
         </div>

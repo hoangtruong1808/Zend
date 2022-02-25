@@ -3,14 +3,16 @@
         <div class="col-sm-4">
             <ul style="display: flex; list-style: none;" class="crumb">
                 <li><a href="/">Trang chủ</a></li>
-                <li><a href="/asset">Quản lý người dùng</a></li>
+                <li><a href="/user">Quản lý người dùng</a></li>
                 <li>Chi tiết người dùng</li>
             </ul>
         </div>
         <div class="col-sm-4">
             {$user.name}
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-2">
+        </div>
+        <div class="col-sm-2">
             <span><a href="/user/update/id/{$user.user_id}" class="btn btn-primary" class="card-title" data-toggle="modal">Sửa</a></span>
             <span><a href="" class="btn btn-danger" data-toggle="modal" data-target="#delete-data">Xóa</a></span>
             <span><a class="btn btn-success" class="card-title" id="return-asset-btn">Trả tài sản</a></span>
@@ -109,7 +111,7 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <th style="width:60px;" class="no-sort">
+                        <th style="width:120px;" class="no-sort">
                             <input type="checkbox" class="check-control" id="all-checked">
                         </th>
                         <th style="text-align:center">Tài sản</th>
@@ -119,7 +121,7 @@
                     {foreach $all_borrow_asset as $key=>$value }
                         <tr id="row{$value.borrow_detail_id}">
                             <td><label class="i-checks m-b-none"><input type="checkbox" class="delete_item_check" value="{$value.borrow_detail_id}" data-id="{$value.asset_id}" ><i></i></label></td>
-                            <td style="text-align:center">{$value.borrow_asset_name}</td>
+                            <td style="text-align:left">{$value.borrow_asset_name}</td>
                             <td style="text-align:center">{$value.borrow_date}</td>
                         </tr>
                     {/foreach}

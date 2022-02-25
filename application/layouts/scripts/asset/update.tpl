@@ -25,8 +25,17 @@
 </style>
 <section>
     <header class="panel-heading">
-        <div class="col-sm-12">
+        <div class="col-sm-4">
+            <ul style="display: flex; list-style: none;" class="crumb">
+                <li><a href="/">Trang chủ</a></li>
+                <li><a href="/asset">Quản lý tài sản</a></li>
+                <li>Cập nhật tài sản</li>
+            </ul>
+        </div>
+        <div class="col-sm-4">
             Cập nhật tài sản
+        </div>
+        <div class="col-sm-4">
         </div>
     </header>
     <div class="table-agile-info">
@@ -35,13 +44,13 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label">Tên</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="name" value="{{$asset.name}}">
+                    <input type="text" class="form-control" name="name" value="{(!empty($name))? {$name} : {$asset.name}}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label">Mã</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="code" value="{{$asset.code}}">
+                    <input type="text" class="form-control" name="code" value="{(!empty($code))? {$code} : {$asset.code}}">
                 </div>
             </div>
             <div class="form-group">
@@ -57,7 +66,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">Cấu hình</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="configuration"  value="{{$asset.configuration}}">
+                    <textarea class="form-control" name="configuration">{(!empty($configuration))? {$configuration} : {$asset.configuration}}</textarea>
                 </div>
             </div>
             <div class="form-group">
@@ -75,6 +84,7 @@
                     <label class="col-sm-3 control-label required-label">Hình ảnh</label>
                     <div class="col-sm-6">
                         <input type="file" class="form-control" id="imgInp" name="image" accept="image/png, image/gif, image/jpeg">
+                        <input type="hidden" class="form-control" id="image-check" name="image-check" value="1">
                     </div>
                 </div>
                 <div class="row">
@@ -98,6 +108,7 @@
                 $('#image-area img').remove();
                 $('#remove-image-btn').remove();
                 $('#imgInp').val('');
+                $('#image-check').val('');
             });
         }
 
@@ -112,6 +123,7 @@
                     $('#image-area img').remove();
                     $('#remove-image-btn').remove();
                     $('#image-area').append('<img src="' + e.target.result +'" id="blah" width="150px" height="120px">' + '<div href="" id="remove-image-btn"><i class="fas fa-times"></i></div>');
+                    $('#image-check').val('1');
                     RemoveImageClick()
                 }
 
@@ -126,24 +138,7 @@
         $.each( err_input, function(key, value) {
             $('.form-control').each(function () {
                 if ($(this).prop('name') == key) {
-                    if (value.isEmpty){
-                        $(this).parent().append('<div class="err_input">'+value.isEmpty+'</div>');
-                    }
-                    if (value.stringLengthTooLong) {
-                        $(this).parent().append('<div class="err_input">' + value.stringLengthTooLong + '</div>')
-                    }
-                    if (value.stringLengthTooShort) {
-                        $(this).parent().append('<div class="err_input">' + value.stringLengthTooShort + '</div>')
-                    }
-                    if (value.recordFound) {
-                        $(this).parent().append('<div class="err_input">' + value.recordFound + '</div>')
-                    }
-                    if (value.fileSizeTooBig) {
-                        $(this).parent().append('<div class="err_input">' + value.fileSizeTooBig + '</div>')
-                    }
-                    if (value.fileUploadErrorNoFile) {
-                        $(this).parent().append('<div class="err_input">' + value.fileUploadErrorNoFile + '</div>')
-                    }
+                    $(this).parent().append('<div class="err_input">'+Object.values(value)+'</div>');
                 }
             });
         });

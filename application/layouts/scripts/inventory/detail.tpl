@@ -29,7 +29,10 @@
         <div class="col-sm-4">
             Chi tiết kiểm kê
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
+
+        </div>
+        <div class="col-sm-1">
             <a href="/inventory/export-excel/inventory_id/{$inventory.inventory_id}" class="btn btn-success">Xuất excel</a>
         </div>
         {*        <div class="col-sm-2">*}
@@ -74,14 +77,15 @@
             <table class="table table-striped table-bordered" style="width:100%" id="example">
                 <thead>
                     <tr>
-                        {*                            <input type="checkbox" class="check-control" id="all-checked">*}
-                        {*                        <th style="width:60px;" class="no-sort">*}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             {*                        </th>*}
-                        <th style="color:black">STT</th>
-                        <th style="color:black">Tên tài sản</th>
-                        <th style="color:black">Tình trạng trước kiểm kê</th>
-                        <th style="color:black">Tình trạng kiểm kê</th>
-                        <th style="color:black">Lưu ý</th>
+                        <th rowspan="2" style="color:black; vertical-align: middle;">STT</th>
+                        <th rowspan="2" style="color:black; vertical-align: middle;">Tên tài sản</th>
+                        <th rowspan="2" style="color:black; vertical-align: middle;">Mã tài sản</th>
+                        <th colspan="2" style="color:black">Tình trạng</th>
+                        <th rowspan="2" style="color:black; vertical-align: middle;">Lưu ý</th>
+                    </tr>
+                    <tr>
+                        <th style="color:black">Trước</th>
+                        <th style="color:black">Sau</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -95,13 +99,11 @@
                     </div>
                     {foreach $inventory_detail as $key=>$value}
                     <tr>
-                        {*                    <th style="width:60px;" class="no-sort">*}
-                        {*                        <input type="checkbox" class="check-control" id="all-checked">*}
-                        {*                    </th>*}
                         <td style="color:black">{$stt++}</td>
                         <td style="color:black">{$value.asset_name}</td>
-                        <td style="color:black">{$value.before_status_name}</td>
-                        <td style="color:black">{$value.inventory_status_name}</td>
+                        <td style="color:black">{$value.asset_code}</td>
+                        <td style="color:black"><span class="badge badge-{($value.before_status==1)?'success':(($value.before_status==2)?'warning':'danger')}">{$value.before_status_name}</span></td>
+                        <td style="color:black"><span class="badge badge-{($value.inventory_status==1)?'success':(($value.inventory_status==2)?'warning':'danger')}">{$value.inventory_status_name}</span></td>
                         <td style="color:black">{$value.note}</td>
                     </tr>
                     {/foreach}

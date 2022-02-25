@@ -51,7 +51,7 @@ class Model_Inventory extends Zend_Db_Table{
         $select = $this->db->select()
             ->from('tbl_inventory_detail')
             ->join('tbl_inventory','tbl_inventory_detail.inventory_id=tbl_inventory.inventory_id', array('inventory_id'=>'inventory_id'))
-            ->join('tbl_asset','tbl_inventory_detail.asset_id=tbl_asset.asset_id', array('asset_name'=>'name'))
+            ->join('tbl_asset','tbl_inventory_detail.asset_id=tbl_asset.asset_id', array('asset_name'=>'name', 'asset_code'=>'code'))
             ->join(array('tbl_before_stt' => 'tbl_status'),'tbl_inventory_detail.before_status=tbl_before_stt.status_id', array('before_status_name'=>'status_name'))
             ->join(array('tbl_inventory_stt' => 'tbl_status'),'tbl_inventory_detail.inventory_status=tbl_inventory_stt.status_id', array('inventory_status_name'=>'status_name'))
             ->where('tbl_inventory_detail.inventory_id = '.$inventory_id);

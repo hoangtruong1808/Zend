@@ -44,7 +44,7 @@
                 <thead>
                 <tr>
                     <th style="width:60px;" class="no-sort">
-                            <input type="checkbox" class="check-control" id="all-checked">
+                        <input type="checkbox" class="check-control" id="all-checked">
                     </th>
                     <th style="color:black">Tên</th>
                     <th style="color:black">Trạng thái</th>
@@ -274,44 +274,44 @@
     });
     //xóa nhiều dữ liệu
     $("#btn_multi_delete").click(function(){
-            var id =[];
-            var asset_count=[];
-            $('.delete_item_check:checkbox:checked').each(function(i){
-                id[i] = $(this).val();
-                asset_count[i] = $(this).attr("data-assetcount");
-            });
-            if(id.length === 0)
-            {
-                $(".alert").remove();
-                $("#message").append('<div class="alert alert-danger">Chọn tối thiểu một dòng!</div>');
-                $("#multi-delete-data").modal('hide');
-            }
-            else {
-                $.ajax({
-                    method: "POST",
-                    url: "/menu/multidelete",
-                    data: {
-                        "id": id,
-                        "asset_count": asset_count,
-                    },
-                    success: function (data) {
-                        if (typeof(data.error_input) != "undefined" && data.error_input_export !== null)
-                        {
-                            $(".xoa-modal").modal('hide');
-                            $(".alert").remove();
-                            $("#message").append('<div class="alert alert-danger">Xóa nhóm tài sản không thành công!</div>');
-                        }
-                        else {
-                            for (var i = 0; i < id.length; i++) {
-                                $("#row" + id[i]).remove();
-                            }
-                            $(".alert").remove();
-                            $("#message").append('<div class="alert alert-success">Xóa nhóm tài sản thành công!</div>');
-                            $("#multi-delete-data").modal('hide');
-                        }
+        var id =[];
+        var asset_count=[];
+        $('.delete_item_check:checkbox:checked').each(function(i){
+            id[i] = $(this).val();
+            asset_count[i] = $(this).attr("data-assetcount");
+        });
+        if(id.length === 0)
+        {
+            $(".alert").remove();
+            $("#message").append('<div class="alert alert-danger">Chọn tối thiểu một dòng!</div>');
+            $("#multi-delete-data").modal('hide');
+        }
+        else {
+            $.ajax({
+                method: "POST",
+                url: "/menu/multidelete",
+                data: {
+                    "id": id,
+                    "asset_count": asset_count,
+                },
+                success: function (data) {
+                    if (typeof(data.error_input) != "undefined" && data.error_input_export !== null)
+                    {
+                        $(".xoa-modal").modal('hide');
+                        $(".alert").remove();
+                        $("#message").append('<div class="alert alert-danger">Xóa nhóm tài sản không thành công! Chỉ xóa những nhóm tài sản không có tài sản</div>');
                     }
-                });
-            }
+                    else {
+                        for (var i = 0; i < id.length; i++) {
+                            $("#row" + id[i]).remove();
+                        }
+                        $(".alert").remove();
+                        $("#message").append('<div class="alert alert-success">Xóa nhóm tài sản thành công!</div>');
+                        $("#multi-delete-data").modal('hide');
+                    }
+                }
+            });
+        }
 
     });
     //cập nhật dữ liệu

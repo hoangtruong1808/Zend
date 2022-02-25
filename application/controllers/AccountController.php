@@ -38,6 +38,10 @@ class AccountController extends Zend_Controller_Action
         //lấy dữ liệu
         $this->view->user = $this->model->getUser($this->account_id);
 
+        if(empty($this->view->user)){
+            $this->redirect('/');
+        }
+
         $this->view->all_borrow_asset = $this->model->getBorrowAsset($this->account_id);
 
         if (isset($_SESSION['message'])) {
