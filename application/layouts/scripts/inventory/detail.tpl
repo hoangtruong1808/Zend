@@ -2,9 +2,6 @@
     th {
         text-align: center;
     }
-    td {
-        text-align: center;
-    }
     .delete-button{
         color: #337ab7;
         background: none;
@@ -102,8 +99,8 @@
                         <td style="color:black">{$stt++}</td>
                         <td style="color:black">{$value.asset_name}</td>
                         <td style="color:black">{$value.asset_code}</td>
-                        <td style="color:black"><span class="badge badge-{($value.before_status==1)?'success':(($value.before_status==2)?'warning':'danger')}">{$value.before_status_name}</span></td>
-                        <td style="color:black"><span class="badge badge-{($value.inventory_status==1)?'success':(($value.inventory_status==2)?'warning':'danger')}">{$value.inventory_status_name}</span></td>
+                        <td style="color:black; text-align: center;"><span class="badge badge-{($value.before_status==1)?'success':(($value.before_status==2)?'warning':'danger')}">{$value.before_status_name}</span></td>
+                        <td style="color:black; text-align: center;"><span class="badge badge-{($value.inventory_status==1)?'success':(($value.inventory_status==2)?'warning':'danger')}">{$value.inventory_status_name}</span></td>
                         <td style="color:black">{$value.note}</td>
                     </tr>
                     {/foreach}

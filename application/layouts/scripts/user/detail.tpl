@@ -15,7 +15,7 @@
         <div class="col-sm-2">
             <span><a href="/user/update/id/{$user.user_id}" class="btn btn-primary" class="card-title" data-toggle="modal">Sửa</a></span>
             <span><a href="" class="btn btn-danger" data-toggle="modal" data-target="#delete-data">Xóa</a></span>
-            <span><a class="btn btn-success" class="card-title" id="return-asset-btn">Trả tài sản</a></span>
+            <span><button class="btn btn-success disabled-btn" class="card-title" id="return-asset-btn" disabled>TRẢ TÀI SẢN</button></span>
         </div>
     </header>
     {*form delete*}
@@ -106,7 +106,7 @@
                 <table class="table stats-table tbl-detail">
                     <thead>
                     <tr>
-                        <th colspan='3' style="text-align: center; font-size: 18px; color:#696969">Tài sản đang sử dụng</th>
+                        <th colspan='4' style="text-align: center; font-size: 18px; color:#696969">Tài sản đang sử dụng</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -114,17 +114,28 @@
                         <th style="width:120px;" class="no-sort">
                             <input type="checkbox" class="check-control" id="all-checked">
                         </th>
+                        <th style="text-align: center;">STT</th>
                         <th style="text-align:center">Tài sản</th>
                         <th style="text-align:center">Ngày mượn</th>
 
                     </tr>
-                    {foreach $all_borrow_asset as $key=>$value }
-                        <tr id="row{$value.borrow_detail_id}">
-                            <td><label class="i-checks m-b-none"><input type="checkbox" class="delete_item_check" value="{$value.borrow_detail_id}" data-id="{$value.asset_id}" ><i></i></label></td>
-                            <td style="text-align:left">{$value.borrow_asset_name}</td>
-                            <td style="text-align:center">{$value.borrow_date}</td>
-                        </tr>
-                    {/foreach}
+                    {$stt=1}
+                    {if empty($all_borrow_asset)}
+                    <tr>
+                        <td colspan="4" style="text-align: center">
+                            Không có dữ liệu
+                        </td>
+                    </tr>
+                    {else}
+                        {foreach $all_borrow_asset as $key=>$value }
+                            <tr id="row{$value.borrow_detail_id}">
+                                <td><label class="i-checks m-b-none"><input type="checkbox" class="delete_item_check" value="{$value.borrow_detail_id}" data-id="{$value.asset_id}" ><i></i></label></td>
+                                <td style="text-align: center;">{$stt++}</td>
+                                <td>{$value.borrow_asset_name}</td>
+                                <td style="text-align: center;">{date("H:i d-m-Y", strtotime($value.borrow_date))}</td>
+                            </tr>
+                        {/foreach}
+                    {/if}
                     </tbody>
                 </table>
             </div>
@@ -133,6 +144,27 @@
     </div>
 </section>
 <script>
+    $('#all-checked,.delete_item_check').change(function(){
+        if($(this).attr("id")=='all-checked'){
+            if(this.checked) {
+                $('.delete_item_check').prop('checked', true);
+                $('.delete_item_check').change(function(){
+                    $('#all-checked').prop('checked', false);
+                })
+            }
+            else{
+                $('.delete_item_check').prop('checked', false);
+            }
+        }
+        if ($('#all-checked').is(':checked') || $('.delete_item_check').is(':checked'))
+        {
+            $(".disabled-btn").removeAttr("disabled");
+        }
+        else
+        {
+            $(".disabled-btn").attr( "disabled", "disabled" );
+        }
+    });
     //trả tài sản
     $("#return-asset-btn").click(function(){
         var borrow_detail_id =[];

@@ -6,9 +6,6 @@
         table th {
             text-align: center;
         }
-        table td {
-            text-align: center;
-        }
         .tbl-dgrr-physical th {
             white-space:nowrap;
             position: sticky;
@@ -80,6 +77,9 @@
                         </tr>
                         <tr>
                             <th>
+                                STT
+                            </th>
+                            <th>
                                 Tên tài sản
                             </th>
                             <th>
@@ -103,13 +103,15 @@
                         </tr>
                     </thead>
                     <tbody>
+                    {$stt = 1}
                     {foreach $asset_list  as $key=>$value}
                         <tr id="row{$value.asset_id}">
                             <input type="hidden" name="inventory_asset_id[]" value="{$value.asset_id}">
                             <input type="hidden" name="before_status[]" value="{$value.status}">
-                            <td style="color:black" >{$value.name}</td>
-                            <td style="color:black" >{$value.code}</td>
-                            <td style="color:black" >{$value.asset_group}</td>
+                            <td>{$stt++}</td>
+                            <td style="color:black"; text-align: left;">{$value.name}</td>
+                            <td style="color:black; text-align: left;" >{$value.code}</td>
+                            <td style="color:black; text-align: left;" >{$value.asset_group}</td>
                             <td style="color:black" >{$value.status_name}</td>
                             <td style="color:black" >{$value.state_name}</td>
                             <td>

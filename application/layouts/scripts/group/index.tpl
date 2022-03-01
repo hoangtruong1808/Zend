@@ -198,6 +198,27 @@
     {*        <button class="delete-button" data-toggle="modal" data-target="#delete-data" data-id="{$value.group_id}"><i class="fas fa-trash-alt"></i></button>*}
     {*    </td>*}
     {*</tr>*}
+    $('#all-checked,.delete_item_check').change(function(){
+        if($(this).attr("id")=='all-checked'){
+            if(this.checked) {
+                $('.delete_item_check').prop('checked', true);
+                $('.delete_item_check').change(function(){
+                    $('#all-checked').prop('checked', false);
+                })
+            }
+            else{
+                $('.delete_item_check').prop('checked', false);
+            }
+        }
+        if ($('#all-checked').is(':checked') || $('.delete_item_check').is(':checked'))
+        {
+            $(".disabled-btn").removeAttr("disabled");
+        }
+        else
+        {
+            $(".disabled-btn").attr( "disabled", "disabled" );
+        }
+    });
     //add dữ liệu
     $('#example').DataTable({
         "columnDefs": [ {

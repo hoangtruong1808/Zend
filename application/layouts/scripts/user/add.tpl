@@ -2,14 +2,26 @@
 
 </style>
 <section>
-    <header class="panel-heading">
-        <div class="col-sm-12">
-            Thêm người dùng
-        </div>
-    </header>
-    <div class="table-agile-info">
+    <form class="form-horizontal bucket-form" method="POST" action="/user/add" enctype="multipart/form-data">
+        <header class="panel-heading">
+            <div class="col-sm-4">
+                <ul style="display: flex; list-style: none;" class="crumb">
+                    <li><a href="/">Trang chủ</a></li>
+                    <li><a href="/asset">Quản lý người dùng</a></li>
+                    <li>Thêm người dùng</li>
+                </ul>
+            </div>
+            <div class="col-sm-4">
+                Thêm người dùng
+            </div>
+            <div class="col-sm-3">
 
-        <form class="form-horizontal bucket-form" method="POST" action="/user/add" enctype="multipart/form-data">
+            </div>
+            <div class="col-sm-1">
+                <button type="submit" class="btn btn-success" style="margin-left: 48%" disabled="disabled" id="btn-add">Thêm</button>
+            </div>
+        </header>
+        <div class="table-agile-info">
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label">Họ tên</label>
                 <div class="col-sm-6">
@@ -55,10 +67,8 @@
                     <span id="image-area"></span
                 </div>
             </div>
-            <button type="submit" class="btn btn-success" style="margin-left: 48%" disabled="disabled" id="btn-add">Thêm</button>
-        </form>
-    </div>
-
+        </div>
+    </form>
 </section>
 
 <script>
@@ -69,7 +79,10 @@
 
             $('.required').each(function() {
                 console.log($(this).val());
-                empty = $(this).val().length == 0;
+                if ($(this).val().length === 0)
+                {
+                    empty = true;
+                }
             });
 
             if (empty)

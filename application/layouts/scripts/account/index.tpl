@@ -131,14 +131,17 @@
                     </thead>
                     <tbody>
                     <tr>
+                        <th style="text-align:center">STT</th>
                         <th style="text-align:center">Tài sản</th>
                         <th style="text-align:center">Ngày mượn</th>
 
                     </tr>
+                    {$stt=1}
                     {foreach $all_borrow_asset as $key=>$value }
                         <tr id="row{$value.borrow_id}">
-                            <td style="text-align:center">{$value.borrow_asset_name}</td>
-                            <td style="text-align:center">{$value.borrow_date}</td>
+                            <td style="text-align:center">{$stt++}</td>
+                            <td style="text-align:left">{$value.borrow_asset_name}</td>
+                            <td style="text-align:center">{date("H:i d-m-Y", strtotime($value.borrow_date))}</td>
                         </tr>
                     {/foreach}
                     </tbody>

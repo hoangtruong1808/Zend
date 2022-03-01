@@ -34,7 +34,6 @@
             </ul>
         </div>
         <div class="col-sm-4">
-
             Quản lý tài sản
         </div>
         <div class="col-sm-1">
@@ -197,24 +196,149 @@
 </section>
 <script>
     //xóa dữ liệu
+    $('document').ready(function(){
+        if($('#all-checked').is(':checked')){
+            console.log('abc');
+            $('#all-checked').change(function(){
+                console.log('abc');
+                // location.reload();
+            });
+        }
+    });
+
+    let myTable = $('#example').DataTable({
+        "columnDefs": [ {
+            "targets": 'no-sort',
+            "orderable": false,
+        } ],
+        order: [[ 4, 'asc' ]],
+        "bDestroy": true,
+        "iDisplayLength": 10,
+        select: {
+            style:    'multi',
+            selector: 'td:first-child'
+        },
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.11.4/i18n/vi.json'
+        }
+    });
+    $(".header").click(function(){
+        getAssetID();
+    });
     function getAssetID(){
         if($('#all-checked').is(':checked')){
             {foreach $asset_list  as $key=>$value}
             checkbox_asset_id.push("{$value.asset_id}");
             {/foreach}
-            $('.delete_item_check').change(function(){
+            $('#all-checked').change(function(){
+                console.log('abc');
                 checkbox_asset_id=[];
             })
+
         }
         else {
             $('.delete_item_check:checkbox:checked').each(function (i) {
                 checkbox_asset_id.push($(this).val());
             });
         }
-        console.log(checkbox_asset_id);
         $("#inventory_asset_id").val(checkbox_asset_id);
+        checkbox_asset_id = jQuery.unique(checkbox_asset_id)
+        console.log(checkbox_asset_id);
         return checkbox_asset_id;
     }
+
+    let checkbox_asset_id=[];
+
+    $('document').ready(function(){
+        if ($('#all-checked').is(':checked') || $('.delete_item_check').is(':checked'))
+        {
+            $(".disabled-btn").removeAttr("disabled");
+        }
+        $('#all-checked').prop('checked', false);
+        $('.delete_item_check').prop('checked', false);
+    });
+
+    $('#all-checked,.delete_item_check').change(function(){
+
+        if($(this).attr("id")=='all-checked'){
+            if(this.checked) {
+                myTable.rows().every(function () {
+                    var data = this.node();
+                    $(data).find('input').each(function () {
+                        $(this).prop('checked', true);
+                        checkbox_asset_id.push($(this).val());
+                    });
+                });
+                $('.delete_item_check').prop('checked', true);
+                $('.delete_item_check').change(function(){
+                    var delete_item_val = $(this).val();
+                    checkbox_asset_id = $.grep(checkbox_asset_id, function (value) {
+                        return value != delete_item_val;
+                    });
+                    $('#all-checked').prop('checked', false);
+                })
+            }
+            $('#all-checked').click(function() {
+                if(!this.checked)
+                {
+                    myTable.rows().every(function () {
+                        var data = this.node();
+                        $(data).find('input').each(function () {
+                            $(this).prop('checked', false);
+                        });
+                    });
+                    checkbox_asset_id = [];
+                }
+            });
+        }
+        else{
+            if(!$(this).is(':checked')) {
+                console.log(uncheck_asset_id = $(this).val());
+                checkbox_asset_id = $.grep(checkbox_asset_id, function (value) {
+                    return value != uncheck_asset_id;
+                });
+            }
+        }
+        if ($('#all-checked').is(':checked') || $('.delete_item_check').is(':checked'))
+        {
+            $(".disabled-btn").removeAttr("disabled");
+        }
+        else
+        {
+            $(".disabled-btn").attr( "disabled", "disabled" );
+        }
+    });
+
+    $(document).on('draw.dt', function () {
+
+        var table = $('#example').DataTable();
+        var page = table.page.info().page;
+
+        if (page!=0){
+            $('#all-checked').hide();
+        }
+        else{
+            $('#all-checked').show();
+        }
+
+        $("#inventory_asset_id").val(checkbox_asset_id);
+
+        $('#all-checked,.delete_item_check').change(function() {
+
+            $('.delete_item_check:checkbox:checked').each(function (i) {
+                checkbox_asset_id.push($(this).val());
+            });
+        })
+
+        if($('#all-checked').is(':checked')){
+            $('.delete_item_check').prop('checked', true);
+            $('.delete_item_check').change(function(){
+                $('#all-checked').prop('checked', false);
+            })
+            console.log(checkbox_asset_id);
+        }
+    });
+
 
     let delete_select_id;
     $(".delete-button").click(function(){
@@ -368,22 +492,6 @@
 
     });
 
-    let myTable = $('#example').DataTable({
-        "columnDefs": [ {
-            "targets": 'no-sort',
-            "orderable": false,
-        } ],
-        order: [[ 4, 'asc' ]],
-        "bDestroy": true,
-        "iDisplayLength": 10,
-        select: {
-            style:    'multi',
-            selector: 'td:first-child'
-        },
-        language: {
-            url: 'https://cdn.datatables.net/plug-ins/1.11.4/i18n/vi.json'
-        }
-    });
 
     $("#btn-inventory").click(function() {
         getAssetID();

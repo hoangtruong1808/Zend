@@ -91,75 +91,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         // })
         //disabled button
 
-        $('document').ready(function(){
-            if ($('#all-checked').is(':checked') || $('.delete_item_check').is(':checked'))
-            {
-                $(".disabled-btn").removeAttr("disabled");
-            }
-
+        $('#no-data').dataTable({
+            "bPaginate": false
         });
-
-        // lấy id cho form kiểm kê
-        let checkbox_asset_id=[];
-
-        $('#all-checked,.delete_item_check').change(function(){
-
-            $('.delete_item_check:checkbox:checked').each(function (i) {
-                checkbox_asset_id[i]=$(this).val();
-            });
-
-            if($(this).attr("id")=='all-checked'){
-                if(this.checked) {
-                    $('.delete_item_check').prop('checked', true);
-                    $('.delete_item_check').change(function(){
-                        $('#all-checked').prop('checked', false);
-                    })
-                }
-                else{
-                    $('.delete_item_check').prop('checked', false);
-                }
-            }
-            if ($('#all-checked').is(':checked') || $('.delete_item_check').is(':checked'))
-            {
-                $(".disabled-btn").removeAttr("disabled");
-            }
-            else
-            {
-                $(".disabled-btn").attr( "disabled", "disabled" );
-            }
-        });
-
-        $(document).on('draw.dt', function () {
-
-            var table = $('#example').DataTable();
-            var page = table.page.info().page;
-
-            if (page!=0){
-                $('#all-checked').hide();
-            }
-            else{
-                $('#all-checked').show();
-            }
-
-            $("#inventory_asset_id").val(checkbox_asset_id);
-
-            $('#all-checked,.delete_item_check').change(function() {
-
-                $('.delete_item_check:checkbox:checked').each(function (i) {
-                    checkbox_asset_id.push($(this).val());
-                });
-            })
-
-            if($('#all-checked').is(':checked')){
-                $('.delete_item_check').prop('checked', true);
-                $('.delete_item_check').change(function(){
-
-                    $('#all-checked').prop('checked', false);
-                })
-                console.log(checkbox_asset_id);
-            }
-        });
-
     </script>
 </section>
 <script src="/js/bootstrap.js"></script>

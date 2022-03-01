@@ -212,4 +212,25 @@
             url: 'https://cdn.datatables.net/plug-ins/1.11.4/i18n/vi.json'
         }
     });
+    $('#all-checked,.delete_item_check').change(function(){
+        if($(this).attr("id")=='all-checked'){
+            if(this.checked) {
+                $('.delete_item_check').prop('checked', true);
+                $('.delete_item_check').change(function(){
+                    $('#all-checked').prop('checked', false);
+                })
+            }
+            else{
+                $('.delete_item_check').prop('checked', false);
+            }
+        }
+        if ($('#all-checked').is(':checked') || $('.delete_item_check').is(':checked'))
+        {
+            $(".disabled-btn").removeAttr("disabled");
+        }
+        else
+        {
+            $(".disabled-btn").attr( "disabled", "disabled" );
+        }
+    });
 </script>

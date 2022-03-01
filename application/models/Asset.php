@@ -99,18 +99,6 @@ class Model_Asset extends Zend_Db_Table{
                     ),
                 )
             ),
-            'configuration' => array(
-                new Zend_Validate_StringLength(
-                    array(
-                        'max' => 255,
-                    )
-                ),
-                Zend_Filter_Input::MESSAGES => array(
-                    array(
-                        Zend_Validate_StringLength::TOO_LONG => 'Cấu hình tối đa 255 kí tự',
-                    )
-                ),
-            ),
             'asset_group_id' => array(
                 new Zend_Validate_NotEmpty(),
                 Zend_Filter_Input::MESSAGES => array(
@@ -136,6 +124,21 @@ class Model_Asset extends Zend_Db_Table{
                 ),
             ),
         );
+        if (!empty($arrParam['configuration'])){
+
+            $this->_validate['configuration'] = array(
+                new Zend_Validate_StringLength(
+                    array(
+                        'max' => 255,
+                    )
+                ),
+                Zend_Filter_Input::MESSAGES => array(
+                    array(
+                        Zend_Validate_StringLength::TOO_LONG => 'Cấu hình tối đa 255 kí tự',
+                    )
+                ),
+            );
+        }
         $result = null;
         $input = new Zend_Filter_Input($this->_filter, $this->_validate, $arrParam, $this->_option);
 
@@ -322,9 +325,9 @@ class Model_Asset extends Zend_Db_Table{
             //update bảng asset
             $row_asset['status']=$arrParam['inventory_detail_status'][$i];
             //update trạng thái mất
-            if($row_asset['status'] == 3){
-                $row_asset['state'] =5;
-            }
+//            if($row_asset['status'] == 3){
+//                $row_asset['state'] =5;
+//            }
             $where = 'asset_id= '.$arrParam['inventory_asset_id'][$i];
             $this->db->update('tbl_asset', $row_asset, $where);
 

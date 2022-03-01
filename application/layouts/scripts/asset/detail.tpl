@@ -129,7 +129,7 @@
                                 <div class="form-group has-success">
                                     <label class="col-lg-5 control-label">Cấu hình</label>
                                     <div class="col-lg-7 input-summary-info">
-                                        <div class="form-control">{$asset.configuration}</div>
+                                        <div class="form-control" style="height: 60px">{$asset.configuration}</div>
                                     </div>
                                 </div>
                             </li>
@@ -178,18 +178,29 @@
                     </thead>
                     <tbody>
                     <tr>
+                        <th style="text-align:center">STT</th>
                         <th style="text-align:center">Người sử dụng</th>
                         <th style="text-align:center">Ngày mượn</th>
                         <th style="text-align:center">Ngày trả</th>
 
                     </tr>
-                    {foreach $all_borrow as $key=>$value }
-                    <tr>
-                        <td style="text-align:center">{$value.borrow_user_name}</td>
-                        <td style="text-align:center">{$value.borrow_date}</td>
-                        <td style="text-align:center">{$value.return_date}</td>
-                    </tr>
-                    {/foreach}
+                    {$stt = 1}
+                    {if empty($all_borrow)}
+                        <tr>
+                            <td colspan="4" style="text-align: center">
+                                Không có dữ liệu
+                            </td>
+                        </tr>
+                    {else}
+                        {foreach $all_borrow as $key=>$value }
+                        <tr>
+                            <td style="text-align:center">{$stt++}</td>
+                            <td style="text-align:left">{$value.borrow_user_name}</td>
+                            <td style="text-align:center">{date("H:i d-m-Y", strtotime($value.borrow_date))}</td>
+                            <td style="text-align:center">{date("H:i d-m-Y", strtotime($value.return_date))}</td>
+                        </tr>
+                        {/foreach}
+                    {/if}
                     </tbody>
                 </table>
             </div>

@@ -36,18 +36,6 @@
                     </a>
                 </li>
                 {/if}
-                <li>
-                    <a {($currentController=='/account')?'class="active"':''} href="/account">
-                        <i class="fas fa-desktop"></i>
-                        <span>Quản lý tài khoản</span>
-                    </a>
-                </li>
-                <li class="sub-menu">
-                    <a href="/login/logout">
-                        <i class=" fa fa-bar-chart-o"></i>
-                        <span>Đăng xuất</span>
-                    </a>
-                </li>
             </ul>
         </div>
         <!-- sidebar menu end-->

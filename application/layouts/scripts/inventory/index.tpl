@@ -67,9 +67,9 @@
                         <td><label class="i-checks m-b-none"><input type="checkbox" class="delete_item_check" value="{$value.inventory_id}" name="inventory_id[]"><i></i></label></td>
 
 {*                        <td><label class="i-checks m-b-none"><input type="checkbox" class="delete_item_check" value="{$value.user_id}"><i></i></label></td>*}
-                        <td style="color:black; " >{$value.inventory_code}</td>
+                        <td style="color:black; text-align: left; " >{$value.inventory_code}</td>
                         <td style="color:black; text-align: left" >{$value.user_name}</td>
-                        <td style="color:black" >{$value.inventory_date}</td>
+                        <td style="color:black" >{date("d-m-Y", strtotime($value.inventory_date))}</td>
                         <td style="color:black" >{$value.note}</td>
                         <td>
                             <a href="/inventory/detail/inventory_id/{$value.inventory_id}" title="Xem chi tiết"><i class="fas fa-eye"></i></a>
@@ -89,5 +89,25 @@
         $(".alert").remove();
 
     });
-
+    $('#all-checked,.delete_item_check').change(function(){
+        if($(this).attr("id")=='all-checked'){
+            if(this.checked) {
+                $('.delete_item_check').prop('checked', true);
+                $('.delete_item_check').change(function(){
+                    $('#all-checked').prop('checked', false);
+                })
+            }
+            else{
+                $('.delete_item_check').prop('checked', false);
+            }
+        }
+        if ($('#all-checked').is(':checked') || $('.delete_item_check').is(':checked'))
+        {
+            $(".disabled-btn").removeAttr("disabled");
+        }
+        else
+        {
+            $(".disabled-btn").attr( "disabled", "disabled" );
+        }
+    });
 </script>

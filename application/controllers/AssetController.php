@@ -107,11 +107,12 @@ class AssetController extends Zend_Controller_Action
                 $file_upload = $file_adapter->getFileInfo();
 
                 $arrParam['image']=$file_upload['image']['name'];
+                $file_adapter->receive();
 
                 //get error input
                 if($file_adapter->isValid() && ($this->model->validateAddAssets($arrParam)===true)){
                     $this->model->addAssets($arrParam);
-                    $file_adapter->receive();
+
                 }
                 else{
                     if($this->model->validateAddAssets($arrParam)!==true) {
@@ -133,6 +134,7 @@ class AssetController extends Zend_Controller_Action
                     $this->view->asset_group_id = $arrParam['asset_group_id'];
                     $this->view->configuration = $arrParam['configuration'];
                     $this->view->status = $arrParam['status'];
+                    $this->view->image = $arrParam['image'];
                 }
 
             } catch (Exception $e) {

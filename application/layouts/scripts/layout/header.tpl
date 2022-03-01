@@ -2,7 +2,7 @@
     <!--logo start-->
     <div class="brand">
         <a href="/" class="logo">
-            PLOTTđ
+            PLOTT
         </a>
         <div class="sidebar-toggle-box">
             <div class="fa fa-bars"></div>

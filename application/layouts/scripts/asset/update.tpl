@@ -24,37 +24,40 @@
     }
 </style>
 <section>
-    <header class="panel-heading">
-        <div class="col-sm-4">
-            <ul style="display: flex; list-style: none;" class="crumb">
-                <li><a href="/">Trang chủ</a></li>
-                <li><a href="/asset">Quản lý tài sản</a></li>
-                <li>Cập nhật tài sản</li>
-            </ul>
-        </div>
-        <div class="col-sm-4">
-            Cập nhật tài sản
-        </div>
-        <div class="col-sm-4">
-        </div>
-    </header>
-    <div class="table-agile-info">
+    <form class="form-horizontal bucket-form" method="POST" action="/asset/update/id/{{$asset.asset_id}}" enctype="multipart/form-data">
+        <header class="panel-heading">
+            <div class="col-sm-4">
+                <ul style="display: flex; list-style: none;" class="crumb">
+                    <li><a href="/">Trang chủ</a></li>
+                    <li><a href="/asset">Quản lý tài sản</a></li>
+                    <li>Cập nhật tài sản</li>
+                </ul>
+            </div>
+            <div class="col-sm-4">
+                Cập nhật tài sản
+            </div>
+            <div class="col-sm-2">
+            </div>
+            <div class="col-sm-2">
+                <button type="submit" class="btn btn-success" style="margin-left: 47%" id="btn-add" >Cập nhật</button>
+            </div>
+        </header>
+        <div class="table-agile-info">
 
-        <form class="form-horizontal bucket-form" method="POST" action="/asset/update/id/{{$asset.asset_id}}" enctype="multipart/form-data">
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label">Tên</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control required" name="name" value="{(!empty($name))? {$name} : {$asset.name}}">
+                    <input type="text" class="form-control required" name="name" value="{(isset($name))? {$name} : {$asset.name}}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label required-label">Mã</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control required" name="code" value="{(!empty($code))? {$code} : {$asset.code}}">
+                    <input type="text" class="form-control required" name="code" value="{(isset($code))? {$code} : {$asset.code}}">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">Nhóm tài sản</label>
+                <label class="col-sm-3 control-label required-label">Nhóm tài sản</label>
                 <div class="col-sm-6">
                     <select class="form-control m-bot15 required" name="asset_group_id">
                         {foreach $menu_list as $key=>$value}
@@ -66,11 +69,11 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">Cấu hình</label>
                 <div class="col-sm-6">
-                    <textarea class="form-control" name="configuration">{(!empty($configuration))? {$configuration} : {$asset.configuration}}</textarea>
+                    <textarea class="form-control" name="configuration">{(isset($configuration))? {$configuration} : {$asset.configuration}}</textarea>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">Tình trạng</label>
+                <label class="col-sm-3 control-label required-label">Tình trạng</label>
                 <div class="col-sm-6">
                     <select class="form-control m-bot15 required" name="status">
                         {foreach $status_list as $key=>$value}
@@ -94,10 +97,8 @@
                     </span>
                 </div>
             </div>
-            <button type="submit" class="btn btn-success" style="margin-left: 47%" id="btn-add" >Cập nhật</button>
-        </form>
-    </div>
-
+        </div>
+    </form>
 </section>
 
 <script>
